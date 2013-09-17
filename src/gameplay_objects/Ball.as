@@ -350,6 +350,8 @@
 					//GameWorld.i.startPlayerInput();
 				}
 				
+				if (GameWorld.pad.moveTween != null) if (GameWorld.pad.moveTween.active) trace("Moving hit detected");
+				
 			}
 			else if (this.y + this.height > 480)//lower boundry
 			{

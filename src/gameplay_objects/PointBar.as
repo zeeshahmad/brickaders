@@ -24,10 +24,14 @@ package gameplay_objects
 		
 		public var nY:Number;//initial y value
 		
+		
+		public static const H:Number = 70;
+		public static const Y:Number = FP.height - H;
+		
 		public function PointBar() 
 		{
 			
-			var picture:BitmapData = new BitmapData(800 - SideBar.W, 70, true, 0);
+			var picture:BitmapData = new BitmapData(800 - SideBar.W, H, true, 0);
 			Draw.setTarget(picture);
 			Draw.rect(0, 0, 800 - SideBar.W, picture.height.valueOf(), 0xffffff); //0xF57516  0xFBDB24
 			Draw.rect(0, 0, picture.width, 5, 0xA0D305);

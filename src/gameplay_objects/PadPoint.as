@@ -66,10 +66,10 @@ package gameplay_objects
 			anchorLine.alpha = 0.8;
 			
 			var dtween:VarTween = new VarTween(r);
-			dtween.tween(pointSpritemap, "alpha", 0, 1, Ease.quadIn);
+			dtween.tween(pointSpritemap, "alpha", 0, 0.5, Ease.quadIn);
 			addTween(dtween, true);
 			var dtween2:VarTween = new VarTween(r);
-			dtween2.tween(anchorLine, "alpha", 0, 1, Ease.quadIn);
+			dtween2.tween(anchorLine, "alpha", 0, 0.5, Ease.quadIn);
 			addTween(dtween2, true);
 			return this;
 		}

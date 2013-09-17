@@ -8,6 +8,7 @@ package worlds
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.Coin;
 	import gameplay_objects.Pad;
+	import gameplay_objects.particles.BackgroundStar;
 	import gameplay_objects.particles.ExplosionParticles;
 	import gameplay_objects.PointBar;
 	import gameplay_objects.SideBar;
@@ -116,6 +117,10 @@ package worlds
 		override public function update():void 
 		{
 			spawnBricks();
+			
+			//background stars
+			if ( typeCount("bgStar") < 10 && FP.rand(100) < 10 ) create(BackgroundStar, true);
+			
 			super.update();
 		}
 		
