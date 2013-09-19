@@ -50,7 +50,6 @@ package gameplay_objects.particles
 		
 		override public function added():void 
 		{
-			
 			// animation
 			var t:MultiVarTween = new MultiVarTween(fadeAway);
 			t.tween(img, { alpha:1 }, time);

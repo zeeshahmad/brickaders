@@ -4,6 +4,7 @@ package worlds
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import gameplay_objects.ActionMenu;
 	import gameplay_objects.Ball;
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.Coin;
@@ -37,6 +38,7 @@ package worlds
 		public static var sideBar:SideBar;
 		public static var pad:Pad;
 		public static var pointBar:PointBar;
+		public static var actionMenu:ActionMenu;
 		
 		//layers
 		public static var pointLayer:Sprite;
@@ -55,7 +57,7 @@ package worlds
 			sideBar = new SideBar();
 			pointBar = new PointBar();
 			pad = new Pad();
-			
+			actionMenu = new ActionMenu();
 		}
 		
 		override public function begin():void 
@@ -92,8 +94,6 @@ package worlds
 			bg1Tween.tween(bg1, { x:randX, y: FP.height }, 60*40, null, 10);
 			addTween(bg1Tween, true);
 			
-			
-			
 			super.begin();
 		}
 		
@@ -112,6 +112,8 @@ package worlds
 			ball.setCartesianSpd(7, 8);
 			
 			//pad.getToPosition(200, );
+			trace("animation complete");
+			actionMenu.show();
 		}
 		
 		override public function update():void 
@@ -151,6 +153,8 @@ package worlds
 			}});
 			
 		}
+		
+		
 		
 		public static function entitiesByType(typ:String, wrld:World):Array
 		{
