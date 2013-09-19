@@ -119,7 +119,7 @@ package worlds
 			spawnBricks();
 			
 			//background stars
-			if ( typeCount("bgStar") < 10 && FP.rand(100) < 10 ) create(BackgroundStar, true);
+			if ( typeCount("bgStar") < 20 && FP.rand(100) < 10 ) create(BackgroundStar, true);
 			
 			super.update();
 		}

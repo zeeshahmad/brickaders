@@ -230,7 +230,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -582,7 +582,10 @@
        sodipodi:rx="5"
        sodipodi:ry="5"
        d="m 152,490.36218 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z"
-       transform="translate(137,21)" />
+       transform="translate(152,-37)"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\bg\star3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        sodipodi:type="arc"
        style="opacity:0.46460176;fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;display:inline;filter:url(#filter3862)"
@@ -592,7 +595,10 @@
        sodipodi:rx="5"
        sodipodi:ry="5"
        d="m 152,490.36218 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z"
-       transform="matrix(0.67500913,0,0,0.67500913,197.6735,188.46338)" />
+       transform="matrix(0.67500913,0,0,0.67500913,153.6735,119.46338)"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\bg\star1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        sodipodi:type="arc"
        style="opacity:0.34513275;fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;display:inline;filter:url(#filter3894)"
@@ -602,17 +608,23 @@
        sodipodi:rx="5"
        sodipodi:ry="5"
        d="m 152,490.36218 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z"
-       transform="matrix(0.67500913,0,0,0.67500913,222.77366,182.36323)" />
+       transform="matrix(0.67500913,0,0,0.67500913,174.77366,124.36323)"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\bg\star2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        sodipodi:type="arc"
-       style="opacity:0.40265487000000000;fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;display:inline;filter:url(#filter3926)"
+       style="opacity:0.40265485;fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;display:inline;filter:url(#filter3926)"
        id="path3056-2"
        sodipodi:cx="147"
        sodipodi:cy="490.36218"
        sodipodi:rx="5"
        sodipodi:ry="5"
        d="m 152,490.36218 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z"
-       transform="translate(202,20)" />
+       transform="translate(176,-46)"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\bg\star4.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        sodipodi:type="arc"
        style="opacity:0.7477876;fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;display:inline;filter:url(#filter3954)"
@@ -622,7 +634,7 @@
        sodipodi:rx="5"
        sodipodi:ry="5"
        d="m 152,490.36218 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z"
-       transform="translate(159,16)" />
+       transform="translate(204,-34)" />
     <g
        id="g3895"
        transform="translate(-62,77)"
