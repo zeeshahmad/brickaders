@@ -212,8 +212,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="642.69592"
-     inkscape:cy="541.64738"
+     inkscape:cx="538.19592"
+     inkscape:cy="-105.59346"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -725,7 +725,7 @@
        transform="translate(-431.39183,-101.29274)" />
     <g
        id="g3111"
-       transform="translate(-144,-305)"
+       transform="translate(-175,-298)"
        inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\power.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -754,7 +754,7 @@
            id="g3966">
           <path
              transform="translate(-50.83661,47.616492)"
-             d="m 809,476.36218 a 9,9 0 1 1 -18,0 9,9 0 1 1 18,0 z"
+             d="m 809,476.36218 c 0,4.97057 -4.02944,9 -9,9 -4.97056,0 -9,-4.02943 -9,-9 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 z"
              sodipodi:ry="9"
              sodipodi:rx="9"
              sodipodi:cy="476.36218"
@@ -764,7 +764,7 @@
              sodipodi:type="arc" />
           <path
              transform="translate(-38.54514,47.748112)"
-             d="m 809,476.36218 a 9,9 0 1 1 -18,0 9,9 0 1 1 18,0 z"
+             d="m 809,476.36218 c 0,4.97057 -4.02944,9 -9,9 -4.97056,0 -9,-4.02943 -9,-9 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 z"
              sodipodi:ry="9"
              sodipodi:rx="9"
              sodipodi:cy="476.36218"
@@ -774,7 +774,7 @@
              sodipodi:type="arc" />
           <path
              transform="translate(-26.25365,48.142962)"
-             d="m 809,476.36218 a 9,9 0 1 1 -18,0 9,9 0 1 1 18,0 z"
+             d="m 809,476.36218 c 0,4.97057 -4.02944,9 -9,9 -4.97056,0 -9,-4.02943 -9,-9 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 z"
              sodipodi:ry="9"
              sodipodi:rx="9"
              sodipodi:cy="476.36218"
@@ -784,7 +784,7 @@
              sodipodi:type="arc" />
           <path
              transform="translate(-13.96218,48.274582)"
-             d="m 809,476.36218 a 9,9 0 1 1 -18,0 9,9 0 1 1 18,0 z"
+             d="m 809,476.36218 c 0,4.97057 -4.02944,9 -9,9 -4.97056,0 -9,-4.02943 -9,-9 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 z"
              sodipodi:ry="9"
              sodipodi:rx="9"
              sodipodi:cy="476.36218"
@@ -850,5 +850,53 @@
            transform="matrix(0,1,-1,0,0,0)" />
       </g>
     </g>
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline"
+       id="path3098-1"
+       sodipodi:cx="864.5"
+       sodipodi:cy="616.86218"
+       sodipodi:rx="196.5"
+       sodipodi:ry="196.5"
+       d="m 1061,616.86218 a 196.5,196.5 0 0 1 -98.25001,170.174 L 864.5,616.86218 z"
+       transform="translate(-53,322.5)"
+       sodipodi:start="0"
+       sodipodi:end="1.0471976"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\selector.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.31415932;fill:#ab773d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="path3121"
+       sodipodi:cx="1058.5"
+       sodipodi:cy="433.86218"
+       sodipodi:rx="17.5"
+       sodipodi:ry="17.5"
+       d="m 1076,433.86218 a 17.5,17.5 0 1 1 -35,0 17.5,17.5 0 1 1 35,0 z"
+       transform="matrix(1.2857143,0,0,1.2857143,-490.42859,159.05219)" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#ff2a2a;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 863.5,426.375 c -108.52395,0 -196.5,87.97605 -196.5,196.5 0,108.524 87.97605,196.5 196.5,196.5 108.52395,0 196.5,-87.976 196.5,-196.5 0,-108.52395 -87.97605,-196.5 -196.5,-196.5 z m 0,163 c 18.50154,0 33.5,14.9985 33.5,33.5 0,18.5015 -14.99846,33.5 -33.5,33.5 -18.50154,0 -33.5,-14.9985 -33.5,-33.5 0,-18.5015 14.99846,-33.5 33.5,-33.5 z"
+       id="path3098"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\bgdisk.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="path3101"
+       sodipodi:cx="160"
+       sodipodi:cy="1014.3622"
+       sodipodi:rx="150"
+       sodipodi:ry="150"
+       d="M 310,1014.3622 A 150,150 0 0 1 234.99999,1144.266 L 160,1014.3622 z"
+       transform="matrix(1.4066666,0,0,1.4066666,803.43334,-518.9944)"
+       sodipodi:start="0"
+       sodipodi:end="1.0471976"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\selector.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

@@ -83,7 +83,7 @@
 			
 			type = "ball";
 			
-			shotAvailable = true;
+			shotAvailable = false;
 			
 		}
 		
@@ -290,6 +290,20 @@
 			this.y += (ins.speedY) * GameWorld.timeFactor * GameWorld.move * FP.rate;
 		}
 		
+		public function shootBullet():void
+		{
+			if (shotAvailable && Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
+			{
+				shotAvailable = false;
+				shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
+				new Bullet(new Point(x+halfWidth, y+halfHeight), shotAngle, shotSpeed, 2, world);
+				
+				//setCartesianSpd(speedX - (shotSpeed / 4) * Math.cos(shotAngle), speedY - (shotSpeed / 4) * Math.sin(shotAngle));
+				setRadialSpd(speed, shotAngle + Math.PI );
+				
+				trace("ball speed:" + speed);
+			}
+		}
 		
 		
 		override public function update():void 
@@ -365,23 +379,8 @@
 				new ExplosionParticles(this.x, this.y, [0xDF4402, 0xA4AC0B, 0x256696, 0x0E4F02], [3, 4, 5], 20, 200);
 			}
 			
-			//TODO shoot ball
+			if (Input.mousePressed) shootBullet();
 			
-			//shooting
-			if (Input.mousePressed)
-			{
-				if (shotAvailable && Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
-				{
-					//shotAvailable = false;
-					shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
-					new Bullet(new Point(x, y), shotAngle, shotSpeed, 2, world);
-					
-					//setCartesianSpd(speedX - (shotSpeed / 4) * Math.cos(shotAngle), speedY - (shotSpeed / 4) * Math.sin(shotAngle));
-					setRadialSpd(speed, shotAngle + Math.PI );
-					
-					trace("ball speed:" + speed);
-				}
-			}
 			
 			super.update();
 			

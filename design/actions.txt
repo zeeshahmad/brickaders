@@ -1,4 +1,10 @@
 -Power ball
--Shoot (shoot 3 bullets)
+-Shoot (1 shot)
 -Slomo
 -(temporary) stealth (make ball enemies for this)
+-reverse ball
+-shadow pad (at next move)
+
+
+
+--orbiter is a count of how many shots available

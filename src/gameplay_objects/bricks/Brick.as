@@ -5,6 +5,7 @@ package gameplay_objects.bricks
 	import flash.geom.Rectangle;
 	import gameplay_objects.Ball;
 	import gameplay_objects.Bullet;
+	import gameplay_objects.Pad;
 	import gameplay_objects.SideBar;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -180,6 +181,18 @@ package gameplay_objects.bricks
 				else {
 					dodgeX = 0;
 					exhaustRight.visible = false;
+				}
+			}
+			
+			if (collide("pad", x, y))
+			{
+				if ((collide("pad", x, y) as Pad).moveTween.active)
+				{
+					destroy();
+				}
+				else 
+				{
+					trace("brick hit pad");
 				}
 			}
 			
