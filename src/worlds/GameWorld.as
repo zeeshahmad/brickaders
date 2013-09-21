@@ -4,6 +4,7 @@ package worlds
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	import gameplay_objects.ActionMenu;
 	import gameplay_objects.Ball;
 	import gameplay_objects.bricks.Brick;
@@ -18,6 +19,7 @@ package worlds
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.tweens.misc.VarTween;
 	import net.flashpunk.utils.Ease;
+	import net.flashpunk.utils.Input;
 	import net.flashpunk.World;
 
 	/**
@@ -26,6 +28,10 @@ package worlds
 	 */
 	public class GameWorld extends World 
 	{
+		[Embed(source = "../../lib/actions_tiles/invoke_button.png")]
+		private static const ACTION_INVOKE:Class;
+		public static var actionInvoker:Image;
+		
 		[Embed(source = "../../lib/bg/planet1.png")]
 		public static const PLANET_1:Class;
 		
@@ -94,6 +100,11 @@ package worlds
 			bg1Tween.tween(bg1, { x:randX, y: FP.height }, 60*40, null, 10);
 			addTween(bg1Tween, true);
 			
+			actionInvoker = new Image(ACTION_INVOKE);
+			actionInvoker.x = (FP.width - SideBar.W - actionInvoker.width) / 2 + SideBar.W;
+			actionInvoker.y = (PointBar.Y - actionInvoker.height) / 2;
+			addGraphic(actionInvoker);
+			
 			super.begin();
 		}
 		
@@ -112,8 +123,8 @@ package worlds
 			ball.setCartesianSpd(7, 8);
 			
 			//pad.getToPosition(200, );
-			trace("animation complete");
-			actionMenu.show();
+			//trace("animation complete");
+			//actionMenu.show();
 		}
 		
 		override public function update():void 
@@ -122,6 +133,14 @@ package worlds
 			
 			//background stars
 			if ( typeCount("bgStar") < 20 && FP.rand(100) < 10 ) create(BackgroundStar, true);
+			
+			if (Input.mousePressed)
+			{
+				if (mouseCollideRect(new Rectangle(actionInvoker.x, actionInvoker.y, actionInvoker.width, actionInvoker.height)))
+				{
+					actionMenu.show();
+				}
+			}
 			
 			super.update();
 		}
@@ -154,7 +173,10 @@ package worlds
 			
 		}
 		
-		
+		public static function mouseCollideRect(r:Rectangle):Boolean
+		{
+			return (Input.mouseX >= r.x && Input.mouseX <= r.x + r.width && Input.mouseY >= r.y && Input.mouseY <= r.y + r.height);
+		}
 		
 		public static function entitiesByType(typ:String, wrld:World):Array
 		{

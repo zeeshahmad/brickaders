@@ -285,9 +285,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.6172927"
-     inkscape:cx="836.32592"
-     inkscape:cy="28.501534"
+     inkscape:zoom="1"
+     inkscape:cx="680.32592"
+     inkscape:cy="208.35657"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -304,7 +304,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -772,16 +772,8 @@
        inkscape:export-ydpi="90" />
     <path
        inkscape:connector-curvature="0"
-       style="fill:#ff2a2a;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="m 807.5,-169.625 c -108.524,0 -196.5,87.97605 -196.5,196.5 0,108.524 87.976,196.5 196.5,196.5 108.524,0 196.5,-87.976 196.5,-196.5 0,-108.52395 -87.976,-196.5 -196.5,-196.5 z m 0,163 c 18.5015,0 33.5,14.9985 33.5,33.5 0,18.5015 -14.9985,33.5 -33.5,33.5 -18.5015,0 -33.5,-14.9985 -33.5,-33.5 0,-18.5015 14.9985,-33.5 33.5,-33.5 z"
-       id="path3098"
-       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\bgdisk.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
-    <path
-       inkscape:connector-curvature="0"
-       style="opacity:0.99115044;fill:#ff2a2a;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline"
-       d="m 960.305,804.80653 c -108.524,0 -196.5,87.97605 -196.5,196.49997 0,108.524 87.976,196.5 196.5,196.5 108.524,0 196.5,-87.976 196.5,-196.5 0,-108.52392 -87.976,-196.49997 -196.5,-196.49997 z m 0,163 c 18.5015,0 33.5,14.9985 33.5,33.49997 0,18.5015 -14.9985,33.5 -33.5,33.5 -18.5015,0 -33.5,-14.9985 -33.5,-33.5 0,-18.50147 14.9985,-33.49997 33.5,-33.49997 z"
+       style="opacity:1;fill:#6eff2a;fill-opacity:0.50264549;fill-rule:nonzero;stroke:none;display:inline"
+       d="m 893.305,390.80653 c -108.524,0 -196.5,87.97605 -196.5,196.49997 0,108.524 87.976,196.5 196.5,196.5 108.524,0 196.5,-87.976 196.5,-196.5 0,-108.52392 -87.976,-196.49997 -196.5,-196.49997 z m 0,163 c 18.5015,0 33.5,14.9985 33.5,33.49997 0,18.5015 -14.9985,33.5 -33.5,33.5 -18.5015,0 -33.5,-14.9985 -33.5,-33.5 0,-18.50147 14.9985,-33.49997 33.5,-33.49997 z"
        id="path3098-4"
        inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\options.png"
        inkscape:export-xdpi="90"
@@ -904,7 +896,7 @@
        inkscape:export-ydpi="90" />
     <g
        id="g4141"
-       transform="translate(64.304997,409.94435)"
+       transform="translate(-2.695003,-4.05565)"
        inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\options.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1049,5 +1041,13 @@
          id="rect4097"
          style="fill:url(#linearGradient4164);fill-opacity:1;fill-rule:nonzero;stroke:none" />
     </g>
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#6eff2a;fill-opacity:0.50264551;fill-rule:nonzero;stroke:none;display:inline"
+       d="m 998,853.8622 c -108.524,0 -196.5,87.97605 -196.5,196.5 0,108.524 87.976,196.5 196.5,196.5 108.524,0 196.5,-87.976 196.5,-196.5 0,-108.52395 -87.976,-196.5 -196.5,-196.5 z m 0,163 c 18.5015,0 33.5,14.9985 33.5,33.5 0,18.5015 -14.9985,33.5 -33.5,33.5 -18.5015,0 -33.5,-14.9985 -33.5,-33.5 0,-18.5015 14.9985,-33.5 33.5,-33.5 z"
+       id="path3098-4-1"
+       inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\actions_tiles\bgdisk.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

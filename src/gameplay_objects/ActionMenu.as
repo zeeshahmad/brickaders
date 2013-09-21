@@ -3,6 +3,7 @@ package gameplay_objects
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.utils.Input;
 	import worlds.GameWorld;
 	
 	/**
@@ -24,29 +25,23 @@ package gameplay_objects
 		private static const SELECTOR_PNG:Class;
 		private var selector:Image;
 		
+		[Embed(source = "../../lib/actions_tiles/options.png")]
+		private static const OPTIONS_PNG:Class;
+		private var options:Image;
+		
 		public static var active:Boolean;
 		
-		private var tileClasses:Array;
-		private var tiles:Array;
+		public static var selectedIndex:int;
 		
 		public function ActionMenu() 
 		{
-			tileClasses = new Array();
-			tiles = new Array();
-			
-			tileClasses.push(POWER_PNG, SHOOT_PNG);
 			
 			graphic = new Image(BG_DISK_PNG);
 			
 			x = FP.halfWidth + SideBar.W / 2 - Image(graphic).width / 2;
 			y = FP.halfHeight - PointBar.H / 2 - Image(graphic).height / 2;
 			
-			for (var i:uint = 0; i < tileClasses.length; i++)
-			{
-				tiles.push(new Image(tileClasses[i]));
-				//addGraphic(tiles[i]);
-				tiles[i].x = (tiles[0].width + 30) * i;
-			}
+			
 			
 			selector = new Image(SELECTOR_PNG);
 			
@@ -54,7 +49,11 @@ package gameplay_objects
 			selector.y = Image(graphic).height / 2;
 			selector.smooth = true;
 			addGraphic(selector);
-			selector.angle = -60;
+			selector.visible = false;
+			//selector.angle = -60;
+			
+			
+			addGraphic(new Image(OPTIONS_PNG));
 			
 			active = false;
 		}
@@ -62,12 +61,10 @@ package gameplay_objects
 		
 		public function show():void
 		{
-			
 			if (!active && GameWorld.i != null)
 			{
 				active = true;
-				
-				
+				selector.visible = false;
 				GameWorld.i.add(this);
 				GameWorld.move = 0;
 			}
@@ -79,8 +76,49 @@ package gameplay_objects
 			{
 				active = false;
 				GameWorld.move = 1;
+				GameWorld.actionInvoker.visible = true;
 			}
 			if (this.world != null) this.world.remove(this);
+		}
+		
+		private static const innerR:Number = 25;
+		
+		override public function update():void 
+		{
+			if (active)
+			{
+				if (Input.mouseDown)
+				{
+					if (
+					(Input.mouseX < x + 393/2 - innerR || Input.mouseX > x+393/2+innerR)
+					|| (Input.mouseY < y + 393/2 - innerR || Input.mouseY > y+393/2+innerR)
+					)
+					{
+						selector.visible = true;
+						for (var i:uint = 0; i < 6; i++)
+						{
+							if (getMouseAngle() < 60 *(i+1) && getMouseAngle() > 60*i) 
+							{
+								selector.angle = -60 * (i + 3);
+								selectedIndex = i;
+							}
+						}
+					}
+					else selector.visible = false;
+					
+				}
+				else
+				{
+					hide();
+				}
+			}
+			
+			super.update();
+		}
+		
+		private function getMouseAngle():Number
+		{
+			return (Math.atan2(Input.mouseY - y - 393 / 2, Input.mouseX - x - 393 / 2) * 180 / Math.PI) + 180;
 		}
 	}
 	
