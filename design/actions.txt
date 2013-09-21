@@ -7,4 +7,4 @@
 
 
 
---orbiter is a count of how many shots available
+--orbiter is a count of how many actions available
