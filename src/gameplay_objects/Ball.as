@@ -4,6 +4,7 @@
 	import com.greensock.easing.*;
 	import com.greensock.plugins.*;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.CapsStyle;
 	import flash.display.Sprite;
@@ -15,6 +16,7 @@
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.tweens.misc.ColorTween;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.utils.Input;
@@ -79,12 +81,21 @@
 			
 			changeType(NORMAL_TYPE);
 			
+			
+			
 			setHitbox(DIAMETER, DIAMETER, 0, 0);
 			
 			type = "ball";
 			
 			shotAvailable = false;
 			
+			var stealthRingBmp:BitmapData = new BitmapData(DIAMETER + 6, DIAMETER + 6, true, 0);
+			Draw.setTarget(stealthRingBmp);
+			Draw.circle(RADIUS+3, RADIUS+3, RADIUS + 3, 0x12A7B8);
+			stealthRing = new Image(stealthRingBmp);
+			stealthRing.x = -3; stealthRing.y = -3;
+			addGraphic(stealthRing);
+			stealthRing.visible = false;
 		}
 		
 		public function clone(newType:String):Ball
@@ -127,7 +138,7 @@
 			return speedIndicator;
 		}
 		
-		
+		private var img:Image;
 		
 		public function changeType(type:String = NORMAL_TYPE, redraw:Boolean = false):void
 		{
@@ -166,7 +177,8 @@
 			var picture:BitmapData = new BitmapData(DIAMETER, DIAMETER, true, 0);
 			Draw.setTarget(picture);
 			Draw.circlePlus(RADIUS, RADIUS, RADIUS, c);
-			graphic = new Image(picture);
+			img = new Image(picture);
+			graphic = img;
 			
 			CURRENT_TYPE = type;
 			
@@ -283,7 +295,6 @@
 		}
 		
 		
-		
 		public var moveFunction:Function = function(ins:Ball):void
 		{
 			this.x += (ins.speedX) * GameWorld.timeFactor * GameWorld.move * FP.rate;
@@ -308,6 +319,7 @@
 		
 		override public function update():void 
 		{
+			if (FP.rand(300) < 2) doStealth();
 			
 			moveFunction.apply(this, [this]);
 			
@@ -383,10 +395,38 @@
 			
 			
 			super.update();
-			
+		}
+		
+		public var stealthOn:Boolean = false;
+		public var stealthRing:Image;
+		
+		public function doStealth():void
+		{
+			if (!stealthOn)
+			{
+				stealthOn = true;
+				stealthRing.visible = true;
+				
+				img.color = 0x1D6CBC;
+				var stealthOnTween:MultiVarTween = new MultiVarTween();
+				stealthOnTween.tween(img, { alpha: 0.2 }, 0.5);
+				addTween(stealthOnTween, true);
+				
+				
+				var stealthOffTween:MultiVarTween = new MultiVarTween(onStealthComplete);
+				stealthOffTween.tween(img, { alpha: 1 }, 0.5, null, 2.5);
+				addTween(stealthOffTween, true);
+			}
 		}
 		
 		
+		public function onStealthComplete():void
+		{
+			img.color = 0xffffff;
+			
+			stealthRing.visible = false;
+			stealthOn = false;
+		}
 		
 	}
 	

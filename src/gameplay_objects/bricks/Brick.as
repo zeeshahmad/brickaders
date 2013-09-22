@@ -196,7 +196,11 @@ package gameplay_objects.bricks
 				}
 			}
 			
-			if (FP.rand(6000) < 2) defend();
+			if (FP.rand(6000) < 2) {
+				defend();
+			} else if (FP.rand(3000) < 2) {
+				fireGun();
+			}
 			
 			super.update();
 		}
@@ -232,25 +236,26 @@ package gameplay_objects.bricks
 		{
 			if (!firing && !defending)
 			{
+				trace("fire");
 				firing = true;
 				gun.smooth = true;
 				gun.angle = 0;
-				gun.y = centerY;
+				gun.y = halfHeight;
 				gun.visible = true;
 				var angleToPad:Number = 180 * Math.atan2(GameWorld.pad.centerX - x - halfWidth, GameWorld.pad.y - y - height) / Math.PI;
 				var gunOutTween:MultiVarTween = new MultiVarTween(function():void {addTween(gunTween, true);});
-				gunOutTween.tween(gun, { y: bottom }, 1, Ease.quartOut);
+				gunOutTween.tween(gun, { y: height }, 0.6, Ease.quartOut);
 				addTween(gunOutTween, true);
 				var gunTween:MultiVarTween = new MultiVarTween(departBullet);
-				gunTween.tween(gun, { angle: angleToPad }, 1, null, 0.3);
+				gunTween.tween(gun, { angle: angleToPad }, 0.6, null, 0.3);
 				
 			}
 		}
 		
 		private function departBullet():void
 		{
-			//TODO: give this function correct params
-			//new Bullet(new Point(centerX, bottom), new Point(GameWorld.pad.centerX, GameWorld.pad.top), 4, world);
+			
+			new Bullet(new Point(centerX, bottom+10), Math.atan2(GameWorld.pad.top-bottom, GameWorld.pad.centerX-centerX), 5, 2, world);
 		}
 		
 		public var defending:Boolean = false;

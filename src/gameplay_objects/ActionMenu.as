@@ -1,5 +1,6 @@
 package gameplay_objects 
 {
+	import flash.geom.Rectangle;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
@@ -31,12 +32,14 @@ package gameplay_objects
 		
 		public static var active:Boolean;
 		
+		private static var disk:Image;
+		
 		public static var selectedIndex:int;
 		
 		public function ActionMenu() 
 		{
-			
-			graphic = new Image(BG_DISK_PNG);
+			disk = new Image(BG_DISK_PNG);
+			graphic = disk;
 			
 			x = FP.halfWidth + SideBar.W / 2 - Image(graphic).width / 2;
 			y = FP.halfHeight - PointBar.H / 2 - Image(graphic).height / 2;
@@ -63,10 +66,13 @@ package gameplay_objects
 		{
 			if (!active && GameWorld.i != null)
 			{
+				selectedIndex = 10; //aribitrary value for none
+				
 				active = true;
 				selector.visible = false;
 				GameWorld.i.add(this);
 				GameWorld.move = 0;
+				PointBar.enabled = false;
 			}
 		}
 		
@@ -77,9 +83,28 @@ package gameplay_objects
 				active = false;
 				GameWorld.move = 1;
 				GameWorld.actionInvoker.visible = true;
+				PointBar.enabled = true;
 			}
 			if (this.world != null) this.world.remove(this);
 		}
+		
+		
+		private function executeAction():void
+		{
+			if (selectedIndex != 10)
+			{
+				trace("action selected index: " + String(selectedIndex));
+				if (selectedIndex == 0)
+				{
+					//stealth ball
+					
+				}
+			}
+			else {
+				trace("no action selected");
+			}
+		}
+		
 		
 		private static const innerR:Number = 25;
 		
@@ -90,9 +115,8 @@ package gameplay_objects
 				if (Input.mouseDown)
 				{
 					if (
-					(Input.mouseX < x + 393/2 - innerR || Input.mouseX > x+393/2+innerR)
-					|| (Input.mouseY < y + 393/2 - innerR || Input.mouseY > y+393/2+innerR)
-					)
+					((Input.mouseX < x + 393/2 - innerR || Input.mouseX > x+393/2+innerR) || (Input.mouseY < y + 393/2 - innerR || Input.mouseY > y+393/2+innerR))
+					&& GameWorld.mouseCollideRect(new Rectangle(x-20, y-20, disk.width+40, disk.height+40)) ) 
 					{
 						selector.visible = true;
 						for (var i:uint = 0; i < 6; i++)
@@ -104,12 +128,16 @@ package gameplay_objects
 							}
 						}
 					}
-					else selector.visible = false;
+					else {
+						selector.visible = false;
+						selectedIndex = 10;
+					}
 					
 				}
 				else
 				{
 					hide();
+					executeAction();
 				}
 			}
 			
