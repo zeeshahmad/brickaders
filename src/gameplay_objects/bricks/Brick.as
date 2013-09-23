@@ -11,10 +11,8 @@ package gameplay_objects.bricks
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Graphiclist;
 	import net.flashpunk.graphics.Image;
-	import net.flashpunk.tweens.misc.Alarm;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.tweens.misc.VarTween;
-	import net.flashpunk.utils.Draw;
 	import net.flashpunk.utils.Ease;
 	import worlds.GameWorld;
 	
@@ -196,11 +194,15 @@ package gameplay_objects.bricks
 				}
 			}
 			
-			if (FP.rand(6000) < 2) {
-				defend();
-			} else if (FP.rand(3000) < 2) {
-				fireGun();
+			if (collidable)
+			{
+				if (FP.rand(6000) < 2) {
+					defend();
+				} else if (FP.rand(3000) < 2) {
+					fireGun();
+				}
 			}
+			
 			
 			super.update();
 		}
@@ -208,25 +210,26 @@ package gameplay_objects.bricks
 		//collision test in ball class
 		public function onBallCollision(ball:Entity):void
 		{
-			
-			var angle:Number = Math.atan2(ball.y + ball.halfHeight - y - halfHeight, ball.x + ball.halfWidth - x - halfWidth);
-			if (angle > -Math.PI + heightAngle && angle < - heightAngle) //top wall
+			if (!(ball as Ball).reverseOn)
 			{
-				(ball as Ball).bounceUp();
+				var angle:Number = Math.atan2(ball.y + ball.halfHeight - y - halfHeight, ball.x + ball.halfWidth - x - halfWidth);
+				if (angle > -Math.PI + heightAngle && angle < - heightAngle) //top wall
+				{
+					(ball as Ball).bounceUp();
+				}
+				else if (angle < Math.PI - heightAngle && angle > heightAngle) // bottom wall
+				{
+					(ball as Ball).bounceDown();
+				}
+				else if (angle <= heightAngle && angle >= -heightAngle) //right wall
+				{
+					(ball as Ball).bounceRight();
+				}
+				else //left wall
+				{
+					(ball as Ball).bounceLeft();
+				}
 			}
-			else if (angle < Math.PI - heightAngle && angle > heightAngle) // bottom wall
-			{
-				(ball as Ball).bounceDown();
-			}
-			else if (angle <= heightAngle && angle >= -heightAngle) //right wall
-			{
-				(ball as Ball).bounceRight();
-			}
-			else //left wall
-			{
-				(ball as Ball).bounceLeft();
-			}
-			
 			destroy();
 		}
 		

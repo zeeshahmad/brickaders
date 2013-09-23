@@ -4,21 +4,19 @@
 	import com.greensock.easing.*;
 	import com.greensock.plugins.*;
 	import com.greensock.TweenLite;
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.CapsStyle;
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
-	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.particles.*;
 	import gameplay_objects.special.Flux;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
-	import net.flashpunk.tweens.misc.ColorTween;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.utils.Draw;
+	import net.flashpunk.utils.Ease;
 	import net.flashpunk.utils.Input;
 	import worlds.GameWorld;
 
@@ -91,7 +89,7 @@
 			
 			var stealthRingBmp:BitmapData = new BitmapData(DIAMETER + 6, DIAMETER + 6, true, 0);
 			Draw.setTarget(stealthRingBmp);
-			Draw.circle(RADIUS+3, RADIUS+3, RADIUS + 3, 0x12A7B8);
+			Draw.circle(RADIUS+3, RADIUS+3, RADIUS + 3, 0x1D6CBC);
 			stealthRing = new Image(stealthRingBmp);
 			stealthRing.x = -3; stealthRing.y = -3;
 			addGraphic(stealthRing);
@@ -221,7 +219,8 @@
 		public function setRadialSpd(sp:Number, direct:Number):Ball
 		{
 			speed = sp;
-			radians = fixAngle(direct);
+			//radians = fixAngle(direct);
+			radians = direct;
 			
 			speedX = speed * Math.cos(radians);
 			speedY = speed * Math.sin(radians);
@@ -236,8 +235,9 @@
 			
 			radians = Math.atan2(speedY, speedX);
 			speed = Math.sqrt(speedX * speedX + speedY * speedY);
+			if (reverseTween.active) reverseSpd = speed.valueOf();
 			
-			return this
+			return this;
 		}
 		
 		public function bounceRight():void { setCartesianSpd( Math.abs(speedX), speedY ); explode(); }
@@ -280,18 +280,7 @@
 		
 		public function onAnyCollision():void
 		{
-			if (CURRENT_TYPE == PATH_PREDICT) 
-			{
-				if (pathCount < 3)
-				{
-					new BallPathPoint(x, y);
-					pathCount++;
-				}
-				else 
-				{
-					GameWorld.i.recycle(this);
-				}
-			}
+			
 		}
 		
 		
@@ -319,79 +308,102 @@
 		
 		override public function update():void 
 		{
-			if (FP.rand(300) < 2) doStealth();
+			//if (FP.rand(300) < 2) doStealth();
 			
 			moveFunction.apply(this, [this]);
 			
-			//horizontal collision
-			if (collide("sidebar", x, y))//left wall
+			if (Input.mouseDown && Input.mouseY < PointBar.Y && !ActionMenu.active)
 			{
-				bounceRight();
-				//GameWorld.resetCombo();
-				
-				clearWallTouch();
-				onAnyCollision();
-				
-			}
-			else if (this.x + this.width > FP.width)//right wall
-			{
-				bounceLeft();
-				//GameWorld.resetCombo();
-				
-				clearWallTouch();
-				onAnyCollision();
-				
+				if (Input.mouseX > SideBar.W + (FP.width - SideBar.W) * 0.75)
+				{
+					setCartesianSpd(speedX + 0.4, speedY);
+				}
+				else if (Input.mouseX > SideBar.W && Input.mouseX < (FP.width - SideBar.W) * 0.25 + SideBar.W)
+				{
+					setCartesianSpd(speedX - 0.4, speedY);
+				}
 			}
 			
-			//vertical collision
-			if (this.y < 0)//upper wall
+			if (!reverseTween.active)
 			{
-				bounceDown();
-				
-				clearWallTouch();
-				onAnyCollision();
-				
-			}
-			else if (this.y + this.height > GameWorld.pad.y && (collideWith(GameWorld.pad, x, y)))
-			//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad
-			{
-				bounceUp();
-				
-				GameWorld.pad.showFixed = false;
-				GameWorld.pad.y = GameWorld.pointBar.nY - GameWorld.pad.height + 2;
-				
-				var recoilTween:MultiVarTween = new MultiVarTween();
-				recoilTween.tween(GameWorld.pad, { y: GameWorld.pointBar.nY - GameWorld.pad.height }, 0.2);
-				addTween(recoilTween, true);
-				
-				GameWorld.pointBar.clear();
-				
-				onAnyCollision();
-				
-				if (PointBar.pointCount != 0)
+				//horizontal collision
+				if (collide("sidebar", x, y))//left wall
 				{
-					//GameWorld.pad.getToPoint(PointBar.points.shift());
+					bounceRight();
+					//GameWorld.resetCombo();
+					
+					clearWallTouch();
+					onAnyCollision();
+					
 				}
-				else if (CURRENT_TYPE != PATH_PREDICT) {
-					//GameWorld.i.startPlayerInput();
+				else if (this.x + this.width > FP.width)//right wall
+				{
+					bounceLeft();
+					//GameWorld.resetCombo();
+					
+					clearWallTouch();
+					onAnyCollision();
+					
 				}
 				
-				if (GameWorld.pad.moveTween != null && GameWorld.pad.moveTween.active) {
-					setCartesianSpd(speedX + GameWorld.pad.dir*0.4, speedY);
+				//vertical collision
+				if (this.y < 0)//upper wall
+				{
+					bounceDown();
+					
+					clearWallTouch();
+					onAnyCollision();
+					
 				}
-				
+				else if (this.y + this.height > GameWorld.pad.y && (collideWith(GameWorld.pad, x, y)))
+				//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad
+				{
+					bounceUp();
+					
+					GameWorld.pad.showFixed = false;
+					GameWorld.pad.y = GameWorld.pointBar.nY - GameWorld.pad.height + 2;
+					
+					var recoilTween:MultiVarTween = new MultiVarTween();
+					recoilTween.tween(GameWorld.pad, { y: GameWorld.pointBar.nY - GameWorld.pad.height }, 0.2);
+					addTween(recoilTween, true);
+					
+					GameWorld.pointBar.clear();
+					
+					onAnyCollision();
+					
+					/*if (PointBar.pointCount != 0)
+					{
+						//GameWorld.pad.getToPoint(PointBar.points.shift());
+					}*/
+					
+					
+					if (GameWorld.pad.moveTween != null && GameWorld.pad.moveTween.active) {
+						setCartesianSpd(speedX + GameWorld.pad.dir*0.4, speedY);
+					}
+					
+				}
+				else if (this.y + this.height > 480)//lower boundry
+				{
+					bounceUp();
+					
+					//TODO reduceHealth
+					onAnyCollision();
+					if (CURRENT_TYPE != PATH_PREDICT) 
+					new ExplosionParticles(this.x, this.y, [0xDF4402, 0xA4AC0B, 0x256696, 0x0E4F02], [3, 4, 5], 20, 200);
+				}
 			}
-			else if (this.y + this.height > 480)//lower boundry
-			{
-				bounceUp();
-				
-				//TODO reduceHealth
-				onAnyCollision();
-				if (CURRENT_TYPE != PATH_PREDICT) 
-				new ExplosionParticles(this.x, this.y, [0xDF4402, 0xA4AC0B, 0x256696, 0x0E4F02], [3, 4, 5], 20, 200);
-			}
+			else if (reverseTween.active)
+			//if (collideRect(x, y, SideBar.W + width, height, FP.width - SideBar.W - 2*width, PointBar.Y - 2*height))
+			 setRadialSpd(reverseSpd, radians);
 			
 			if (Input.mousePressed) shootBullet();
+			
+			if (stealthOn)
+			{
+				if (stealthOffTween!=null)
+				 stealthOffTween.active = (int(GameWorld.move) != 0);
+			}
+			
 			
 			
 			super.update();
@@ -399,6 +411,7 @@
 		
 		public var stealthOn:Boolean = false;
 		public var stealthRing:Image;
+		public var stealthOffTween:MultiVarTween;
 		
 		public function doStealth():void
 		{
@@ -413,9 +426,10 @@
 				addTween(stealthOnTween, true);
 				
 				
-				var stealthOffTween:MultiVarTween = new MultiVarTween(onStealthComplete);
-				stealthOffTween.tween(img, { alpha: 1 }, 0.5, null, 2.5);
+				stealthOffTween = new MultiVarTween(onStealthComplete);
+				stealthOffTween.tween(img, { alpha: 1 }, 0.5, null, 1);
 				addTween(stealthOffTween, true);
+				type = "stealthball";
 			}
 		}
 		
@@ -426,6 +440,30 @@
 			
 			stealthRing.visible = false;
 			stealthOn = false;
+			type = "ball";
+		}
+		
+		
+		public var reverseTween:MultiVarTween = new MultiVarTween();;
+		public var reverseSpd:Number;
+		public var reverseOn:Boolean = false;
+		
+		public function doReverse():void
+		{
+			reverseSpd = speed.valueOf();
+			img.color = 0xC0C918;
+			
+			reverseTween = new MultiVarTween(onReverseComplete);
+			reverseTween.tween(this, { reverseSpd: Number(-reverseSpd).valueOf() }, 0.5, Ease.cubeInOut);
+			addTween(reverseTween, true);
+			reverseOn = true;
+			
+		}
+		
+		public function onReverseComplete():void
+		{
+			reverseOn = false;
+			img.color = 0xffffff;
 		}
 		
 	}

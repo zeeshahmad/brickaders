@@ -93,11 +93,23 @@ package gameplay_objects
 		{
 			if (selectedIndex != 10)
 			{
+				var ar:Array;
 				trace("action selected index: " + String(selectedIndex));
 				if (selectedIndex == 0)
 				{
 					//stealth ball
-					
+					ar = GameWorld.entitiesByType("ball", world);
+					for (var i:uint = 0; i < ar.length; i++)
+					{
+						(ar[i] as Ball).doStealth();
+					}
+				}
+				else if (selectedIndex == 1)
+				{
+					//reverse ball
+					ar = GameWorld.entitiesByType("ball", world);
+					for (var j:uint = 0; j < ar.length; j++)
+					if (!(ar[j].reverseOn)) (ar[j] as Ball).doReverse();
 				}
 			}
 			else {

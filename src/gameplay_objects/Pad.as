@@ -56,7 +56,7 @@ package gameplay_objects
 			fixed = b;
 		}
 		
-		public var moveTween:VarTween;
+		public var moveTween:VarTween = new VarTween();
 		public var dir:int;
 		
 		
