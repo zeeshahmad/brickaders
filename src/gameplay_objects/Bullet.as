@@ -59,6 +59,12 @@ package gameplay_objects
 				end();
 			}
 			
+			if (collide("targetEntity", x, y))
+			{
+				var targetEntity:Entity = collide("targetEntity", x, y);
+				if (targetEntity.world !=null) targetEntity.world.remove(targetEntity);
+			}
+			
 			if (x < SideBar.W) direction = Math.asin(Math.sin(direction));
 			if (x + width > FP.width) end();// Math.asin(Math.sin(direction));
 			if (y < 0) end();

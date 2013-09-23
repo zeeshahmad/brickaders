@@ -114,6 +114,12 @@ package gameplay_objects
 					//shadow pad
 					GameWorld.pad.doShadow();
 				}
+				else if (selectedIndex == 3)
+				{
+					//shoot
+					ar = GameWorld.entitiesByType("ball", world);
+					(ar[FP.rand(ar.length)] as Ball).doTarget();
+				}
 			}
 			else {
 				trace("no action selected");

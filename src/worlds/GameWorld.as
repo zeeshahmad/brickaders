@@ -134,7 +134,7 @@ package worlds
 			//background stars
 			if ( typeCount("bgStar") < 20 && FP.rand(100) < 10 ) create(BackgroundStar, true);
 			
-			if (Input.mousePressed)
+			if (Input.mousePressed && !Ball.targetOn)
 			{
 				if (mouseCollideRect(new Rectangle(actionInvoker.x, actionInvoker.y, actionInvoker.width, actionInvoker.height)))
 				{

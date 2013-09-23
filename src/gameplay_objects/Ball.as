@@ -40,7 +40,6 @@
 		public static const PATH_PREDICT:String = "PATH_PREDICT";
 		
 		public var unstopable:Boolean = false;
-		public var shotAvailable:Boolean;
 		public var shotAngle:Number;
 		public var shotSpeed:Number = 5;
 		
@@ -87,7 +86,6 @@
 			
 			type = "ball";
 			
-			shotAvailable = false;
 			
 			var stealthRingBmp:BitmapData = new BitmapData(DIAMETER + 6, DIAMETER + 6, true, 0);
 			Draw.setTarget(stealthRingBmp);
@@ -294,9 +292,8 @@
 		
 		public function shootBullet():void
 		{
-			if (shotAvailable && Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
+			if (Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
 			{
-				shotAvailable = false;
 				shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
 				new Bullet(new Point(x+halfWidth, y+halfHeight), shotAngle, shotSpeed, 2, world);
 				
@@ -393,7 +390,6 @@
 			//if (collideRect(x, y, SideBar.W + width, height, FP.width - SideBar.W - 2*width, PointBar.Y - 2*height))
 			 setRadialSpd(reverseSpd, radians);
 			
-			if (Input.mousePressed) shootBullet();
 			
 			if (stealthOn)
 			{
@@ -401,7 +397,17 @@
 				 stealthOffTween.active = (int(GameWorld.move) != 0);
 			}
 			
-			
+			if (targetOn)
+			{
+				if (Input.mousePressed)
+				{
+					targetEntity.x = Input.mouseX - Image(targetEntity.graphic).width / 2;
+					targetEntity.y = Input.mouseY - Image(targetEntity.graphic).height / 2;
+					if (world != null) world.add(targetEntity);
+					targetOn = false;
+					shootBullet();
+				}
+			}
 			
 			super.update();
 		}
@@ -464,7 +470,7 @@
 		}
 		
 		
-		public var targetOn:Boolean = false;
+		public static var targetOn:Boolean = false;
 		public var targetEntity:Entity;
 		
 		public function doTarget():void
@@ -473,7 +479,9 @@
 			{
 				targetOn = true;
 				targetEntity = new Entity(0, 0, new Image(TARGET_PNG));
-				//TODO over here target
+				targetEntity.type = "targetEntity";
+				targetEntity.setHitbox(Image(targetEntity.graphic).width, Image(targetEntity.graphic).height);
+				//targetEntity.setOrigin(Image(targetEntity.graphic).width / 2, Image(targetEntity.graphic).height / 2);
 			}
 		}
 		
