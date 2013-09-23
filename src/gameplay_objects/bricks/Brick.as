@@ -194,7 +194,7 @@ package gameplay_objects.bricks
 				}
 			}
 			
-			if (collidable)
+			if (collidable && Math.round(GameWorld.move) == 1)
 			{
 				if (FP.rand(6000) < 2) {
 					defend();

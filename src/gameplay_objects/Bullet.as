@@ -44,7 +44,7 @@ package gameplay_objects
 		
 		override public function update():void 
 		{
-			moveBy(speed * Math.cos(direction), speed * Math.sin(direction));
+			moveBy(speed * Math.cos(direction) * GameWorld.move, speed * Math.sin(direction) * GameWorld.move);
 			
 			if (collide("pad", x, y))
 			{
@@ -59,14 +59,9 @@ package gameplay_objects
 				end();
 			}
 			
-			if (collide("targetEntity", x, y))
-			{
-				var targetEntity:Entity = collide("targetEntity", x, y);
-				if (targetEntity.world !=null) targetEntity.world.remove(targetEntity);
-			}
 			
 			if (x < SideBar.W) direction = Math.asin(Math.sin(direction));
-			if (x + width > FP.width) end();// Math.asin(Math.sin(direction));
+			if (x + width > FP.width) direction = Math.atan2(Math.sin(direction), -Math.abs(Math.cos(direction)));
 			if (y < 0) end();
 			if (y + height > GameWorld.pointBar.y) end();
 			
@@ -75,9 +70,7 @@ package gameplay_objects
 		
 		public function end():void
 		{
-			
 			if (world != null) world.remove(this);
-			
 		}
 		
 		

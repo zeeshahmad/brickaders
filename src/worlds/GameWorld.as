@@ -52,7 +52,7 @@ package worlds
 		public static var ballPathLayer:Sprite;
 		
 		public static var timeFactor:Number = 1;
-		public static var move:Number = 1;
+		public static var move:uint = 1;
 		
 		public function GameWorld() 
 		{
@@ -122,9 +122,6 @@ package worlds
 			add(ball); ball.moveTo(200, 200);
 			ball.setCartesianSpd(7, 8);
 			
-			//pad.getToPosition(200, );
-			//trace("animation complete");
-			//actionMenu.show();
 		}
 		
 		override public function update():void 

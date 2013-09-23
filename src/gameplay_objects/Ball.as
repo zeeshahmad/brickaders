@@ -292,16 +292,15 @@
 		
 		public function shootBullet():void
 		{
-			if (Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
-			{
-				shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
-				new Bullet(new Point(x+halfWidth, y+halfHeight), shotAngle, shotSpeed, 2, world);
-				
-				//setCartesianSpd(speedX - (shotSpeed / 4) * Math.cos(shotAngle), speedY - (shotSpeed / 4) * Math.sin(shotAngle));
-				setRadialSpd(speed, shotAngle + Math.PI );
-				
-				trace("ball speed:" + speed);
-			}
+			
+			shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
+			new Bullet(new Point(x+halfWidth, y+halfHeight), shotAngle, shotSpeed, 2, world);
+			
+			//setCartesianSpd(speedX - (shotSpeed / 4) * Math.cos(shotAngle), speedY - (shotSpeed / 4) * Math.sin(shotAngle));
+			setRadialSpd(speed, shotAngle + Math.PI );
+			
+			trace("ball speed:" + speed);
+			
 		}
 		
 		
@@ -315,11 +314,11 @@
 			{
 				if (Input.mouseX > SideBar.W + (FP.width - SideBar.W) * 0.75)
 				{
-					setCartesianSpd(speedX + 0.4, speedY);
+					setCartesianSpd(Math.min(speedX + 0.4, 11), speedY);
 				}
 				else if (Input.mouseX > SideBar.W && Input.mouseX < (FP.width - SideBar.W) * 0.25 + SideBar.W)
 				{
-					setCartesianSpd(speedX - 0.4, speedY);
+					setCartesianSpd(Math.max(speedX - 0.4, -11), speedY);
 				}
 			}
 			
@@ -399,13 +398,19 @@
 			
 			if (targetOn)
 			{
-				if (Input.mousePressed)
+				if (Input.mousePressed && Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
 				{
 					targetEntity.x = Input.mouseX - Image(targetEntity.graphic).width / 2;
 					targetEntity.y = Input.mouseY - Image(targetEntity.graphic).height / 2;
 					if (world != null) world.add(targetEntity);
 					targetOn = false;
 					shootBullet();
+					
+					var targetRemoveTween:MultiVarTween = new MultiVarTween(function():void {
+						if (targetEntity.world != null) targetEntity.world.remove(targetEntity);
+					});
+					targetRemoveTween.tween(Image(targetEntity.graphic), { alpha: 0 }, 0.4, null, 3);
+					addTween(targetRemoveTween, true);
 				}
 			}
 			
