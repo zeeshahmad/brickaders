@@ -56,7 +56,7 @@ package gameplay_objects
 		
 		override public function update():void 
 		{
-			if (Input.mouseDown)
+			if (Input.mousePressed && !ActionMenu.active)
 			{
 				if (collidePoint(x, y, Input.mouseX, Input.mouseY))
 				{

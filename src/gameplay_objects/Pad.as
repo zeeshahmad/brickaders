@@ -75,6 +75,16 @@ package gameplay_objects
         {
             positions.push(x);
             positions.push(y);
+			
+			if (shadowPadOn && shadowPad != null)
+			{
+				
+				if (shadowPad.collide("ball", shadowPad.x, shadowPad.y))
+				{
+					if (shadowPad.world != null) shadowPad.world.remove(shadowPad);
+					shadowPadOn = false;
+				}
+			}
            
             super.update();
         }
@@ -93,6 +103,23 @@ package gameplay_objects
             Image(graphic).alpha = 1;
             super.render();
         }
+		
+		public var shadowPad:Entity;
+		public var shadowPadOn:Boolean = false;
+		
+		public function doShadow():void
+		{
+			if (!shadowPadOn)
+			{
+				shadowPad = new Entity(x, y, img);
+				shadowPad.type = "pad";
+				shadowPad.setHitboxTo(this);
+				
+				if (world != null) world.add(shadowPad);
+				shadowPadOn = true;
+			}
+		}
+		
 		
 	}
 

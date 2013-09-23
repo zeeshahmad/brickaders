@@ -23,6 +23,8 @@
 	
 	public class Ball extends Entity {
 		
+		[Embed(source = "../../lib/ball/target.png")]
+		private static const TARGET_PNG:Class;
 		
 		private static const explosive_glow_filter:GlowFilter = new GlowFilter(0xB31200, 1, 5, 5, 2, 1, true);
 		private static const power_glow_filter:GlowFilter = new GlowFilter(0x15F020, 1, 5, 5, 2, 1, true);
@@ -355,13 +357,13 @@
 					onAnyCollision();
 					
 				}
-				else if (this.y + this.height > GameWorld.pad.y && (collideWith(GameWorld.pad, x, y)))
+				else if (this.y + this.height > GameWorld.pad.y && (collide("pad", x, y)))
 				//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad
 				{
 					bounceUp();
 					
 					GameWorld.pad.showFixed = false;
-					GameWorld.pad.y = GameWorld.pointBar.nY - GameWorld.pad.height + 2;
+					collide("pad", x, y).y = GameWorld.pointBar.nY - GameWorld.pad.height + 2;
 					
 					var recoilTween:MultiVarTween = new MultiVarTween();
 					recoilTween.tween(GameWorld.pad, { y: GameWorld.pointBar.nY - GameWorld.pad.height }, 0.2);
@@ -370,11 +372,6 @@
 					GameWorld.pointBar.clear();
 					
 					onAnyCollision();
-					
-					/*if (PointBar.pointCount != 0)
-					{
-						//GameWorld.pad.getToPoint(PointBar.points.shift());
-					}*/
 					
 					
 					if (GameWorld.pad.moveTween != null && GameWorld.pad.moveTween.active) {
@@ -464,6 +461,20 @@
 		{
 			reverseOn = false;
 			img.color = 0xffffff;
+		}
+		
+		
+		public var targetOn:Boolean = false;
+		public var targetEntity:Entity;
+		
+		public function doTarget():void
+		{
+			if (!targetOn)
+			{
+				targetOn = true;
+				targetEntity = new Entity(0, 0, new Image(TARGET_PNG));
+				//TODO over here target
+			}
 		}
 		
 	}

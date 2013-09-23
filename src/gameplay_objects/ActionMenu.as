@@ -72,7 +72,6 @@ package gameplay_objects
 				selector.visible = false;
 				GameWorld.i.add(this);
 				GameWorld.move = 0;
-				PointBar.enabled = false;
 			}
 		}
 		
@@ -83,7 +82,6 @@ package gameplay_objects
 				active = false;
 				GameWorld.move = 1;
 				GameWorld.actionInvoker.visible = true;
-				PointBar.enabled = true;
 			}
 			if (this.world != null) this.world.remove(this);
 		}
@@ -110,6 +108,11 @@ package gameplay_objects
 					ar = GameWorld.entitiesByType("ball", world);
 					for (var j:uint = 0; j < ar.length; j++)
 					if (!(ar[j].reverseOn)) (ar[j] as Ball).doReverse();
+				}
+				else if (selectedIndex == 2 )
+				{
+					//shadow pad
+					GameWorld.pad.doShadow();
 				}
 			}
 			else {

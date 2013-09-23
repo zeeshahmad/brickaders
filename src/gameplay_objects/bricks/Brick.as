@@ -203,7 +203,6 @@ package gameplay_objects.bricks
 				}
 			}
 			
-			
 			super.update();
 		}
 		
