@@ -323,6 +323,22 @@
 			return Input.mouseX > SideBar.W && Input.mouseX < (FP.width - SideBar.W) * 0.25 + SideBar.W;
 		}
 		
+		public function dirTendToVertical(left:Boolean):void
+		{
+			setRadialSpd(speed, fixAngle(radians));
+			trace(radians * 180 / Math.PI);
+			if (radians > 0)
+			{
+				if (left && radians < Math.PI - Math.PI/8) setRadialSpd(speed, radians + Math.PI / 60);
+				else if (!left && radians > Math.PI/8) setRadialSpd(speed, radians - Math.PI / 60);
+			}
+			else if (radians < 0)
+			{
+				if (left && radians > -Math.PI + Math.PI / 8) setRadialSpd(speed, radians - Math.PI / 60);
+				else if (!left && radians < -Math.PI/8) setRadialSpd(speed, radians + Math.PI / 60);
+			}
+		}
+		
 		override public function update():void 
 		{
 			//if (FP.rand(300) < 2) doStealth();
@@ -333,11 +349,13 @@
 			{
 				if (mouseOnRight)
 				{
-					setCartesianSpd(Math.min(speedX + 0.3, 9), speedY);
+					//setCartesianSpd(Math.min(speedX + 0.3, 9), speedY);
+					dirTendToVertical(false);
 				}
 				else if (mouseOnLeft)
 				{
-					setCartesianSpd(Math.max(speedX - 0.3, -9), speedY);
+					//setCartesianSpd(Math.max(speedX - 0.3, -9), speedY);
+					dirTendToVertical(true);
 				}
 			}
 			

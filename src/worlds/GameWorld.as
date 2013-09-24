@@ -40,7 +40,7 @@ package worlds
 		
 		public static var firstBallSpeed:Number = 10;
 		public static var fieldLeft:Number;
-		public static const FIELD_TOTAL:Number = 300;
+		public static const FIELD_TOTAL:Number = 60;
 		
 		public static var wave:uint;
 		
@@ -133,7 +133,7 @@ package worlds
 			//PointBar.firstBall = new Ball();
 			var ball:Ball = new Ball();
 			add(ball); ball.moveTo(200, 200);
-			ball.setCartesianSpd(7, 8);
+			ball.setRadialSpd(8, -Math.PI / 4);
 			
 		}
 		
