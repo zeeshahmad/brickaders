@@ -303,6 +303,15 @@
 			
 		}
 		
+		public static function get mouseOnRight():Boolean
+		{
+			return Input.mouseX > SideBar.W + (FP.width - SideBar.W) * 0.75;
+		}
+		
+		public static function get mouseOnLeft():Boolean
+		{
+			return Input.mouseX > SideBar.W && Input.mouseX < (FP.width - SideBar.W) * 0.25 + SideBar.W;
+		}
 		
 		override public function update():void 
 		{
@@ -310,13 +319,13 @@
 			
 			moveFunction.apply(this, [this]);
 			
-			if (Input.mouseDown && Input.mouseY < PointBar.Y && !ActionMenu.active)
+			if (fieldCheck)
 			{
-				if (Input.mouseX > SideBar.W + (FP.width - SideBar.W) * 0.75)
+				if (mouseOnRight)
 				{
 					setCartesianSpd(Math.min(speedX + 0.4, 11), speedY);
 				}
-				else if (Input.mouseX > SideBar.W && Input.mouseX < (FP.width - SideBar.W) * 0.25 + SideBar.W)
+				else if (mouseOnLeft)
 				{
 					setCartesianSpd(Math.max(speedX - 0.4, -11), speedY);
 				}
@@ -488,6 +497,11 @@
 				targetEntity.setHitbox(Image(targetEntity.graphic).width, Image(targetEntity.graphic).height);
 				//targetEntity.setOrigin(Image(targetEntity.graphic).width / 2, Image(targetEntity.graphic).height / 2);
 			}
+		}
+		
+		public static function get fieldCheck():Boolean
+		{
+			return Input.mouseDown && Input.mouseY < PointBar.Y && GameWorld.fieldLeft > 0 && !ActionMenu.active;
 		}
 		
 	}

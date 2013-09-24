@@ -9,6 +9,7 @@ package worlds
 	import gameplay_objects.Ball;
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.Coin;
+	import gameplay_objects.FieldBar;
 	import gameplay_objects.Pad;
 	import gameplay_objects.particles.BackgroundStar;
 	import gameplay_objects.particles.ExplosionParticles;
@@ -38,6 +39,8 @@ package worlds
 		public static var i:GameWorld;
 		
 		public static var firstBallSpeed:Number = 10;
+		public static var fieldLeft:Number;
+		public static const FIELD_TOTAL:Number = 300;
 		
 		public static var wave:uint;
 		
@@ -45,6 +48,7 @@ package worlds
 		public static var pad:Pad;
 		public static var pointBar:PointBar;
 		public static var actionMenu:ActionMenu;
+		public static var fieldBar:FieldBar;
 		
 		//layers
 		public static var pointLayer:Sprite;
@@ -64,6 +68,7 @@ package worlds
 			pointBar = new PointBar();
 			pad = new Pad();
 			actionMenu = new ActionMenu();
+			fieldBar = new FieldBar();
 		}
 		
 		override public function begin():void 
@@ -71,8 +76,12 @@ package worlds
 			add(sideBar);
 			add(pointBar);
 			add(pad);
+			add(fieldBar);
+			
+			
 			
 			wave = 1;
+			fieldLeft = FIELD_TOTAL;
 			
 			sideBar.x = -100;
 			var sidebarT:MultiVarTween = new MultiVarTween();
@@ -99,6 +108,10 @@ package worlds
 			var bg1Tween:MultiVarTween = new MultiVarTween();
 			bg1Tween.tween(bg1, { x:randX, y: FP.height }, 60*40, null, 10);
 			addTween(bg1Tween, true);
+			
+			fieldBar.y = 10;
+			fieldBar.x = FP.halfWidth - fieldBar.img.width / 2 + SideBar.W/2;
+			fieldBar.transparency = 0.2;
 			
 			actionInvoker = new Image(ACTION_INVOKE);
 			actionInvoker.x = (FP.width - SideBar.W - actionInvoker.width) / 2 + SideBar.W;
@@ -136,6 +149,29 @@ package worlds
 				if (mouseCollideRect(new Rectangle(actionInvoker.x, actionInvoker.y, actionInvoker.width, actionInvoker.height)))
 				{
 					actionMenu.show();
+				}
+			}
+			
+			//fieldbar
+			if (Input.mousePressed && Ball.fieldCheck)
+			{
+				if (Ball.mouseOnRight || Ball.mouseOnLeft)
+				{
+					fieldBar.transparency = 1;
+				}
+			}
+			else if (Input.mouseReleased)
+			{
+				fieldBar.transparency = 0.2;
+				fieldBar.fillUp();
+			}
+			
+			if (Ball.fieldCheck)
+			{
+				if (Ball.mouseOnRight || Ball.mouseOnLeft)
+				{
+					fieldLeft--;
+					fieldBar.inner.scaleX = fieldLeft / FIELD_TOTAL;
 				}
 			}
 			

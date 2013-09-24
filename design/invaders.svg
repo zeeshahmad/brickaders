@@ -296,16 +296,18 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="625.49375"
-     inkscape:cy="425.79846"
+     inkscape:cx="378.02067"
+     inkscape:cy="562.99638"
      inkscape:document-units="px"
-     inkscape:current-layer="g3918-1"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1600"
      inkscape:window-height="850"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -671,7 +673,7 @@
        sodipodi:rx="10"
        sodipodi:ry="10"
        d="m 234,644.36218 a 10,10 0 1 1 -20,0 10,10 0 1 1 20,0 z"
-       transform="matrix(0.75,0,0,0.75,53.5,158.59055)" />
+       transform="matrix(0.75,0,0,0.75,152.8485,166.01517)" />
     <path
        sodipodi:type="arc"
        style="opacity:0.7477876;fill:#eeeeee;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter3830)"
@@ -1051,7 +1053,7 @@
       <g
          id="g3230"
          style="fill:#666666"
-         transform="translate(109,83)"
+         transform="translate(-259,-326)"
          inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\ball\target.png"
          inkscape:export-xdpi="90"
          inkscape:export-ydpi="90">
@@ -1081,6 +1083,63 @@
            transform="matrix(0,1,-1,0,0,0)"
            d="m 1131.3622,-1361 c 0.3944,0 0.7853,0.1155 1.1279,0.3107 0.3427,0.1953 0.6381,0.4686 0.8769,0.7825 0.4777,0.6276 0.7276,1.4028 0.8552,2.1811 0.2553,1.5568 0.14,3.1481 0.14,4.7257 l 0,46 c 0,1.5776 0.1153,3.1689 -0.14,4.7257 -0.1276,0.7783 -0.3775,1.5535 -0.8552,2.1811 -0.2388,0.3139 -0.5342,0.5872 -0.8769,0.7825 -0.3426,0.1952 -0.7335,0.3107 -1.1279,0.3107 -0.3944,0 -0.7853,-0.1155 -1.128,-0.3107 -0.3426,-0.1953 -0.638,-0.4686 -0.8769,-0.7825 -0.4777,-0.6276 -0.7275,-1.4028 -0.8551,-2.1811 -0.2553,-1.5568 -0.14,-3.1481 -0.14,-4.7257 l 0,-46 c 0,-1.5776 -0.1153,-3.1689 0.14,-4.7257 0.1276,-0.7783 0.3774,-1.5535 0.8551,-2.1811 0.2389,-0.3139 0.5343,-0.5872 0.8769,-0.7825 0.3427,-0.1952 0.7336,-0.3107 1.128,-0.3107" />
       </g>
+    </g>
+    <rect
+       style="fill:#800000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="rect3978"
+       width="213"
+       height="66"
+       x="250"
+       y="227.36218" />
+    <g
+       id="g4004"
+       transform="translate(-4,5)">
+      <path
+         id="rect3126"
+         d="m 313,251.375 0,15 104,0 0,-15 -104,0 z m 3.625,2.5 96.75,0 0,10 -96.75,0 0,-10 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         inkscape:connector-curvature="0" />
+      <g
+         transform="translate(140,-343)"
+         id="text3896"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Trebuchet MS;-inkscape-font-specification:Trebuchet MS">
+        <path
+           id="path3939"
+           style="fill:#ffffff;font-family:Trebuchet MS;-inkscape-font-specification:Trebuchet MS"
+           d="m 133.54492,597.11609 0,3.57715 4.52637,0 0,1.49414 -4.52637,0 0,6.22265 -1.75781,0 0,-12.87597 7.9541,0 0,1.58203 z"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path3941"
+           style="fill:#ffffff;font-family:Trebuchet MS;-inkscape-font-specification:Trebuchet MS"
+           d="m 142.83496,595.43738 c 0.28711,1e-5 0.53174,0.10109 0.73389,0.30322 0.20214,0.20216 0.30322,0.44386 0.30322,0.7251 0,0.28712 -0.10108,0.53175 -0.30322,0.73388 -0.20215,0.20216 -0.44678,0.30324 -0.73389,0.30323 -0.28125,1e-5 -0.52295,-0.10107 -0.7251,-0.30323 -0.20215,-0.20213 -0.30322,-0.44676 -0.30322,-0.73388 0,-0.2871 0.0996,-0.53026 0.29883,-0.72949 0.19922,-0.19921 0.44238,-0.29882 0.72949,-0.29883 z m -0.91406,12.97265 0,-8.00683 -1.29199,0 0,-1.40625 2.96191,0 0,9.41308 z"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path3943"
+           style="fill:#ffffff;font-family:Trebuchet MS;-inkscape-font-specification:Trebuchet MS"
+           d="m 154.17285,603.86609 -6.78515,0 c -1e-5,1.10156 0.30175,1.94824 0.90527,2.54004 0.5332,0.51562 1.21874,0.77344 2.05664,0.77344 0.95507,0 1.75195,-0.27832 2.39062,-0.83497 l 0.70313,1.20411 c -0.25782,0.25781 -0.65333,0.48047 -1.18652,0.66796 -0.66798,0.2461 -1.41212,0.36915 -2.23243,0.36915 -1.18359,0 -2.18848,-0.40137 -3.01464,-1.20411 -0.91993,-0.88476 -1.37989,-2.07421 -1.37989,-3.56836 0,-1.55272 0.47168,-2.79784 1.41504,-3.73535 0.84375,-0.83788 1.84277,-1.25682 2.99707,-1.25683 1.34179,10e-6 2.39355,0.37794 3.15528,1.13379 0.73827,0.72657 1.10741,1.69043 1.10742,2.8916 -1e-5,0.36914 -0.044,0.70899 -0.13184,1.01953 z m -4.05176,-3.63867 c -0.74414,10e-6 -1.36816,0.24024 -1.87207,0.7207 -0.48047,0.45704 -0.75293,1.0254 -0.81738,1.70508 l 5.21191,0 c 0,-0.67382 -0.21094,-1.23632 -0.63281,-1.6875 -0.46289,-0.49218 -1.09278,-0.73827 -1.88965,-0.73828 z"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path3945"
+           style="fill:#ffffff;font-family:Trebuchet MS;-inkscape-font-specification:Trebuchet MS"
+           d="m 156.18555,605.74695 0,-10.6084 1.66992,0 0,10.32715 c 0,0.50391 0.14502,0.90088 0.43506,1.19092 0.29003,0.29004 0.66943,0.43506 1.13818,0.43505 l 0,1.49415 c -2.16211,0 -3.24316,-0.94629 -3.24316,-2.83887 z"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path3947"
+           style="fill:#ffffff;font-family:Trebuchet MS;-inkscape-font-specification:Trebuchet MS"
+           d="m 167.33008,608.40125 0,-0.69434 c -0.58009,0.58008 -1.42384,0.87012 -2.53125,0.87012 -1.17774,0 -2.13282,-0.42188 -2.86524,-1.26563 -0.73242,-0.84375 -1.09863,-1.96875 -1.09863,-3.375 0,-1.4121 0.42187,-2.61767 1.26563,-3.6167 0.84374,-0.99901 1.84862,-1.49852 3.01464,-1.49853 0.97265,10e-6 1.71094,0.22852 2.21485,0.68554 l 0,-4.36816 1.66992,0 0,13.2627 z m 0,-7.22461 c -0.42188,-0.63281 -0.99903,-0.94921 -1.73145,-0.94922 -0.89649,10e-6 -1.62158,0.33399 -2.17529,1.00195 -0.55371,0.66798 -0.83057,1.51758 -0.83057,2.54883 0,2.26758 1.03125,3.40137 3.09375,3.40137 0.26367,0 0.58008,-0.0835 0.94922,-0.25049 0.36914,-0.16699 0.60058,-0.34424 0.69434,-0.53174 z"
+           inkscape:connector-curvature="0" />
+      </g>
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\Computer\Documents\Zeeshan\Brickaders\lib\ball\fieldbarinner.png"
+         ry="0"
+         y="255.6705"
+         x="319.14203"
+         height="6.4090099"
+         width="91.71595"
+         id="rect3126-1-7"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline" />
     </g>
   </g>
 </svg>
