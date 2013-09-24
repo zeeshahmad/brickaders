@@ -206,6 +206,25 @@ package worlds
 			
 		}
 		
+		public static var slomoOnT:MultiVarTween;
+		public static var slomoOffT:MultiVarTween;
+		public static var slomoOn:Boolean = false;
+		
+		public static function doSlomo():void
+		{
+			if (!slomoOn)
+			{
+				slomoOn = true;
+				slomoOnT = new MultiVarTween();
+				slomoOnT.tween(GameWorld, { timeFactor:0.2 }, 0.7, Ease.quadOut);
+				i.addTween(slomoOnT, true);
+				
+				slomoOffT = new MultiVarTween(function():void { slomoOn = false; } );
+				slomoOffT.tween(GameWorld, {timeFactor:1},0.7, Ease.quadOut, 5);
+				i.addTween(slomoOffT, true);
+			}
+		}
+		
 		public static function mouseCollideRect(r:Rectangle):Boolean
 		{
 			return (Input.mouseX >= r.x && Input.mouseX <= r.x + r.width && Input.mouseY >= r.y && Input.mouseY <= r.y + r.height);

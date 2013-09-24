@@ -72,6 +72,10 @@
 		
 		public var pathCount:uint = 0;
 		
+		public static const POWER_STEPS:uint = 5;
+		public var positionsX:Vector.<Number> = new Vector.<Number>;
+		public var positionsY:Vector.<Number> = new Vector.<Number>;
+		
 		public function Ball() {
 			// constructor code
 			TweenPlugin.activate([BlurFilterPlugin, GlowFilterPlugin]);
@@ -94,6 +98,12 @@
 			stealthRing.x = -3; stealthRing.y = -3;
 			addGraphic(stealthRing);
 			stealthRing.visible = false;
+			
+			//for power ball
+			for (var i:int = 0; i < POWER_STEPS; i++) {
+                positionsX.push(x);
+                positionsY.push(y);
+            }
 		}
 		
 		public function clone(newType:String):Ball
@@ -323,11 +333,11 @@
 			{
 				if (mouseOnRight)
 				{
-					setCartesianSpd(Math.min(speedX + 0.4, 11), speedY);
+					setCartesianSpd(Math.min(speedX + 0.3, 9), speedY);
 				}
 				else if (mouseOnLeft)
 				{
-					setCartesianSpd(Math.max(speedX - 0.4, -11), speedY);
+					setCartesianSpd(Math.max(speedX - 0.3, -9), speedY);
 				}
 			}
 			
@@ -404,6 +414,14 @@
 				if (stealthOffTween!=null)
 				 stealthOffTween.active = (int(GameWorld.move) != 0);
 			}
+			else if (powerOn)
+			{
+				positionsX.push(x);
+				positionsY.push(y);
+				
+				if (powerTween!=null)
+				 powerTween.active = (int(GameWorld.move) != 0);
+			}
 			
 			if (targetOn)
 			{
@@ -423,7 +441,24 @@
 				}
 			}
 			
+			
+			
 			super.update();
+		}
+		
+		override public function render():void 
+		{
+			if (powerOn)
+			{
+				for (var i:int = 0; i < POWER_STEPS; i++) {
+					img.alpha = i / POWER_STEPS;
+					Draw.graphic(graphic, positionsX[i], positionsY[i]);
+				}
+				
+				positionsX.shift();
+				positionsY.shift();
+			}
+			super.render();
 		}
 		
 		public var stealthOn:Boolean = false;
@@ -432,7 +467,7 @@
 		
 		public function doStealth():void
 		{
-			if (!stealthOn)
+			if (!stealthOn && !powerOn)
 			{
 				stealthOn = true;
 				stealthRing.visible = true;
@@ -497,6 +532,32 @@
 				targetEntity.setHitbox(Image(targetEntity.graphic).width, Image(targetEntity.graphic).height);
 				//targetEntity.setOrigin(Image(targetEntity.graphic).width / 2, Image(targetEntity.graphic).height / 2);
 			}
+		}
+		
+		public var powerOn:Boolean = false;
+		public var powerTween:MultiVarTween;
+		public var powerInitSpd:Number;
+		
+		public function doPower():void
+		{
+			if (!powerOn && !stealthOn)
+			{
+				
+				powerOn = true;
+				powerTween = new MultiVarTween(powerEnd);
+				powerTween.tween(this, { }, 9);
+				addTween(powerTween, true);
+				img.color = 0x0DDD51;
+				powerInitSpd = speed.valueOf();
+				setRadialSpd(speed + 2, radians);
+			}
+		}
+		
+		public function powerEnd():void
+		{
+			img.color = 0xffffff;
+			setRadialSpd(powerInitSpd, radians);
+			powerOn = false;
 		}
 		
 		public static function get fieldCheck():Boolean

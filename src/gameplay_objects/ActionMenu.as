@@ -118,7 +118,18 @@ package gameplay_objects
 				{
 					//shoot
 					ar = GameWorld.entitiesByType("ball", world);
-					(ar[FP.rand(ar.length)] as Ball).doTarget();
+					if (ar.length!=0) (ar[FP.rand(ar.length)] as Ball).doTarget();
+				}
+				else if (selectedIndex == 4)
+				{
+					//power
+					ar = GameWorld.entitiesByType("ball", world);
+					if (ar.length!=0) (ar[FP.rand(ar.length)] as Ball).doPower();
+				}
+				else if (selectedIndex == 5)
+				{
+					//slomo
+					GameWorld.doSlomo();
 				}
 			}
 			else {

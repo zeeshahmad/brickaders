@@ -44,7 +44,7 @@ package gameplay_objects
 		
 		override public function update():void 
 		{
-			moveBy(speed * Math.cos(direction) * GameWorld.move, speed * Math.sin(direction) * GameWorld.move);
+			moveBy(speed * Math.cos(direction) * GameWorld.move * GameWorld.timeFactor, speed * Math.sin(direction) * GameWorld.move * GameWorld.timeFactor);
 			
 			if (collide("pad", x, y))
 			{
