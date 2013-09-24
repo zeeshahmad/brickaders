@@ -42,6 +42,7 @@ package gameplay_objects
 			
 			//setOrigin(R, R);
 			//trace(graphic.x, graphic.y);
+			type = "orbiter";
 			
 			t = 0;
 			theta = FP.rand(180);

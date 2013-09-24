@@ -4,7 +4,9 @@ package gameplay_objects
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Input;
+	import net.flashpunk.World;
 	import worlds.GameWorld;
 	
 	/**
@@ -29,6 +31,8 @@ package gameplay_objects
 		[Embed(source = "../../lib/actions_tiles/options.png")]
 		private static const OPTIONS_PNG:Class;
 		private var options:Image;
+		
+		public var leftIndicator:Text;
 		
 		public static var active:Boolean;
 		
@@ -58,6 +62,10 @@ package gameplay_objects
 			
 			addGraphic(new Image(OPTIONS_PNG));
 			
+			leftIndicator = new Text("0");
+			addGraphic(leftIndicator);
+			
+			
 			active = false;
 		}
 		
@@ -72,6 +80,12 @@ package gameplay_objects
 				selector.visible = false;
 				GameWorld.i.add(this);
 				GameWorld.move = 0;
+				
+				leftIndicator.text = String((GameWorld.i as World).typeCount("orbiter"));
+				leftIndicator.size = 40;
+				
+				leftIndicator.x = 393 / 2-leftIndicator.width/2;
+				leftIndicator.y = 393 / 2-leftIndicator.height/2;
 			}
 		}
 		

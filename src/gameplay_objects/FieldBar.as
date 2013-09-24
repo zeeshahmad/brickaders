@@ -56,15 +56,14 @@ package gameplay_objects
 		
 		override public function update():void 
 		{
-			if (fill && !ActionMenu.active)
+			if (fill && !ActionMenu.active && !Ball.fieldCheck)
 			{
 				if (GameWorld.fieldLeft < GameWorld.FIELD_TOTAL) {
-					GameWorld.fieldLeft += 0.4;
+					GameWorld.fieldLeft += 0.1;
 					inner.scaleX = GameWorld.fieldLeft / GameWorld.FIELD_TOTAL;
 				}
 				else fill = false;
 			}
-			
 			
 			super.update();
 		}

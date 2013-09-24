@@ -145,7 +145,8 @@ package gameplay_objects.bricks
 		
 		override public function update():void 
 		{
-			x += (speedX + dodgeX) * GameWorld.move * FP.rate;
+			x += (speedX + dodgeX) * GameWorld.move * FP.rate;        
+			x = Math.max(Math.min(x,800 - width), SideBar.W);
 			y += speedY * GameWorld.move * FP.rate;
 			
 			
@@ -209,7 +210,7 @@ package gameplay_objects.bricks
 		//collision test in ball class
 		public function onBallCollision(ball:Entity):void
 		{
-			if (!(ball as Ball).reverseOn)
+			if (!(ball as Ball).reverseOn && !(ball as Ball).powerOn)
 			{
 				var angle:Number = Math.atan2(ball.y + ball.halfHeight - y - halfHeight, ball.x + ball.halfWidth - x - halfWidth);
 				if (angle > -Math.PI + heightAngle && angle < - heightAngle) //top wall

@@ -79,7 +79,6 @@ package worlds
 			add(fieldBar);
 			
 			
-			
 			wave = 1;
 			fieldLeft = FIELD_TOTAL;
 			
@@ -123,7 +122,6 @@ package worlds
 		
 		
 		
-		
 		public function newGameAnimationComplete():void
 		{
 			PointBar.pointLimit = 1;
@@ -133,7 +131,7 @@ package worlds
 			//PointBar.firstBall = new Ball();
 			var ball:Ball = new Ball();
 			add(ball); ball.moveTo(200, 200);
-			ball.setRadialSpd(8, -Math.PI / 4);
+			ball.setRadialSpd(12, -Math.PI / 4);
 			
 		}
 		

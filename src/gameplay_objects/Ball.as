@@ -9,6 +9,7 @@
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import gameplay_objects.particles.*;
 	import gameplay_objects.special.Flux;
 	import net.flashpunk.Entity;
@@ -147,6 +148,7 @@
 		}
 		
 		private var img:Image;
+		private var picture:BitmapData;
 		
 		public function changeType(type:String = NORMAL_TYPE, redraw:Boolean = false):void
 		{
@@ -182,7 +184,7 @@
 				
 			}
 			
-			var picture:BitmapData = new BitmapData(DIAMETER, DIAMETER, true, 0);
+			picture = new BitmapData(DIAMETER, DIAMETER, true, 0);
 			Draw.setTarget(picture);
 			Draw.circlePlus(RADIUS, RADIUS, RADIUS, c);
 			img = new Image(picture);
@@ -418,12 +420,10 @@
 					
 					//TODO reduceHealth
 					onAnyCollision();
-					if (CURRENT_TYPE != PATH_PREDICT) 
-					new ExplosionParticles(this.x, this.y, [0xDF4402, 0xA4AC0B, 0x256696, 0x0E4F02], [3, 4, 5], 20, 200);
+					
 				}
 			}
 			else if (reverseTween.active)
-			//if (collideRect(x, y, SideBar.W + width, height, FP.width - SideBar.W - 2*width, PointBar.Y - 2*height))
 			 setRadialSpd(reverseSpd, radians);
 			
 			
@@ -576,6 +576,44 @@
 			img.color = 0xffffff;
 			setRadialSpd(powerInitSpd, radians);
 			powerOn = false;
+		}
+		
+		public function destroy():void
+		{		
+			collidable = false;
+			type = "exploding brick";
+			
+			//explosion
+			var l:Number = 4;
+			
+			var tPart:Image;
+			
+			img.visible = false;
+			
+			var particleTween:MultiVarTween;
+			
+			for (var i:uint = 0; i < Math.ceil(width / l); i++)
+			{
+				for (var j:uint = 0; j < Math.ceil(height / l); j++)
+				{
+					tPart = new Image(picture, new Rectangle(i * l, j * l, l, l));
+					//tPart.scale = 0.5;
+					tPart.x = i * l;
+					tPart.y = j * l;
+					
+					addGraphic(tPart);
+					
+					particleTween = new MultiVarTween(removeThis);
+					particleTween.tween(tPart, { x: tPart.x + FP.rand(100) - 50, y: tPart.y + FP.rand(100) - 50, scale:0 }, 0.8, Ease.quadOut);
+					addTween(particleTween);
+				}
+			}
+			setHitbox();
+		}
+		
+		private function removeThis():void
+		{
+			if (this.world != null) this.world.remove(this);
 		}
 		
 		public static function get fieldCheck():Boolean
