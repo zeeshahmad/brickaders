@@ -251,7 +251,7 @@ package gameplay_objects.bricks
 				}
 			}
 			
-			if (FP.rand(200) < 2) ball.world.add(new Orbiter(ball as Ball));
+			if (FP.rand(4) == 0) ball.world.add(new Orbiter(ball as Ball));
 			
 			destroy();
 			
@@ -259,6 +259,7 @@ package gameplay_objects.bricks
 		}
 		
 		private var firing:Boolean = false;
+		private var fireAngle:Number;
 		
 		public function fireGun():void
 		{
@@ -274,6 +275,8 @@ package gameplay_objects.bricks
 				var gunOutTween:MultiVarTween = new MultiVarTween(function():void {addTween(gunTween, true);});
 				gunOutTween.tween(gun, { y: height }, 0.6, Ease.quartOut);
 				addTween(gunOutTween, true);
+				
+				fireAngle = Math.atan2(GameWorld.pad.top - bottom, GameWorld.pad.centerX - centerX);
 				var gunTween:MultiVarTween = new MultiVarTween(departBullet);
 				gunTween.tween(gun, { angle: angleToPad }, 0.6, null, 0.3);
 				
@@ -283,7 +286,7 @@ package gameplay_objects.bricks
 		private function departBullet():void
 		{
 			
-			new Bullet(new Point(centerX, bottom+10), Math.atan2(GameWorld.pad.top-bottom, GameWorld.pad.centerX-centerX), 5, 2, world);
+			new Bullet(new Point(centerX, bottom+10), fireAngle, 5, 2, world);
 		}
 		
 		public var defending:Boolean = false;

@@ -4,6 +4,7 @@ package gameplay_objects
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.tweens.misc.VarTween;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.utils.Ease;
@@ -105,7 +106,7 @@ package gameplay_objects
         }
 		
 		public var shadowPad:Entity;
-		public var shadowPadOn:Boolean = false;
+		public static var shadowPadOn:Boolean = false;
 		
 		public function doShadow():void
 		{
@@ -117,6 +118,11 @@ package gameplay_objects
 				
 				if (world != null) world.add(shadowPad);
 				shadowPadOn = true;
+				
+				var shadowPoint:PadPoint = new PadPoint(x + halfWidth);
+				var pointRemTween:MultiVarTween = new MultiVarTween(function():void { GameWorld.del(shadowPoint) } );
+				pointRemTween.tween(shadowPoint.pointSpritemap, { alpha :0 }, 0.7, null, 1.5);
+				addTween(pointRemTween, true);
 			}
 		}
 		

@@ -72,7 +72,7 @@ package gameplay_objects
 		
 		public function show():void
 		{
-			if (!active && GameWorld.i != null)
+			if (!active && GameWorld.i != null && !Ball.targetOn && !Pad.shadowPadOn)
 			{
 				selectedIndex = 10; //aribitrary value for none
 				
