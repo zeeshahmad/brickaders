@@ -13,9 +13,9 @@ package gameplay_objects
 	 */
 	public class Orbiter extends Entity 
 	{
-		private var b:Ball;
+		public var b:Ball;
 		
-		private static const R:uint = 6;
+		private static const R:uint = 5;
 		
 		private var orbitTarget:Point;
 		private const A:Number = Main.pickRandomFromArray([20, 26]); 
@@ -32,12 +32,14 @@ package gameplay_objects
 		public function Orbiter(ball:Ball) 
 		{
 			b = ball;
+			x = b.x;
+			y = b.y;
 			
 			var c:uint = Main.pickRandomFromArray([0x5FB5CD, 0x99D656, 0xFD5E2F]);
 			
 			var pic:BitmapData = new BitmapData(R*2, R*2, true, 0);
 			Draw.setTarget(pic);
-			Draw.circlePlus(R, R, R, c);
+			Draw.circlePlus(R, R, R, c, 0.5);
 			graphic = new Image(pic);
 			
 			//setOrigin(R, R);
@@ -49,7 +51,7 @@ package gameplay_objects
 			alpha = FP.rand(180);
 			orbitTarget = new Point();
 			
-			attraction = Main.pickRandomFromArray([10, 12, 11]);
+			attraction = Main.pickRandomFromArray([16, 14, 15]);
 			orbitSpeed = Main.pickRandomFromArray([0.15, 0.1, 0.18]);
 		}
 		
@@ -69,6 +71,7 @@ package gameplay_objects
 			moveTowards(orbitTarget.x + b.centerX, orbitTarget.y + b.centerY, attraction );
 			super.update();
 		}
+		
 		
 	}
 

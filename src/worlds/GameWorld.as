@@ -7,6 +7,7 @@ package worlds
 	import flash.geom.Rectangle;
 	import gameplay_objects.ActionMenu;
 	import gameplay_objects.Ball;
+	import gameplay_objects.BallEnemy;
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.Coin;
 	import gameplay_objects.FieldBar;
@@ -15,6 +16,7 @@ package worlds
 	import gameplay_objects.particles.ExplosionParticles;
 	import gameplay_objects.PointBar;
 	import gameplay_objects.SideBar;
+	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.tweens.misc.MultiVarTween;
@@ -139,6 +141,8 @@ package worlds
 		{
 			spawnBricks();
 			
+			if (FP.rand(800) < 2 && typeCount("ballenemy") < 2 && wave > 9) add(new BallEnemy());
+			
 			//background stars
 			if ( typeCount("bgStar") < 20 && FP.rand(100) < 10 ) create(BackgroundStar, true);
 			
@@ -255,6 +259,10 @@ package worlds
 			return pythagoras(object1.x, object1.y, object2.x, object2.y);
 		}
 		
+		public static function del(e:Entity):void
+		{
+			if (e.world != null) e.world.remove(e);
+		}
 		
 	}
 

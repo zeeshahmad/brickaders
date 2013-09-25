@@ -5,7 +5,9 @@ package gameplay_objects.bricks
 	import flash.geom.Rectangle;
 	import gameplay_objects.Ball;
 	import gameplay_objects.Bullet;
+	import gameplay_objects.Orbiter;
 	import gameplay_objects.Pad;
+	import gameplay_objects.PointBar;
 	import gameplay_objects.SideBar;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -204,6 +206,24 @@ package gameplay_objects.bricks
 				}
 			}
 			
+			if (y + height > PointBar.Y)
+			{
+				if (world != null) 
+				{
+					if (world.typeCount("orbiter") > 0)
+					{
+						var e:Entity = world.typeFirst("orbiter");
+						if (e.world != null) e.world.remove(e);
+					}
+					else 
+					{
+						//TODO loose due to brick hit bottom
+					}
+				}
+				destroy();
+				
+			}
+			
 			super.update();
 		}
 		
@@ -230,7 +250,12 @@ package gameplay_objects.bricks
 					(ball as Ball).bounceLeft();
 				}
 			}
+			
+			if (FP.rand(200) < 2) ball.world.add(new Orbiter(ball as Ball));
+			
 			destroy();
+			
+			
 		}
 		
 		private var firing:Boolean = false;

@@ -1,17 +1,11 @@
 ﻿package gameplay_objects {
 	
-	import com.greensock.core.TweenCore;
-	import com.greensock.easing.*;
-	import com.greensock.plugins.*;
-	import com.greensock.TweenLite;
 	import flash.display.BitmapData;
 	import flash.display.CapsStyle;
 	import flash.display.Sprite;
-	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import gameplay_objects.particles.*;
-	import gameplay_objects.special.Flux;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
@@ -26,19 +20,6 @@
 		
 		[Embed(source = "../../lib/ball/target.png")]
 		private static const TARGET_PNG:Class;
-		
-		private static const explosive_glow_filter:GlowFilter = new GlowFilter(0xB31200, 1, 5, 5, 2, 1, true);
-		private static const power_glow_filter:GlowFilter = new GlowFilter(0x15F020, 1, 5, 5, 2, 1, true);
-		private static const freeze_glow_filter:GlowFilter = new GlowFilter(0x66A6C1, 1, 10, 10, 2, 1, true);
-		private var magnetFlux:Flux;
-		
-		public static const NORMAL_TYPE:String = "Normal_TYPE";
-		public static const EXPLOSION_TYPE:String = "EXPLOSION_TYPE";
-		public static const FREEZE_TYPE:String = "FREEZE_TYPE";
-		public static const MAGNET_TYPE:String = "MAGNET_TYPE";
-		public static const POWER_TYPE:String = "POWER_TYPE";
-		
-		public static const PATH_PREDICT:String = "PATH_PREDICT";
 		
 		public var unstopable:Boolean = false;
 		public var shotAngle:Number;
@@ -65,12 +46,6 @@
 		public var speedX:Number = 0;
 		public var speedY:Number = 0;
 		
-		public var speedIndicator:Sprite;
-		public var speedIndicatorTween:TweenLite;
-		
-		public var typeTween:TweenCore;
-		public var expireTimer:TweenCore;
-		
 		public var pathCount:uint = 0;
 		
 		public static const POWER_STEPS:uint = 5;
@@ -79,18 +54,22 @@
 		
 		public function Ball() {
 			// constructor code
-			TweenPlugin.activate([BlurFilterPlugin, GlowFilterPlugin]);
 			
 			SetDIAMETER = 15;
 			
-			changeType(NORMAL_TYPE);
 			
+			
+			picture = new BitmapData(DIAMETER, DIAMETER, true, 0);
+			Draw.setTarget(picture);
+			
+			Draw.circlePlus(RADIUS, RADIUS, RADIUS, 0xE3CC2B);
+			img = new Image(picture);
+			graphic = img;
 			
 			
 			setHitbox(DIAMETER, DIAMETER, 0, 0);
 			
 			type = "ball";
-			
 			
 			var stealthRingBmp:BitmapData = new BitmapData(DIAMETER + 6, DIAMETER + 6, true, 0);
 			Draw.setTarget(stealthRingBmp);
@@ -107,7 +86,7 @@
             }
 		}
 		
-		public function clone(newType:String):Ball
+		public function clone():Ball
 		{
 			var cl:Ball = new Ball();
 			cl.speedX = this.speedX.valueOf();
@@ -116,108 +95,13 @@
 			cl.y = this.y.valueOf();
 			cl.speed = this.speed.valueOf();
 			cl.radians = radians.valueOf();
-			cl.CURRENT_TYPE = newType;
 			return cl;
-		}
-		
-		private static var indicatorDrawFactor:uint = 4;
-		public function drawSpeedIndicator():Sprite
-		{
-			speedIndicator = new Sprite();
-			speedIndicator.graphics.beginFill(0x2F86DD);
-			speedIndicator.graphics.drawCircle(speed * indicatorDrawFactor, 0, 4);
-			speedIndicator.graphics.endFill();
-			speedIndicator.graphics.lineStyle(3, 0x2F86DD, 1, false, "normal", CapsStyle.ROUND);
-			speedIndicator.graphics.moveTo(0, 0);
-			speedIndicator.graphics.lineTo(speed * indicatorDrawFactor, 0);
-			speedIndicator.graphics.lineStyle();
-			
-			speedIndicator.scaleX = 0;
-			speedIndicator.scaleY = 0;
-			speedIndicator.x = x;
-			speedIndicator.y = y;
-			
-			speedIndicator.rotation = radians * 180 / Math.PI;
-			
-			GameWorld.ballGuideLayer.addChild(speedIndicator);
-			
-			speedIndicatorTween = 
-			TweenLite.to(speedIndicator, 0.4, { scaleX:1, scaleY:1, ease: Back.easeOut,
-			onReverseComplete: Main.remove, onReverseCompleteParams: [speedIndicator] } );
-			return speedIndicator;
 		}
 		
 		private var img:Image;
 		private var picture:BitmapData;
 		
-		public function changeType(type:String = NORMAL_TYPE, redraw:Boolean = false):void
-		{
-			refreshEffects();
-			var c:uint;
-			
-			switch (type)
-			{
-				case NORMAL_TYPE:
-					
-					c = 0xB7B7B7;
-					break;
-					
-				case EXPLOSION_TYPE:
-					
-					c = 0xC11300;
-					break;
-					
-				case FREEZE_TYPE:
-					
-					c = 0xB8D3D2;
-					break;
-					
-				case MAGNET_TYPE:
-					
-					c = 0xBE5421;
-					break;
-					
-				case POWER_TYPE:
-					
-					c = 0x21E60B;
-					break;
-				
-			}
-			
-			picture = new BitmapData(DIAMETER, DIAMETER, true, 0);
-			Draw.setTarget(picture);
-			Draw.circlePlus(RADIUS, RADIUS, RADIUS, c);
-			img = new Image(picture);
-			graphic = img;
-			
-			CURRENT_TYPE = type;
-			
-			if (type != NORMAL_TYPE && !redraw)
-			{
-				setTimerToNormal(30);
-			}
-		}
 		
-		public var CURRENT_TYPE:String = NORMAL_TYPE;
-		
-		private function setTimerToNormal(time:Number):void
-		{
-			expireTimer = TweenLite.to(Ball, time, { onComplete: changeType, onCompleteParams: [NORMAL_TYPE] } );
-			//new ExplosionParticles(this.x, this.y, [0x18BFCD, 0x2C69A7], [3, 4], 30, 140);
-		}
-		
-		private function refreshEffects():void
-		{
-			/*this.filters = [];
-			if (typeTween != null) { typeTween.vars = { }; typeTween.kill(); }
-			if (expireTimer != null) { expireTimer.vars = { }; expireTimer.kill(); }
-			
-			if (magnetFlux != null) { magnetFlux.remove(); magnetFlux == null; }
-			
-			this.graphics.clear();
-			this.graphics.lineStyle();
-			if (originalSpeed != 0) setRadialSpd(originalSpeed, radians);*/
-		}
 		
 		public static function fixAngle(a:Number):Number
 		{
@@ -252,24 +136,17 @@
 			return this;
 		}
 		
-		public function bounceRight():void { setCartesianSpd( Math.abs(speedX), speedY ); explode(); }
-		public function bounceLeft():void { setCartesianSpd( -Math.abs(speedX), speedY ); explode(); }
-		public function bounceUp():void { setCartesianSpd(speedX, -Math.abs(speedY) ); explode(); }
-		public function bounceDown():void { setCartesianSpd(speedX, Math.abs(speedY) ); explode(); 
+		public function bounceRight():void { setCartesianSpd( Math.abs(speedX), speedY ); }
+		public function bounceLeft():void { setCartesianSpd( -Math.abs(speedX), speedY );}
+		public function bounceUp():void { setCartesianSpd(speedX, -Math.abs(speedY) );  }
+		public function bounceDown():void { setCartesianSpd(speedX, Math.abs(speedY) ); 
 		new CollisionAngleDisplay(x, y, 1, radians * 180 / Math.PI); }
 		
-		public function explode():void 
-		{ 
-			if (CURRENT_TYPE == EXPLOSION_TYPE) 
-			{ 
-				//GameWorld.explosion(this); 
-			} 
-		}
 		
 		
 		public function predictCollisionCoords():void
 		{
-			var cl:Ball = clone(PATH_PREDICT);
+			var cl:Ball = clone();
 			
 			cl.unstopable = true;
 			cl.moveFunction = function(ins:Ball):void
@@ -295,7 +172,6 @@
 			
 		}
 		
-		
 		public var moveFunction:Function = function(ins:Ball):void
 		{
 			this.x += (ins.speedX) * GameWorld.timeFactor * GameWorld.move * FP.rate;
@@ -304,7 +180,6 @@
 		
 		public function shootBullet():void
 		{
-			
 			shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
 			new Bullet(new Point(x+halfWidth, y+halfHeight), shotAngle, shotSpeed, 2, world);
 			
@@ -410,7 +285,7 @@
 					
 					
 					if (GameWorld.pad.moveTween != null && GameWorld.pad.moveTween.active) {
-						setCartesianSpd(speedX + GameWorld.pad.dir*0.4, speedY);
+						setCartesianSpd(speedX + GameWorld.pad.dir * 0.4, speedY);
 					}
 					
 				}
@@ -418,8 +293,35 @@
 				{
 					bounceUp();
 					
-					//TODO reduceHealth
+					
+					var orbiters:Array = GameWorld.entitiesByType("orbiter", world);
+					
+					for (var or:uint = 0; or < orbiters.length; or++)
+					{
+						if ((orbiters[or] as Orbiter).b == this)
+						{
+							GameWorld.del(orbiters[or] as Orbiter);
+							break;
+						}
+					}
+					
+					var orbCount:uint = 0;
+					for (var or2:uint = 0; or2 < orbiters.length; or2++)
+					{
+						if ((orbiters[or2] as Orbiter).b == this)
+						{
+							orbCount++;
+							break;
+						}
+						
+					}
+					
 					onAnyCollision();
+					
+					if (orbCount == 0) destroy();
+					
+					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") ==0)
+					trace("no ball left");//TODO loose due to no ball left
 					
 				}
 			}
@@ -458,7 +360,6 @@
 					addTween(targetRemoveTween, true);
 				}
 			}
-			
 			
 			
 			super.update();
