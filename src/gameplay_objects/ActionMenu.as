@@ -72,7 +72,7 @@ package gameplay_objects
 		
 		public function show():void
 		{
-			if (!active && GameWorld.i != null && !Ball.targetOn && !Pad.shadowPadOn)
+			if (!active && GameWorld.i != null && GameWorld.i.typeCount("orbiter") > 0 && !Ball.targetOn && !Pad.shadowPadOn)
 			{
 				selectedIndex = 10; //aribitrary value for none
 				
@@ -105,6 +105,8 @@ package gameplay_objects
 		{
 			if (selectedIndex != 10)
 			{
+				if (world != null) if (world.typeFirst("orbiter") != null) GameWorld.del(world.typeFirst("orbiter"));
+				
 				var ar:Array;
 				trace("action selected index: " + String(selectedIndex));
 				if (selectedIndex == 0)

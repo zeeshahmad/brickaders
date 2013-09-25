@@ -255,7 +255,6 @@
 					
 					clearWallTouch();
 					onAnyCollision();
-					
 				}
 				
 				//vertical collision
@@ -265,7 +264,6 @@
 					
 					clearWallTouch();
 					onAnyCollision();
-					
 				}
 				else if (this.y + this.height > GameWorld.pad.y && (collide("pad", x, y)))
 				//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad

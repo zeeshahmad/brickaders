@@ -19,6 +19,7 @@ package worlds
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.tweens.misc.VarTween;
 	import net.flashpunk.utils.Ease;
@@ -60,17 +61,33 @@ package worlds
 		public static var timeFactor:Number = 1;
 		public static var move:uint = 1;
 		
+		public static var scoreTextLabel:Text;
+		public static var scoreText:Text;
+		public static var score:uint;
+		
 		public function GameWorld() 
 		{
 			i = this;
 			
-			FP.console.enable();
+			//FP.console.enable();
 			
 			sideBar = new SideBar();
 			pointBar = new PointBar();
 			pad = new Pad();
 			actionMenu = new ActionMenu();
 			fieldBar = new FieldBar();
+			
+			scoreTextLabel = new Text("Score: ");
+			scoreTextLabel.color = 0xDDDDDD;
+			scoreTextLabel.smooth = true;
+			scoreTextLabel.size = 24;
+			scoreTextLabel.x = 5 + SideBar.W;
+			
+			scoreText = new Text("0");
+			scoreText.color = 0xffffff;
+			scoreText.smooth = true;
+			scoreText.size = 24;
+			scoreText.x = scoreTextLabel.x + scoreTextLabel.width;
 		}
 		
 		override public function begin():void 
@@ -80,7 +97,10 @@ package worlds
 			add(pad);
 			add(fieldBar);
 			
+			addGraphic(scoreTextLabel);
+			addGraphic(scoreText);
 			
+			score = 0;
 			wave = 1;
 			fieldLeft = FIELD_TOTAL;
 			

@@ -5,6 +5,7 @@ package gameplay_objects
 	import flash.display.Sprite;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Draw;
 	import worlds.GameWorld;
 	
@@ -17,6 +18,9 @@ package gameplay_objects
 		
 		public static const W:Number = 100;
 		
+		public static var waveText:Text;
+		
+		
 		public function SideBar() 
 		{
 			var picture:BitmapData = new BitmapData(W, 480, true, 0);
@@ -28,7 +32,19 @@ package gameplay_objects
 			
 			type = "sidebar";
 			
+			waveText = new Text("Wave: 1");
+			waveText.color = 0xA4DAFB;
+			waveText.x = 5;
+			waveText.y = 20;
 			
+		}
+		
+		override public function added():void 
+		{
+			addGraphic(waveText);
+			
+			
+			super.added();
 		}
 		
 	}

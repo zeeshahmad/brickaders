@@ -147,9 +147,9 @@ package gameplay_objects.bricks
 		
 		override public function update():void 
 		{
-			x += (speedX + dodgeX) * GameWorld.move * FP.rate;        
+			x += (speedX + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor;        
 			x = Math.max(Math.min(x,800 - width), SideBar.W);
-			y += speedY * GameWorld.move * FP.rate;
+			y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor;
 			
 			
 			for each (var i:Entity in GameWorld.entitiesByType("ball", world))
@@ -175,7 +175,7 @@ package gameplay_objects.bricks
 					
 					if (defending && i.collideRect(i.x, i.y, x + shield.x, y + shield.y, shield.width, shield.height))
 					{
-						if (centerY < i.y && (i as Ball).speedY < 0) (i as Ball).bounceDown();
+						if (centerY < i.y && (i as Ball).speedY < 0 && !(i as Ball).powerOn) (i as Ball).bounceDown();
 					}
 					else if (collide("ball", x, y)) onBallCollision(collide("ball", x, y));
 				}
@@ -251,11 +251,10 @@ package gameplay_objects.bricks
 				}
 			}
 			
-			if (FP.rand(4) == 0) ball.world.add(new Orbiter(ball as Ball));
+			FP.randomizeSeed();
+			if (FP.rand(3) == 0) ball.world.add(new Orbiter(ball as Ball));
 			
 			destroy();
-			
-			
 		}
 		
 		private var firing:Boolean = false;
