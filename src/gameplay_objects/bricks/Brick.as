@@ -26,7 +26,7 @@ package gameplay_objects.bricks
 	public class Brick extends Entity 
 	{
 		public var speedX:Number = 0;
-		public var speedY:Number = 0;
+		public static var speedY:Number = 0;
 		public var dodgeX:Number = 0;
 		public var dodgeAmount:Number = 0;
 		public var enableDodge:Boolean = true;
@@ -98,12 +98,12 @@ package gameplay_objects.bricks
 			else if (r < 60) {
 				img = new Image(INVADER_2);
 				imgClass = INVADER_2;
-				dodgeAmount = 1;
+				dodgeAmount = 1.25;
 			}
 			else if (r < 70) {
 				img = new Image(INVADER_3);
 				imgClass = INVADER_3;
-				dodgeAmount = 1.25;
+				dodgeAmount = 1.5;
 			}
 			else if (r < 75) {
 				img = new Image(INVADER_4);
@@ -157,7 +157,7 @@ package gameplay_objects.bricks
 			
 			for each (var i:Entity in GameWorld.entitiesByType("ball", world))
 			{
-				if (i.distanceFrom(this, true) < 50) 
+				if (i.distanceFrom(this, true) < 60) 
 				{
 					if (enableDodge) 
 					{
@@ -178,10 +178,11 @@ package gameplay_objects.bricks
 					
 					if (defending && i.collideRect(i.x, i.y, x + shield.x, y + shield.y, shield.width, shield.height))
 					{
-						if (centerY < i.y && (i as Ball).speedY < 0 && !(i as Ball).powerOn) (i as Ball).bounceDown();
-						
-						GameWorld.addScore( -2);
-						if (world != null) world.add(new ScoreShow(-2, x + FP.rand(width), y + height + 24));
+						if (centerY < i.y && (i as Ball).speedY < 0 && !(i as Ball).powerOn) {
+							(i as Ball).bounceDown();
+							GameWorld.addScore( -2);
+							if (world != null) world.add(new ScoreShow(-2, x + FP.rand(width), y + height + 24));
+						}
 					}
 					else if (collide("ball", x, y)) onBallCollision(collide("ball", x, y));
 				}
@@ -205,9 +206,9 @@ package gameplay_objects.bricks
 			
 			if (collidable && Math.round(GameWorld.move) == 1)
 			{
-				if (FP.rand(6000) < 2) {
+				if (FP.rand(4500) < 2) {
 					defend();
-				} else if (FP.rand(3000) < 2) {
+				} else if (FP.rand(4500) < 2) {
 					fireGun();
 				}
 			}
@@ -227,9 +228,7 @@ package gameplay_objects.bricks
 					}
 				}
 				destroy();
-				
 			}
-			
 			super.update();
 		}
 		
@@ -270,33 +269,43 @@ package gameplay_objects.bricks
 		
 		private var firing:Boolean = false;
 		private var fireAngle:Number;
+		private var gunTween:MultiVarTween;
+		private var angleToPad:Number;
 		
 		public function fireGun():void
 		{
 			if (!firing && !defending)
 			{
-				trace("fire");
 				firing = true;
 				gun.smooth = true;
 				gun.angle = 0;
 				gun.y = halfHeight;
 				gun.visible = true;
-				var angleToPad:Number = 180 * Math.atan2(GameWorld.pad.centerX - x - halfWidth, GameWorld.pad.y - y - height) / Math.PI;
-				var gunOutTween:MultiVarTween = new MultiVarTween(function():void {addTween(gunTween, true);});
+				
+				var gunOutTween:MultiVarTween = new MultiVarTween();
 				gunOutTween.tween(gun, { y: height }, 0.6, Ease.quartOut);
 				addTween(gunOutTween, true);
 				
-				fireAngle = Math.atan2(GameWorld.pad.top - bottom, GameWorld.pad.centerX - centerX);
-				var gunTween:MultiVarTween = new MultiVarTween(departBullet);
-				gunTween.tween(gun, { angle: angleToPad }, 0.6, null, 0.3);
+				pointAndShoot();
 				
 			}
 		}
 		
+		public function pointAndShoot():void
+		{
+			angleToPad = 180 * Math.atan2(GameWorld.pad.centerX - x - halfWidth, GameWorld.pad.y - y - height) / Math.PI;
+			fireAngle = Math.atan2(GameWorld.pad.top - bottom, GameWorld.pad.centerX - centerX);
+			gunTween = new MultiVarTween(departBullet);
+			gunTween.tween(gun, { angle: angleToPad }, 0.6, null, 0.9);
+			addTween(gunTween, true);
+		}
+		
 		private function departBullet():void
 		{
-			
-			new Bullet(new Point(centerX, bottom+10), fireAngle, 5, 2, world);
+			new Bullet(new Point(centerX, bottom + 10), fireAngle, 5, 2, world);
+			var t:MultiVarTween = new MultiVarTween(pointAndShoot);
+			t.tween(this, { }, 2.8);
+			addTween(t);
 		}
 		
 		public var defending:Boolean = false;

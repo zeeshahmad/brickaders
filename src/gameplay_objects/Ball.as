@@ -329,7 +329,8 @@
 					
 					onAnyCollision();
 					
-					if (orbCount == 0) destroy();
+					//TODO disable for ball to destroy at bottom
+					//if (orbCount == 0) destroy();
 					
 					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") ==0)
 					trace("no ball left");//TODO loose due to no ball left
@@ -359,17 +360,23 @@
 			{
 				if (Input.mousePressed && Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
 				{
-					targetEntity.x = Input.mouseX - Image(targetEntity.graphic).width / 2;
-					targetEntity.y = Input.mouseY - Image(targetEntity.graphic).height / 2;
-					if (world != null) world.add(targetEntity);
-					targetOn = false;
-					shootBullet();
+					if (targetEntity != null)
+					{
+						targetEntity.x = Input.mouseX - Image(targetEntity.graphic).width / 2;
+						targetEntity.y = Input.mouseY - Image(targetEntity.graphic).height / 2;
+						
+						if (world != null) world.add(targetEntity);
+						targetOn = false;
+						shootBullet();
+						
+						var targetRemoveTween:MultiVarTween = new MultiVarTween(function():void {
+							if (targetEntity.world != null) targetEntity.world.remove(targetEntity);
+						});
+						targetRemoveTween.tween(Image(targetEntity.graphic), { alpha: 0 }, 0.4, null, 3);
+						addTween(targetRemoveTween, true);
+					}
 					
-					var targetRemoveTween:MultiVarTween = new MultiVarTween(function():void {
-						if (targetEntity.world != null) targetEntity.world.remove(targetEntity);
-					});
-					targetRemoveTween.tween(Image(targetEntity.graphic), { alpha: 0 }, 0.4, null, 3);
-					addTween(targetRemoveTween, true);
+					
 				}
 			}
 			

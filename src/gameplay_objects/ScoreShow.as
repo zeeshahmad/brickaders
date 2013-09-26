@@ -20,14 +20,26 @@ package gameplay_objects
 			x = _x;
 			y = _y;
 			
-			if (amount > 0) showString = "+ ";
-			else if (amount < 0) showString = "- ";
-			else showString = "";
+			var c:uint;
+			
+			if (amount > 0) {
+				showString = "+ ";
+				c = 0xffffff;
+			}
+			else if (amount < 0) {
+				showString = "- ";
+				c = 0xE73103;
+			}
+			else {
+				showString = "";
+				c = 0xB9B9B9;
+			}
 			
 			showString += String(Math.abs(amount));
 			
 			text = new Text(showString);
 			text.size = 24;
+			text.color = c;
 			addGraphic(text);
 			
 			var up:MultiVarTween = new MultiVarTween(removeThis);
