@@ -30,6 +30,7 @@ package gameplay_objects.bricks
 		public var dodgeX:Number = 0;
 		public var dodgeAmount:Number = 0;
 		public var enableDodge:Boolean = true;
+		public var bonus:Boolean = false;
 		
 		private var speedChangeType:int;
 		
@@ -113,6 +114,7 @@ package gameplay_objects.bricks
 				img = new Image(INVADER_BONUS);
 				imgClass = INVADER_BONUS;
 				dodgeAmount = 1.9;
+				bonus = true;
 			}
 			
 			img.smooth = true;
@@ -177,6 +179,7 @@ package gameplay_objects.bricks
 					if (defending && i.collideRect(i.x, i.y, x + shield.x, y + shield.y, shield.width, shield.height))
 					{
 						if (centerY < i.y && (i as Ball).speedY < 0 && !(i as Ball).powerOn) (i as Ball).bounceDown();
+						
 						GameWorld.addScore( -2);
 						if (world != null) world.add(new ScoreShow(-2, x + FP.rand(width), y + height + 24));
 					}
@@ -255,11 +258,12 @@ package gameplay_objects.bricks
 			}
 			
 			var hitScore:uint = Math.round(Math.abs(8 * (1 - y / 480)));
+			if (bonus) hitScore += 150;
 			GameWorld.addScore(hitScore);
 			if (world != null) world.add(new ScoreShow(hitScore, FP.rand(width) + x, y - height));
 			
 			FP.randomizeSeed();
-			if (FP.rand(3) == 0) ball.world.add(new Orbiter(ball as Ball));
+			if (world !=null) if (world.typeCount("orbiter") < 6) if (FP.rand(3) == 0) ball.world.add(new Orbiter(ball as Ball));
 			
 			destroy();
 		}

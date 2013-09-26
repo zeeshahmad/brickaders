@@ -219,6 +219,7 @@ package worlds
 					add(b).y = -b.height-i * (FP.rand(20) + 25);
 				}
 				wave++;
+				SideBar.waveText.text = "Wave " + String(wave);
 			}
 		}
 		

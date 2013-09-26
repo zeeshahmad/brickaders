@@ -186,7 +186,6 @@
 			//setCartesianSpd(speedX - (shotSpeed / 4) * Math.cos(shotAngle), speedY - (shotSpeed / 4) * Math.sin(shotAngle));
 			setRadialSpd(speed, shotAngle + Math.PI );
 			
-			trace("ball speed:" + speed);
 			
 		}
 		
@@ -203,7 +202,6 @@
 		public function dirTendToVertical(left:Boolean):void
 		{
 			setRadialSpd(speed, fixAngle(radians));
-			trace(radians * 180 / Math.PI);
 			if (radians > 0)
 			{
 				if (left && radians < Math.PI - Math.PI/8) setRadialSpd(speed, radians + Math.PI / 60);
@@ -215,6 +213,8 @@
 				else if (!left && radians < -Math.PI/8) setRadialSpd(speed, radians + Math.PI / 60);
 			}
 		}
+		
+		public var collideOnce:Boolean = false;
 		
 		override public function update():void 
 		{
@@ -265,9 +265,21 @@
 					clearWallTouch();
 					onAnyCollision();
 				}
-				else if (this.y + this.height > GameWorld.pad.y && (collide("pad", x, y)))
+				else if (collide("pad", x, y) && !collideOnce)
 				//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad
 				{
+					collideOnce = true;
+					
+					FP.randomizeSeed();
+					
+					if (!GameWorld.pad.fixed && FP.rand(4) == 0 && speedY > 0 && world !=null)
+					{
+						var newball:Ball = new Ball();
+						newball.x  = x; newball.y = y;
+						newball.setCartesianSpd( -speedX, -Math.abs(speedY));
+						world.add(newball);
+					}
+					
 					bounceUp();
 					
 					GameWorld.pad.showFixed = false;
@@ -285,6 +297,7 @@
 					if (GameWorld.pad.moveTween != null && GameWorld.pad.moveTween.active) {
 						setCartesianSpd(speedX + GameWorld.pad.dir * 0.4, speedY);
 					}
+					
 					
 				}
 				else if (this.y + this.height > 480)//lower boundry
@@ -322,6 +335,7 @@
 					trace("no ball left");//TODO loose due to no ball left
 					
 				}
+				else if (!collide("ball", x, y)) collideOnce = false;
 			}
 			else if (reverseTween.active)
 			 setRadialSpd(reverseSpd, radians);
