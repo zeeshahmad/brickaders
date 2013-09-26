@@ -90,6 +90,13 @@ package worlds
 			scoreText.x = scoreTextLabel.x + scoreTextLabel.width;
 		}
 		
+		public static function addScore(d:int):void
+		{
+			score = Math.max(0, score + d);
+			scoreText.text = String(score);
+			scoreText.x = scoreTextLabel.x + scoreTextLabel.width;
+		}
+		
 		override public function begin():void 
 		{
 			add(sideBar);

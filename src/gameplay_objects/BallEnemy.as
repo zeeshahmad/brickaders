@@ -3,6 +3,7 @@ package gameplay_objects
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import worlds.GameWorld;
 	
 	/**
 	 * ...
@@ -33,7 +34,7 @@ package gameplay_objects
 		
 		override public function update():void 
 		{
-			y += speed;
+			y += speed * GameWorld.move * FP.rate * GameWorld.timeFactor;
 			
 			if (y > FP.height * 0.6)
 			speed = -Math.abs(speed);

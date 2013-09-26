@@ -8,6 +8,7 @@ package gameplay_objects.bricks
 	import gameplay_objects.Orbiter;
 	import gameplay_objects.Pad;
 	import gameplay_objects.PointBar;
+	import gameplay_objects.ScoreShow;
 	import gameplay_objects.SideBar;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -176,6 +177,8 @@ package gameplay_objects.bricks
 					if (defending && i.collideRect(i.x, i.y, x + shield.x, y + shield.y, shield.width, shield.height))
 					{
 						if (centerY < i.y && (i as Ball).speedY < 0 && !(i as Ball).powerOn) (i as Ball).bounceDown();
+						GameWorld.addScore( -2);
+						if (world != null) world.add(new ScoreShow(-2, x + FP.rand(width), y + height + 24));
 					}
 					else if (collide("ball", x, y)) onBallCollision(collide("ball", x, y));
 				}
@@ -250,6 +253,10 @@ package gameplay_objects.bricks
 					(ball as Ball).bounceLeft();
 				}
 			}
+			
+			var hitScore:uint = Math.round(Math.abs(8 * (1 - y / 480)));
+			GameWorld.addScore(hitScore);
+			if (world != null) world.add(new ScoreShow(hitScore, FP.rand(width) + x, y - height));
 			
 			FP.randomizeSeed();
 			if (FP.rand(3) == 0) ball.world.add(new Orbiter(ball as Ball));

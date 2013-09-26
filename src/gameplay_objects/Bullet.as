@@ -48,7 +48,9 @@ package gameplay_objects
 			
 			if (collide("pad", x, y))
 			{
-				trace("bullet hit pad");
+				var hitPadScore:int = -3 - Math.ceil(GameWorld.wave * 0.1);
+				GameWorld.addScore( hitPadScore);
+				if (world != null) world.add(new ScoreShow(hitPadScore, x, y - 30));
 				end();
 			}
 			//angle < Math.PI - heightAngle && angle > heightAngle
