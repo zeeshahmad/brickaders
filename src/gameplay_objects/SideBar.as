@@ -1,13 +1,10 @@
 package gameplay_objects 
 {
-	import com.greensock.TweenMax;
 	import flash.display.BitmapData;
-	import flash.display.Sprite;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Draw;
-	import worlds.GameWorld;
 	
 	/**
 	 * ...
@@ -19,6 +16,20 @@ package gameplay_objects
 		public static const W:Number = 100;
 		
 		public static var waveText:Text;
+		
+		[Embed(source = "../../lib/sidebar/musicOff.png")]
+		private static const musicOffPng:Class;
+		[Embed(source = "../../lib/sidebar/musicOn.png")]
+		private static const musicOnPng:Class;
+		[Embed(source = "../../lib/sidebar/soundOff.png")]
+		private static const soundOffPng:Class;
+		[Embed(source = "../../lib/sidebar/soundOn.png")]
+		private static const soundOnPng:Class;
+		
+		private var musicOn:Image;
+		private var musicOff:Image;
+		private var soundOn:Image;
+		private var soundOff:Image;
 		
 		
 		public function SideBar() 
@@ -36,6 +47,8 @@ package gameplay_objects
 			waveText.color = 0xA4DAFB;
 			waveText.x = 5;
 			waveText.y = 20;
+			
+			
 			
 		}
 		

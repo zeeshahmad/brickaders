@@ -272,7 +272,7 @@
 					
 					FP.randomizeSeed();
 					
-					if (!GameWorld.pad.fixed && FP.rand(4) == 0 && speedY > 0 && world !=null)
+					if (!GameWorld.pad.fixed && FP.rand(7) == 0 && speedY > 0 && world !=null)
 					{
 						var newball:Ball = new Ball();
 						newball.x  = x; newball.y = y;
