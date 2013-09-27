@@ -1,15 +1,14 @@
 package worlds 
 {
 	import com.greensock.TweenLite;
-	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	import flash.net.SharedObject;
 	import gameplay_objects.ActionMenu;
 	import gameplay_objects.Ball;
 	import gameplay_objects.BallEnemy;
 	import gameplay_objects.bricks.Brick;
-	import gameplay_objects.Coin;
 	import gameplay_objects.FieldBar;
 	import gameplay_objects.Pad;
 	import gameplay_objects.particles.BackgroundStar;
@@ -21,7 +20,7 @@ package worlds
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.tweens.misc.MultiVarTween;
-	import net.flashpunk.tweens.misc.VarTween;
+	import net.flashpunk.utils.Data;
 	import net.flashpunk.utils.Ease;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.World;
@@ -60,14 +59,17 @@ package worlds
 		
 		public static var timeFactor:Number = 1;
 		public static var move:uint = 1;
+		public static var paused:Boolean;
 		
 		public static var scoreTextLabel:Text;
 		public static var scoreText:Text;
 		public static var score:uint;
 		
+		
 		public function GameWorld() 
 		{
 			i = this;
+			
 			
 			//FP.console.enable();
 			
@@ -97,6 +99,47 @@ package worlds
 			scoreText.x = scoreTextLabel.x + scoreTextLabel.width;
 		}
 		
+		public static function getHighScores():Array
+		{
+			var ar:Array = new Array();
+			Data.load("brickadersHighScores");
+			for (var i:uint = 0; i < 5; i++)
+			{
+				ar.push(Data.readUint("score"+int(i+1), 0));
+			}
+			ar.sort(Array.NUMERIC);
+			
+			return ar;
+		}
+		
+		public static function submitScore(s:uint):Boolean
+		{
+			var ar:Array = getHighScores();
+			
+			var high:Boolean = false;
+			
+			var replaceInd:uint;
+			
+			for (var i:uint = 0; i < ar.length; i++)
+			{
+				if (s > ar[i])
+				{
+					high = true;
+					replaceInd = i;
+					break;
+				}
+			}
+			
+			if (high)
+			{
+				Data.load("brickadersHighScores");
+				Data.writeUint("score" + String(replaceInd + 1), s);
+				Data.save("brickadersHighScores");
+			}
+			
+			return high;
+		}
+		
 		override public function begin():void 
 		{
 			add(sideBar);
@@ -109,6 +152,8 @@ package worlds
 			
 			score = 0;
 			wave = 1;
+			timeFactor = 1;
+			paused = false;
 			fieldLeft = FIELD_TOTAL;
 			
 			sideBar.x = -100;
@@ -291,6 +336,11 @@ package worlds
 		public static function del(e:Entity):void
 		{
 			if (e.world != null) e.world.remove(e);
+		}
+		
+		public static function doGameOver():void
+		{
+			//TODO game over screen
 		}
 		
 	}

@@ -1,0 +1,11 @@
+make help class that stores all variables staticly
+
+help list:
+- pad movement and fixation
+- orbiters rewarded randomly
+- beware of bullets and enemies
+- action menu and no. of actions
+- field movement
+
+- game gets harder
+- lookout for bonus

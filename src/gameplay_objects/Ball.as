@@ -57,8 +57,6 @@
 			
 			SetDIAMETER = 15;
 			
-			
-			
 			picture = new BitmapData(DIAMETER, DIAMETER, true, 0);
 			Draw.setTarget(picture);
 			
@@ -538,7 +536,7 @@
 		
 		public static function get fieldCheck():Boolean
 		{
-			return Input.mouseDown && Input.mouseY < PointBar.Y && GameWorld.fieldLeft > 0 && !ActionMenu.active;
+			return Input.mouseDown && Input.mouseY < PointBar.Y && GameWorld.fieldLeft > 0 && !ActionMenu.active && !GameWorld.paused;
 		}
 		
 	}
