@@ -4,7 +4,6 @@ package worlds
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	import flash.net.SharedObject;
 	import gameplay_objects.ActionMenu;
 	import gameplay_objects.Ball;
 	import gameplay_objects.BallEnemy;
@@ -107,7 +106,9 @@ package worlds
 			{
 				ar.push(Data.readUint("score"+int(i+1), 0));
 			}
-			ar.sort(Array.NUMERIC);
+			
+			ar = ar.sort(Array.DESCENDING|Array.NUMERIC);
+			trace(ar);
 			
 			return ar;
 		}
@@ -118,24 +119,31 @@ package worlds
 			
 			var high:Boolean = false;
 			
-			var replaceInd:uint;
 			
 			for (var i:uint = 0; i < ar.length; i++)
 			{
 				if (s > ar[i])
 				{
 					high = true;
-					replaceInd = i;
 					break;
 				}
 			}
 			
-			if (high)
+			
+			ar.push(s);
+			ar = ar.sort(Array.DESCENDING|Array.NUMERIC);
+			ar.pop();
+			
+			
+			Data.load("brickadersHighScores");
+			for (var j:uint = 0; j < 5; j++)
 			{
-				Data.load("brickadersHighScores");
-				Data.writeUint("score" + String(replaceInd + 1), s);
-				Data.save("brickadersHighScores");
+				Data.writeUint("score" + String(j + 1), ar[j]);
 			}
+			
+			Data.save("brickadersHighScores");
+			
+			GameOver.gameScore = s;
 			
 			return high;
 		}
@@ -151,6 +159,7 @@ package worlds
 			addGraphic(scoreText);
 			
 			score = 0;
+			move = 1;
 			wave = 1;
 			timeFactor = 1;
 			paused = false;
@@ -190,6 +199,7 @@ package worlds
 			actionInvoker.x = (FP.width - SideBar.W - actionInvoker.width) / 2 + SideBar.W;
 			actionInvoker.y = (PointBar.Y - actionInvoker.height) / 2;
 			addGraphic(actionInvoker);
+			
 			
 			super.begin();
 		}
@@ -340,7 +350,8 @@ package worlds
 		
 		public static function doGameOver():void
 		{
-			//TODO game over screen
+			submitScore(score);
+			FP.world = new GameOver;
 		}
 		
 	}

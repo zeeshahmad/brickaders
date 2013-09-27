@@ -224,7 +224,8 @@ package gameplay_objects.bricks
 					}
 					else 
 					{
-						//TODO loose due to brick hit bottom
+						GameWorld.addScore( -80);
+						if (world != null) world.add(new ScoreShow( -80, FP.rand(width) + x, y - 10));
 					}
 				}
 				destroy();

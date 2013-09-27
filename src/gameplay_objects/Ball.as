@@ -1,8 +1,6 @@
 ﻿package gameplay_objects {
 	
 	import flash.display.BitmapData;
-	import flash.display.CapsStyle;
-	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import gameplay_objects.particles.*;
@@ -328,10 +326,10 @@
 					onAnyCollision();
 					
 					//TODO disable for ball to destroy at bottom
-					//if (orbCount == 0) destroy();
+					if (orbCount == 0) destroy();
 					
 					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") ==0)
-					trace("no ball left");//TODO loose due to no ball left
+					GameWorld.doGameOver();//TODO loose due to no ball left
 					
 				}
 				else if (!collide("ball", x, y)) collideOnce = false;

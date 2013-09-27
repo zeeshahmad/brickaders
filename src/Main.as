@@ -8,7 +8,6 @@ package
 	import flash.events.Event;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
-	import worlds.GameOver;
 	import worlds.GameWorld;
 	
 	/**
@@ -37,7 +36,7 @@ package
 			super(800, 480);
 			
 			FP.screen.color = 0x333333;
-			FP.world = new GameOver;
+			FP.world = new GameWorld;
 			
 			
 		}

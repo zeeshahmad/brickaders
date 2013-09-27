@@ -1,8 +1,10 @@
 package worlds 
 {
+	import flash.geom.Rectangle;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
+	import net.flashpunk.utils.Input;
 	import net.flashpunk.World;
 	
 	/**
@@ -47,14 +49,43 @@ package worlds
 			addGraphic(againButton);
 			
 			//this game score
-			gameScore = 6360;
+			//gameScore = 6360;
 			score = new Text("Score: " + String(gameScore));
-			score.size = 42;
 			score.smooth = true;
+			score.size = 42;
+			
 			score.color = 0x5CE998;
 			score.y = 80;
 			score.x = (FP.width - score.width) / 2;
 			addGraphic(score);
+			
+			var highs:Array = new Array();
+			var highText:Text;
+			
+			for (var i:uint = 0; i < GameWorld.getHighScores().length; i++)
+			{
+				highText = new Text(String(i + 1) + ". " + String(GameWorld.getHighScores()[i]));
+				highText.smooth = true;
+				highText.size = 40;
+				highText.x = 250;
+				highText.y = 120 + i * 50;
+				if (GameWorld.getHighScores()[i] == gameScore) highText.color = 0x5CE998;
+				addGraphic(highText);
+			}
+			
+		}
+		
+		override public function update():void 
+		{
+			if (Input.mousePressed)
+			{
+				if (GameWorld.mouseCollideRect(new Rectangle(againButton.x, againButton.y, againButton.width, againButton.height)))
+				{
+					FP.world = new GameWorld;
+				}
+			}
+			
+			super.update();
 		}
 		
 	}
