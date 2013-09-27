@@ -83,6 +83,10 @@ package worlds
 				{
 					FP.world = new GameWorld;
 				}
+				else if (GameWorld.mouseCollideRect(new Rectangle(menuButton.x, menuButton.y, menuButton.width, menuButton.height)))
+				{
+					FP.world = new MainMenuWorld;
+				}
 			}
 			
 			super.update();

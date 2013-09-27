@@ -24,7 +24,7 @@ package gameplay_objects
 			graphic = img;
 			setHitbox(img.width, img.height);
 			
-			x = SideBar.W + FP.rand(FP.width - SideBar.W);
+			x = SideBar.W + FP.rand(FP.width - SideBar.W - img.width);
 			y = -height;
 			
 			type = "ballenemy";
@@ -40,7 +40,11 @@ package gameplay_objects
 			speed = -Math.abs(speed);
 			
 			if (collide("ball", x, y))
-			(collide("ball", x, y) as Ball).destroy();
+			{
+				(collide("ball", x, y) as Ball).removeOrbiters(false);
+				(collide("ball", x, y) as Ball).destroy();
+				GameWorld.doGameOver();
+			}
 			
 			
 			if (speed < 0 && y < -height) if (world != null) world.remove(this);

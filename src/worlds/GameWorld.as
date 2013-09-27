@@ -108,7 +108,6 @@ package worlds
 			}
 			
 			ar = ar.sort(Array.DESCENDING|Array.NUMERIC);
-			trace(ar);
 			
 			return ar;
 		}
@@ -302,11 +301,11 @@ package worlds
 			{
 				slomoOn = true;
 				slomoOnT = new MultiVarTween();
-				slomoOnT.tween(GameWorld, { timeFactor:0.2 }, 0.7, Ease.quadOut);
+				slomoOnT.tween(GameWorld, { timeFactor:0.2 }, 0.8, Ease.quadOut);
 				i.addTween(slomoOnT, true);
 				
 				slomoOffT = new MultiVarTween(function():void { slomoOn = false; } );
-				slomoOffT.tween(GameWorld, {timeFactor:1},0.7, Ease.quadOut, 5);
+				slomoOffT.tween(GameWorld, {timeFactor:1},0.8, Ease.quadOut, 5);
 				i.addTween(slomoOffT, true);
 			}
 		}
@@ -350,8 +349,11 @@ package worlds
 		
 		public static function doGameOver():void
 		{
-			submitScore(score);
-			FP.world = new GameOver;
+			if (FP.world.typeCount("ball") == 0 && FP.world.typeCount("stealthball") ==0 && FP.world.typeCount("powerball") == 0)
+			{
+				submitScore(score);
+				FP.world = new GameOver;
+			}
 		}
 		
 	}

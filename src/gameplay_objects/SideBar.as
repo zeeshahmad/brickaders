@@ -9,6 +9,7 @@ package gameplay_objects
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.utils.Input;
+	import worlds.GameOver;
 	import worlds.GameWorld;
 	
 	/**
@@ -33,6 +34,8 @@ package gameplay_objects
 		
 		[Embed(source = "../../lib/sidebar/pause.png")]
 		private static const pausePng:Class;
+		[Embed(source = "../../lib/sidebar/giveup.png")]
+		private static const GIVEUP_PNG:Class;
 		
 		private var musicOn:Image;
 		private var musicOff:Image;
@@ -40,6 +43,7 @@ package gameplay_objects
 		private var soundOff:Image;
 		
 		private var pause:Image;
+		private var giveUp:Image;
 		
 		public var highLabel:Text;
 		public var highText:Text;
@@ -69,6 +73,7 @@ package gameplay_objects
 			soundOn = new Image(soundOnPng);
 			
 			pause = new Image(pausePng);
+			giveUp = new Image(GIVEUP_PNG);
 			
 			
 			addGraphic(musicOff); addGraphic(musicOn);
@@ -106,6 +111,11 @@ package gameplay_objects
 			pauseLabel.smooth = true;
 			pauseLabel.visible = false;
 			
+			giveUp.x = (FP.width - SideBar.W - giveUp.width) / 2 + SideBar.W;
+			giveUp.y = 300;
+			
+			giveUp.visible = false;
+			
 		}
 		
 		override public function added():void 
@@ -113,6 +123,7 @@ package gameplay_objects
 			addGraphic(waveText);
 			addGraphic(highText);
 			addGraphic(pauseLabel);
+			addGraphic(giveUp);
 			
 			super.added();
 		}
@@ -131,6 +142,7 @@ package gameplay_objects
 						pauseLabel.text = "Game Paused";
 						pauseLabel.width = pauseLabel.textWidth;
 						pauseLabel.visible = true;
+						giveUp.visible = true;
 						pauseLabel.x = (FP.width - pauseLabel.width - SideBar.W) / 2 + SideBar.W;
 						GameWorld.move = 0;
 						GameWorld.paused = true;
@@ -149,14 +161,21 @@ package gameplay_objects
 				}
 			}
 			
-			if (GameWorld.paused && resumeTween != null)
+			if (GameWorld.paused)
 			{
-				if (resumeTween.active)
+				if (Input.mousePressed && GameWorld.mouseCollideRect(new Rectangle(giveUp.x, giveUp.y, giveUp.width, giveUp.height)))
+				{
+					FP.world = new GameOver;
+				}
+				
+				else if (resumeTween != null) {if (resumeTween.active)
 				{
 					pauseLabel.text = "Action resumes in " + String(Math.ceil(resumeDelay));
 					pauseLabel.x = (FP.width - pauseLabel.width - SideBar.W) / 2 + SideBar.W;
-				}
+				}}
 			}
+			
+			
 			super.update();
 		}
 		
@@ -165,6 +184,7 @@ package gameplay_objects
 			GameWorld.move = 1;
 			GameWorld.paused = false;
 			pauseLabel.visible = false;
+			giveUp.visible = false;
 		}
 		
 	}

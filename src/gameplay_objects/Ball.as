@@ -303,14 +303,9 @@
 					
 					var orbiters:Array = GameWorld.entitiesByType("orbiter", world);
 					
-					for (var or:uint = 0; or < orbiters.length; or++)
-					{
-						if ((orbiters[or] as Orbiter).b == this)
-						{
-							GameWorld.del(orbiters[or] as Orbiter);
-							break;
-						}
-					}
+					removeOrbiters();
+					
+					
 					
 					var orbCount:uint = 0;
 					for (var or2:uint = 0; or2 < orbiters.length; or2++)
@@ -378,6 +373,21 @@
 			
 			
 			super.update();
+		}
+		
+		
+		public function removeOrbiters(brk:Boolean = true):void
+		{
+			var orbiters:Array = GameWorld.entitiesByType("orbiter", world);
+			
+			for (var or:uint = 0; or < orbiters.length; or++)
+			{
+				if ((orbiters[or] as Orbiter).b == this)
+				{
+					GameWorld.del(orbiters[or] as Orbiter);
+					if (brk) break;
+				}
+			}
 		}
 		
 		override public function render():void 

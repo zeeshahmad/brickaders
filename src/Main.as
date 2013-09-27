@@ -9,6 +9,7 @@ package
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
 	import worlds.GameWorld;
+	import worlds.MainMenuWorld;
 	
 	/**
 	 * ...
@@ -36,7 +37,7 @@ package
 			super(800, 480);
 			
 			FP.screen.color = 0x333333;
-			FP.world = new GameWorld;
+			FP.world = new MainMenuWorld;
 			
 			
 		}

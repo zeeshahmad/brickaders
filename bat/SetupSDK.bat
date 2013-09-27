@@ -1,12 +1,12 @@
 :user_configuration
 
 :: Path to Flex SDK
-::set FLEX_SDK=U:\FlashDevelop\Tools\flexsdk
-set FLEX_SDK=C:\Program Files\FlashDevelop\Tools\flexsdk
+set FLEX_SDK=U:\FlashDevelop\Tools\flexsdk
+::set FLEX_SDK=C:\Program Files\FlashDevelop\Tools\flexsdk
 
 :: Path to Android SDK
-::set ANDROID_SDK=U:\FlashDevelop\Tools\android
-set ANDROID_SDK=C:\Program Files\FlashDevelop\Tools\android
+set ANDROID_SDK=U:\FlashDevelop\Tools\android
+::set ANDROID_SDK=C:\Program Files\FlashDevelop\Tools\android
 
 
 :validation
