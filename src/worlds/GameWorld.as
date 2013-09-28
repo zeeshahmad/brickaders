@@ -40,6 +40,10 @@ package worlds
 		private static const START_SND:Class;
 		private static var startSnd:Sfx = new Sfx(START_SND);
 		
+		/*[Embed(source = "../../lib/music/game.mp3")]
+		private static const MUSIC:Class;
+		public static var music:Sfx = new Sfx(MUSIC);*/
+		
 		public static var i:GameWorld;
 		
 		public static var firstBallSpeed:Number = 10;
@@ -67,6 +71,8 @@ package worlds
 		public static var scoreText:Text;
 		public static var score:uint;
 		
+		public static var soundOn:Boolean = true;
+		
 		
 		public function GameWorld() 
 		{
@@ -91,6 +97,8 @@ package worlds
 			scoreText.smooth = true;
 			scoreText.size = 24;
 			scoreText.x = scoreTextLabel.x + scoreTextLabel.width;
+			
+			Main.CURRENT_WORLD = "gameWorld";
 		}
 		
 		public static function addScore(d:int):void
@@ -151,7 +159,7 @@ package worlds
 		
 		override public function begin():void 
 		{
-			startSnd.play();
+			if (GameWorld.soundOn) startSnd.play();
 			
 			add(sideBar);
 			add(pointBar);
@@ -204,8 +212,15 @@ package worlds
 			actionInvoker.y = (PointBar.Y - actionInvoker.height) / 2;
 			addGraphic(actionInvoker);
 			
+			//music.loop();
 			
 			super.begin();
+		}
+		
+		override public function end():void 
+		{
+			//music.stop();
+			super.end();
 		}
 		
 		

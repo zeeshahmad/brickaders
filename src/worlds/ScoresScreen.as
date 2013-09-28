@@ -35,7 +35,7 @@ package worlds
 				highText.y = 200 + i * 50;
 				addGraphic(highText);
 			}
-			
+			Main.CURRENT_WORLD = "scoresScreen";
 		}
 		
 		override public function update():void 

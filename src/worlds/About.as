@@ -29,6 +29,8 @@ package worlds
 			abouttext.size = 25;
 			abouttext.smooth = true;
 			addGraphic(abouttext);
+			
+			Main.CURRENT_WORLD = "about";
 		}
 		
 		override public function update():void 

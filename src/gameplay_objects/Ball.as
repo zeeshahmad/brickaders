@@ -192,7 +192,7 @@
 		{
 			shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
 			new Bullet(new Point(x+halfWidth, y+halfHeight), shotAngle, shotSpeed, 2, world);
-			Brick.shootSnd.play();
+			if (GameWorld.soundOn) Brick.shootSnd.play();
 			//setCartesianSpd(speedX - (shotSpeed / 4) * Math.cos(shotAngle), speedY - (shotSpeed / 4) * Math.sin(shotAngle));
 			setRadialSpd(speed, shotAngle + Math.PI );
 			
@@ -253,7 +253,7 @@
 				{
 					bounceRight();
 					//GameWorld.resetCombo();
-					hitWallSnd.play();
+					if (GameWorld.soundOn) hitWallSnd.play();
 					
 					clearWallTouch();
 					onAnyCollision();
@@ -262,7 +262,7 @@
 				else if (this.x + this.width > FP.width)//right wall
 				{
 					bounceLeft();
-					hitWallSnd.play();
+					if (GameWorld.soundOn) hitWallSnd.play();
 					
 					clearWallTouch();
 					onAnyCollision();
@@ -272,7 +272,7 @@
 				if (this.y < 0)//upper wall
 				{
 					bounceDown();
-					hitWallSnd.play();
+					if (GameWorld.soundOn) hitWallSnd.play();
 					
 					clearWallTouch();
 					onAnyCollision();
@@ -281,7 +281,7 @@
 				//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad
 				{
 					collideOnce = true;
-					hitPadSnd.play();
+					if (GameWorld.soundOn) hitPadSnd.play();
 					
 					FP.randomizeSeed();
 					
@@ -342,7 +342,7 @@
 					}
 					else 
 					{
-						hitWallSnd.play();
+						if (GameWorld.soundOn) hitWallSnd.play();
 					}
 					
 					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") == 0)
@@ -539,7 +539,7 @@
 			
 			collidable = false;
 			type = "exploding ball";
-			destroySnd.play();
+			if (GameWorld.soundOn) destroySnd.play();
 			
 			//explosion
 			var l:Number = 4;

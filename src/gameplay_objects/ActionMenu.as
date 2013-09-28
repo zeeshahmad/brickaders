@@ -163,7 +163,7 @@ package gameplay_objects
 					GameWorld.doSlomo();
 				}
 				
-				selectSnd.play();
+				if (GameWorld.soundOn) selectSnd.play();
 			}
 			else {
 				trace("no action selected");
@@ -193,7 +193,7 @@ package gameplay_objects
 								
 								if (selectedIndex != i)
 								{
-									hoverSnd.play();
+									if (GameWorld.soundOn) hoverSnd.play();
 								}
 								
 								selectedIndex = i;

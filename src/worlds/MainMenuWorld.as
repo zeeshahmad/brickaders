@@ -30,7 +30,7 @@ package worlds
 		
 		[Embed(source = "../../lib/music/menu.mp3")]
 		private static const MUSIC_SND:Class;
-		private static var music:Sfx = new Sfx(MUSIC_SND);
+		public static var music:Sfx = new Sfx(MUSIC_SND);
 		
 		[Embed(source = "../../lib/sounds/button.mp3")]
 		private static const BUTTON_SND:Class;
@@ -50,6 +50,7 @@ package worlds
 			tTween.tween(title, { y: 70 }, 0.6, Ease.bounceOut);
 			addTween(tTween, true);
 			
+			Main.CURRENT_WORLD = "mainMenuWorld";
 		}
 		
 		override public function begin():void 

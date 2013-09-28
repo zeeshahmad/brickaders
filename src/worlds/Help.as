@@ -43,6 +43,8 @@ package worlds
 			current = 0;
 			
 			addGraphic(slide1);
+			
+			Main.CURRENT_WORLD = "help";
 		}
 		
 		override public function update():void 

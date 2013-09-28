@@ -278,7 +278,7 @@ package gameplay_objects.bricks
 			FP.randomizeSeed();
 			if (world != null) if (world.typeCount("orbiter") < 6) if (FP.rand(3) == 0) {
 				ball.world.add(new Orbiter(ball as Ball));
-				getOrbiterSnd.play();
+				if (GameWorld.soundOn) getOrbiterSnd.play();
 			}
 			
 			destroy();
@@ -320,7 +320,7 @@ package gameplay_objects.bricks
 		private function departBullet():void
 		{
 			new Bullet(new Point(centerX, bottom + 10), fireAngle, 5, 2, world);
-			shootSnd.play();
+			if (GameWorld.soundOn) shootSnd.play();
 			var t:MultiVarTween = new MultiVarTween(pointAndShoot);
 			t.tween(this, { }, 2.8);
 			addTween(t);
@@ -351,7 +351,7 @@ package gameplay_objects.bricks
 			collidable = false;
 			type = "exploding brick";
 			
-			explodeSnd.play();
+			if (GameWorld.soundOn) explodeSnd.play();
 			
 			//explosion
 			var l:Number = 10;

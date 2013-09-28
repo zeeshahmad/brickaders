@@ -6,8 +6,10 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import gameplay_objects.SideBar;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
+	import net.flashpunk.World;
 	import worlds.GameWorld;
 	import worlds.MainMenuWorld;
 	
@@ -19,15 +21,15 @@ package
 	{
 		
 		public static var _instance:Main;
+		public static var CURRENT_WORLD:String = "";
 		
 		public function Main():void 
 		{
 			_instance = this;
 			
 			
-			/*stage.addEventListener(Event.DEACTIVATE, deactivate);
 			
-			// touch or gesture?
+			/*// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			// entry point
@@ -56,17 +58,26 @@ package
 			super.init();
 		}
 		
-		
-		private function deactivate(e:Event):void 
+		override public function focusLost():void
 		{
-			// auto-close
-			NativeApplication.nativeApplication.exit();
+			if (CURRENT_WORLD == "gameWorld")
+			{
+				GameWorld.sideBar.doPause();
+			}
+			else if (CURRENT_WORLD == "mainMenuWorld")
+			{
+				MainMenuWorld.music.stop();
+			}
+			super.focusLost();
 		}
 		
-		
-		
-		
-		
+		override public function focusGained():void
+		{
+			if (CURRENT_WORLD == "mainMenuWorld")
+			{
+				if (!MainMenuWorld.music.playing) MainMenuWorld.music.loop();
+			}
+		}
 		
 		
 		

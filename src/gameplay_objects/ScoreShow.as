@@ -33,13 +33,13 @@ package gameplay_objects
 			if (amount > 0) {
 				showString = "+ ";
 				c = 0xffffff;
-				//upSnd.play();
+				//if (GameWorld.soundOn) upSnd.play();
 				
 			}
 			else if (amount < 0) {
 				showString = "- ";
 				c = 0xE73103;
-				downSnd.play();
+				if (GameWorld.soundOn) downSnd.play();
 			}
 			else {
 				showString = "";

@@ -76,8 +76,8 @@ package gameplay_objects
 			giveUp = new Image(GIVEUP_PNG);
 			
 			
-			addGraphic(musicOff); addGraphic(musicOn);
-			addGraphic(soundOff); addGraphic(soundOn);
+			//addGraphic(musicOn); addGraphic(musicOff); 
+			addGraphic(soundOff); addGraphic(soundOn); 
 			addGraphic(pause);
 			
 			musicOff.x = 10;
@@ -118,6 +118,8 @@ package gameplay_objects
 			
 		}
 		
+		
+		
 		override public function added():void 
 		{
 			addGraphic(waveText);
@@ -131,6 +133,17 @@ package gameplay_objects
 		public var resumeDelay:Number;
 		public var resumeTween:MultiVarTween;
 		
+		public function doPause():void
+		{
+			pauseLabel.text = "Game Paused";
+			pauseLabel.width = pauseLabel.textWidth;
+			pauseLabel.visible = true;
+			giveUp.visible = true;
+			pauseLabel.x = (FP.width - pauseLabel.width - SideBar.W) / 2 + SideBar.W;
+			GameWorld.move = 0;
+			GameWorld.paused = true;
+		}
+		
 		override public function update():void 
 		{
 			if (Input.mousePressed)
@@ -139,13 +152,7 @@ package gameplay_objects
 				{
 					if (!GameWorld.paused)
 					{
-						pauseLabel.text = "Game Paused";
-						pauseLabel.width = pauseLabel.textWidth;
-						pauseLabel.visible = true;
-						giveUp.visible = true;
-						pauseLabel.x = (FP.width - pauseLabel.width - SideBar.W) / 2 + SideBar.W;
-						GameWorld.move = 0;
-						GameWorld.paused = true;
+						doPause();
 					}
 					else if ((resumeTween != null && !resumeTween.active) || resumeTween == null)
 					{
@@ -157,6 +164,31 @@ package gameplay_objects
 							resumeTween.tween(this, { resumeDelay: 0 }, 2);
 							addTween(resumeTween, true);
 						}
+					}
+				}
+				/*else if (GameWorld.mouseCollideRect(new Rectangle(musicOn.x, musicOn.y, musicOn.width, musicOn.height)))
+				{
+					if (GameWorld.music.playing)
+					{
+						GameWorld.music.stop();
+						addGraphic(musicOn);
+					}
+					else {
+						GameWorld.music.loop();
+						addGraphic(musicOff);
+					}
+				}*/
+				else if (GameWorld.mouseCollideRect(new Rectangle(soundOn.x, soundOn.y, soundOn.width, soundOn.height)))
+				{
+					if (GameWorld.soundOn)
+					{
+						GameWorld.soundOn = false;
+						addGraphic(soundOff);
+					}
+					else
+					{
+						GameWorld.soundOn = true;
+						addGraphic(soundOn);
 					}
 				}
 			}

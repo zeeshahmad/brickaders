@@ -75,6 +75,8 @@ package worlds
 				addGraphic(highText);
 			}
 			
+			Main.CURRENT_WORLD = "gameOver";
+			
 		}
 		
 		override public function update():void 
