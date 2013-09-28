@@ -22,6 +22,11 @@ package worlds
 		private static const TITLE_PNG:Class;
 		private var title:Image;
 		
+		[Embed(source = "../../lib/bg/ship.png")]
+		private static const SHIP_PNG:Class;
+		private var ship:Image = new Image(SHIP_PNG);
+		private var shipY:Number;
+		
 		public function MainMenuWorld() 
 		{
 			mainButtons = new Image(MAIN_BUTTONS_PNG);
@@ -36,6 +41,14 @@ package worlds
 			tTween.tween(title, { y: 70 }, 0.6, Ease.bounceOut);
 			addTween(tTween, true);
 			
+		}
+		
+		override public function begin():void 
+		{
+			ship.x = -ship.width;
+			shipY = FP.rand(FP.width - ship.height - mainButtons.height);
+			addGraphic(ship);
+			super.begin();
 		}
 		
 		public function mouseCollideImage(i:Image):Boolean
@@ -58,7 +71,7 @@ package worlds
 				}
 				else if (GameWorld.mouseCollideRect(new Rectangle(mainButtons.x + 400, mainButtons.y, 400, 100)))
 				{
-					trace("help");
+					FP.world = new Help;
 				}
 				else if (GameWorld.mouseCollideRect(new Rectangle(mainButtons.x, mainButtons.y + 100, 400, 100)))
 				{
@@ -70,6 +83,9 @@ package worlds
 				}
 				
 			}
+			
+			ship.x += 0.15;
+			ship.y = shipY + 10 * Math.cos(ship.x * Math.PI/6);
 			
 			super.update();
 		}

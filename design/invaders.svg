@@ -14,7 +14,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.48.2 r9819"
    sodipodi:docname="invaders.svg">
   <defs
      id="defs4">
@@ -687,16 +687,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7071068"
-     inkscape:cx="888.38292"
-     inkscape:cy="-100.37292"
+     inkscape:cx="329.18776"
+     inkscape:cy="453.29167"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1018"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:window-width="784"
+     inkscape:window-height="834"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
      showguides="true"
      inkscape:guide-bbox="true" />
   <metadata
@@ -707,7 +707,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -868,7 +868,7 @@
        inkscape:connector-curvature="0" />
     <g
        id="g3082"
-       transform="translate(-6,0)"
+       transform="translate(-1.7573598,6.9162525e-8)"
        inkscape:export-filename="C:\Users\Zeeshan\Development\AIR\Brickaders\lib\bricks\invader1.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">

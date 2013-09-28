@@ -69,7 +69,6 @@ package worlds
 		{
 			i = this;
 			
-			
 			//FP.console.enable();
 			
 			sideBar = new SideBar();
@@ -163,6 +162,7 @@ package worlds
 			timeFactor = 1;
 			paused = false;
 			fieldLeft = FIELD_TOTAL;
+			Ball.targetOn = false;
 			
 			sideBar.x = -100;
 			var sidebarT:MultiVarTween = new MultiVarTween();
@@ -200,6 +200,7 @@ package worlds
 			addGraphic(actionInvoker);
 			
 			
+			
 			super.begin();
 		}
 		
@@ -214,8 +215,7 @@ package worlds
 			//PointBar.firstBall = new Ball();
 			var ball:Ball = new Ball();
 			add(ball); ball.moveTo(200, 200);
-			ball.setRadialSpd(12, -Math.PI / 4);
-			
+			ball.setRadialSpd(10, -Math.PI / 4);
 		}
 		
 		override public function update():void 
@@ -258,8 +258,10 @@ package worlds
 				}
 			}
 			
+			
 			super.update();
 		}
+		
 		
 		
 		public function spawnBricks():void

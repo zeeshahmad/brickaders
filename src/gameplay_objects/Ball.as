@@ -306,7 +306,6 @@
 					removeOrbiters();
 					
 					
-					
 					var orbCount:uint = 0;
 					for (var or2:uint = 0; or2 < orbiters.length; or2++)
 					{
@@ -324,7 +323,8 @@
 					if (orbCount == 0) destroy();
 					
 					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") ==0)
-					GameWorld.doGameOver();//TODO loose due to no ball left
+					GameWorld.doGameOver();
+					
 					
 				}
 				else if (!collide("ball", x, y)) collideOnce = false;
@@ -358,6 +358,7 @@
 						
 						if (world != null) world.add(targetEntity);
 						targetOn = false;
+						thisTargetOn = false;
 						shootBullet();
 						
 						var targetRemoveTween:MultiVarTween = new MultiVarTween(function():void {
@@ -374,6 +375,8 @@
 			
 			super.update();
 		}
+		
+		public var thisTargetOn:Boolean = false;
 		
 		
 		public function removeOrbiters(brk:Boolean = true):void
@@ -471,6 +474,7 @@
 			if (!targetOn)
 			{
 				targetOn = true;
+				thisTargetOn = true;
 				targetEntity = new Entity(0, 0, new Image(TARGET_PNG));
 				targetEntity.type = "targetEntity";
 				targetEntity.setHitbox(Image(targetEntity.graphic).width, Image(targetEntity.graphic).height);
@@ -506,8 +510,10 @@
 		
 		public function destroy():void
 		{		
+			
+			
 			collidable = false;
-			type = "exploding brick";
+			type = "exploding ball";
 			
 			//explosion
 			var l:Number = 4;
@@ -540,6 +546,15 @@
 		private function removeThis():void
 		{
 			if (this.world != null) this.world.remove(this);
+			
+			if (thisTargetOn)
+			{
+				targetEntity = null;
+				targetOn = false;
+				var b:Ball = FP.world.typeFirst("ball") as Ball;
+				b.doTarget();
+			}
+			
 		}
 		
 		public static function get fieldCheck():Boolean

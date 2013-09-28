@@ -175,7 +175,6 @@ package gameplay_objects
 				}}
 			}
 			
-			
 			super.update();
 		}
 		
