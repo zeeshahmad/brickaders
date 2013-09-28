@@ -1,6 +1,5 @@
 package gameplay_objects.ui 
 {
-	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;

@@ -43,6 +43,7 @@ package worlds
 			if (Input.mousePressed)
 			{
 				FP.world = new MainMenuWorld;
+				MainMenuWorld.buttonSnd.play();
 			}
 			
 			super.update();

@@ -14,6 +14,7 @@ package gameplay_objects.bricks
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Graphiclist;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.tweens.misc.VarTween;
 	import net.flashpunk.utils.Ease;
@@ -60,6 +61,18 @@ package gameplay_objects.bricks
 		
 		[Embed(source = "../../../lib/bricks/shield-icon.png")]
 		private static const SHIELD_IMG:Class;
+		
+		[Embed(source = "../../../lib/sounds/brick_explode.mp3")]
+		private static const EXPLODE_SND:Class;
+		private static var explodeSnd:Sfx = new Sfx(EXPLODE_SND);
+		
+		[Embed(source = "../../../lib/sounds/shoot.mp3")]
+		private static const SHOOT_SND:Class;
+		public static var shootSnd:Sfx = new Sfx(SHOOT_SND);
+		
+		[Embed(source = "../../../lib/sounds/get_orbiter.mp3")]
+		private static const GET_ORBITER:Class;
+		private static var getOrbiterSnd:Sfx = new Sfx(GET_ORBITER);
 		
 		private var gun:Image = new Image(GUN_IMG);
 		private var exhaustRight:Image = new Image(EXHAUST_IMG);
@@ -263,7 +276,10 @@ package gameplay_objects.bricks
 			if (world != null) world.add(new ScoreShow(hitScore, FP.rand(width) + x, y - height));
 			
 			FP.randomizeSeed();
-			if (world !=null) if (world.typeCount("orbiter") < 6) if (FP.rand(3) == 0) ball.world.add(new Orbiter(ball as Ball));
+			if (world != null) if (world.typeCount("orbiter") < 6) if (FP.rand(3) == 0) {
+				ball.world.add(new Orbiter(ball as Ball));
+				getOrbiterSnd.play();
+			}
 			
 			destroy();
 		}
@@ -304,6 +320,7 @@ package gameplay_objects.bricks
 		private function departBullet():void
 		{
 			new Bullet(new Point(centerX, bottom + 10), fireAngle, 5, 2, world);
+			shootSnd.play();
 			var t:MultiVarTween = new MultiVarTween(pointAndShoot);
 			t.tween(this, { }, 2.8);
 			addTween(t);
@@ -333,6 +350,8 @@ package gameplay_objects.bricks
 		{		
 			collidable = false;
 			type = "exploding brick";
+			
+			explodeSnd.play();
 			
 			//explosion
 			var l:Number = 10;

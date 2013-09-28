@@ -1,6 +1,5 @@
 package worlds 
 {
-	import com.greensock.TweenLite;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
@@ -11,13 +10,13 @@ package worlds
 	import gameplay_objects.FieldBar;
 	import gameplay_objects.Pad;
 	import gameplay_objects.particles.BackgroundStar;
-	import gameplay_objects.particles.ExplosionParticles;
 	import gameplay_objects.PointBar;
 	import gameplay_objects.SideBar;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.utils.Data;
 	import net.flashpunk.utils.Ease;
@@ -36,6 +35,10 @@ package worlds
 		
 		[Embed(source = "../../lib/bg/planet1.png")]
 		public static const PLANET_1:Class;
+		
+		[Embed(source = "../../lib/sounds/start.mp3")]
+		private static const START_SND:Class;
+		private static var startSnd:Sfx = new Sfx(START_SND);
 		
 		public static var i:GameWorld;
 		
@@ -148,6 +151,8 @@ package worlds
 		
 		override public function begin():void 
 		{
+			startSnd.play();
+			
 			add(sideBar);
 			add(pointBar);
 			add(pad);
@@ -198,7 +203,6 @@ package worlds
 			actionInvoker.x = (FP.width - SideBar.W - actionInvoker.width) / 2 + SideBar.W;
 			actionInvoker.y = (PointBar.Y - actionInvoker.height) / 2;
 			addGraphic(actionInvoker);
-			
 			
 			
 			super.begin();
@@ -280,7 +284,7 @@ package worlds
 			}
 		}
 		
-		public function stopPlayerInput():void
+		/*public function stopPlayerInput():void
 		{
 			
 			TweenLite.to(GameWorld, 0.5, { move: 1, onStart:function():void {
@@ -291,7 +295,7 @@ package worlds
 				}
 			}});
 			
-		}
+		}*/
 		
 		public static var slomoOnT:MultiVarTween;
 		public static var slomoOffT:MultiVarTween;
@@ -324,14 +328,14 @@ package worlds
 			return arr;
 		}
 		
-		public static function explosion(obj:DisplayObject):Boolean
+		/*public static function explosion(obj:DisplayObject):Boolean
 		{
 			var gotBrickOnExplosion:Boolean = false;
 			
 			new ExplosionParticles(obj.x, obj.y, [0xF3B90A, 0xC71C03], [4, 5]);
 			
 			return gotBrickOnExplosion;
-		}
+		}*/
 		
 		
 		public static function pythagoras(x1:Number, y1:Number, x2:Number = 0, y2:Number = 0):Number
@@ -353,8 +357,13 @@ package worlds
 		{
 			if (FP.world.typeCount("ball") == 0 && FP.world.typeCount("stealthball") ==0 && FP.world.typeCount("powerball") == 0)
 			{
+				var overTween:MultiVarTween = new MultiVarTween(function():void{
+				
 				submitScore(score);
 				FP.world = new GameOver;
+				});
+				overTween.tween(GameWorld, { }, 1);
+				FP.world.addTween(overTween, true);
 			}
 		}
 		

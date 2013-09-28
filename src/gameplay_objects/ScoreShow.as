@@ -2,6 +2,7 @@ package gameplay_objects
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Text;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import worlds.GameWorld;
 	
@@ -11,6 +12,13 @@ package gameplay_objects
 	 */
 	public class ScoreShow extends Entity 
 	{
+		/*[Embed(source = "../../lib/sounds/scoreUp.mp3")]
+		private static const UP_SND:Class;
+		private static var upSnd:Sfx = new Sfx(UP_SND);*/
+		
+		[Embed(source = "../../lib/sounds/scoreDown.mp3")]
+		private static const DOWN_SND:Class;
+		private static var downSnd:Sfx = new Sfx(DOWN_SND);
 		
 		public var showString:String;
 		public var text:Text;
@@ -25,10 +33,13 @@ package gameplay_objects
 			if (amount > 0) {
 				showString = "+ ";
 				c = 0xffffff;
+				//upSnd.play();
+				
 			}
 			else if (amount < 0) {
 				showString = "- ";
 				c = 0xE73103;
+				downSnd.play();
 			}
 			else {
 				showString = "";

@@ -59,6 +59,8 @@ package worlds
 			score.x = (FP.width - score.width) / 2;
 			addGraphic(score);
 			
+			//TODO make game over music
+			
 			var highs:Array = new Array();
 			var highText:Text;
 			
@@ -82,10 +84,12 @@ package worlds
 				if (GameWorld.mouseCollideRect(new Rectangle(againButton.x, againButton.y, againButton.width, againButton.height)))
 				{
 					FP.world = new GameWorld;
+					//MainMenuWorld.buttonSnd.play();
 				}
 				else if (GameWorld.mouseCollideRect(new Rectangle(menuButton.x, menuButton.y, menuButton.width, menuButton.height)))
 				{
 					FP.world = new MainMenuWorld;
+					MainMenuWorld.buttonSnd.play();
 				}
 			}
 			

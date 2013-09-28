@@ -3,10 +3,12 @@
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.particles.*;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.utils.Ease;
@@ -18,6 +20,19 @@
 		
 		[Embed(source = "../../lib/ball/target.png")]
 		private static const TARGET_PNG:Class;
+		
+		[Embed(source = "../../lib/sounds/hit_wall.mp3")]
+		private static const HIT_WALL_SND:Class;
+		private var hitWallSnd:Sfx = new Sfx(HIT_WALL_SND);
+		
+		[Embed(source = "../../lib/sounds/hit_pad.mp3")]
+		private static const HIT_PAD_SND:Class;
+		private var hitPadSnd:Sfx = new Sfx(HIT_PAD_SND);
+		
+		[Embed(source = "../../lib/sounds/ball_destroy.mp3")]
+		private static const DESTROY_SND:Class;
+		private var destroySnd:Sfx = new Sfx(DESTROY_SND);
+		
 		
 		public var unstopable:Boolean = false;
 		public var shotAngle:Number;
@@ -135,8 +150,7 @@
 		public function bounceRight():void { setCartesianSpd( Math.abs(speedX), speedY ); }
 		public function bounceLeft():void { setCartesianSpd( -Math.abs(speedX), speedY );}
 		public function bounceUp():void { setCartesianSpd(speedX, -Math.abs(speedY) );  }
-		public function bounceDown():void { setCartesianSpd(speedX, Math.abs(speedY) ); 
-		new CollisionAngleDisplay(x, y, 1, radians * 180 / Math.PI); }
+		public function bounceDown():void { setCartesianSpd(speedX, Math.abs(speedY) ); }
 		
 		
 		
@@ -178,7 +192,7 @@
 		{
 			shotAngle = Math.atan2(Input.mouseY - y - halfHeight, Input.mouseX - x - halfWidth);
 			new Bullet(new Point(x+halfWidth, y+halfHeight), shotAngle, shotSpeed, 2, world);
-			
+			Brick.shootSnd.play();
 			//setCartesianSpd(speedX - (shotSpeed / 4) * Math.cos(shotAngle), speedY - (shotSpeed / 4) * Math.sin(shotAngle));
 			setRadialSpd(speed, shotAngle + Math.PI );
 			
@@ -239,6 +253,7 @@
 				{
 					bounceRight();
 					//GameWorld.resetCombo();
+					hitWallSnd.play();
 					
 					clearWallTouch();
 					onAnyCollision();
@@ -247,7 +262,7 @@
 				else if (this.x + this.width > FP.width)//right wall
 				{
 					bounceLeft();
-					//GameWorld.resetCombo();
+					hitWallSnd.play();
 					
 					clearWallTouch();
 					onAnyCollision();
@@ -257,6 +272,7 @@
 				if (this.y < 0)//upper wall
 				{
 					bounceDown();
+					hitWallSnd.play();
 					
 					clearWallTouch();
 					onAnyCollision();
@@ -265,6 +281,7 @@
 				//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad
 				{
 					collideOnce = true;
+					hitPadSnd.play();
 					
 					FP.randomizeSeed();
 					
@@ -301,6 +318,7 @@
 					bounceUp();
 					
 					
+					
 					var orbiters:Array = GameWorld.entitiesByType("orbiter", world);
 					
 					removeOrbiters();
@@ -319,11 +337,18 @@
 					
 					onAnyCollision();
 					
-					//TODO disable for ball to destroy at bottom
-					if (orbCount == 0) destroy();
+					if (orbCount == 0) {
+						destroy();
+					}
+					else 
+					{
+						hitWallSnd.play();
+					}
 					
-					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") ==0)
-					GameWorld.doGameOver();
+					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") == 0)
+					{
+						GameWorld.doGameOver();
+					}
 					
 					
 				}
@@ -473,6 +498,7 @@
 		{
 			if (!targetOn)
 			{
+				
 				targetOn = true;
 				thisTargetOn = true;
 				targetEntity = new Entity(0, 0, new Image(TARGET_PNG));
@@ -511,9 +537,9 @@
 		public function destroy():void
 		{		
 			
-			
 			collidable = false;
 			type = "exploding ball";
+			destroySnd.play();
 			
 			//explosion
 			var l:Number = 4;

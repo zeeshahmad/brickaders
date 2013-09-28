@@ -1,10 +1,12 @@
 package gameplay_objects 
 {
 	import flash.geom.Rectangle;
+	import flash.media.Sound;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.World;
 	import worlds.GameWorld;
@@ -32,6 +34,18 @@ package gameplay_objects
 		private static const OPTIONS_PNG:Class;
 		private var options:Image;
 		
+		[Embed(source="../../lib/sounds/action_hover.mp3")]
+		private static const HOVER_SND:Class;
+		private var hoverSnd:Sfx = new Sfx(HOVER_SND);
+		
+		[Embed(source = "../../lib/sounds/action_invoke.mp3")]
+		private static const INVOKE_SND:Class;
+		private var invokeSnd:Sfx = new Sfx(INVOKE_SND);
+		
+		[Embed(source = "../../lib/sounds/option_select.mp3")]
+		private static const SELECT_SND:Class;
+		private var selectSnd:Sfx = new Sfx(SELECT_SND);
+		
 		public var leftIndicator:Text;
 		
 		public static var active:Boolean;
@@ -47,7 +61,6 @@ package gameplay_objects
 			
 			x = FP.halfWidth + SideBar.W / 2 - Image(graphic).width / 2;
 			y = FP.halfHeight - PointBar.H / 2 - Image(graphic).height / 2;
-			
 			
 			
 			selector = new Image(SELECTOR_PNG);
@@ -85,7 +98,9 @@ package gameplay_objects
 				leftIndicator.size = 40;
 				
 				leftIndicator.x = 393 / 2-leftIndicator.width/2;
-				leftIndicator.y = 393 / 2-leftIndicator.height/2;
+				leftIndicator.y = 393 / 2 - leftIndicator.height / 2;
+				
+				invokeSnd.play();
 			}
 		}
 		
@@ -147,6 +162,8 @@ package gameplay_objects
 					//slomo
 					GameWorld.doSlomo();
 				}
+				
+				selectSnd.play();
 			}
 			else {
 				trace("no action selected");
@@ -155,6 +172,7 @@ package gameplay_objects
 		
 		
 		private static const innerR:Number = 25;
+		private var prevI:int;
 		
 		override public function update():void 
 		{
@@ -172,6 +190,12 @@ package gameplay_objects
 							if (getMouseAngle() < 60 *(i+1) && getMouseAngle() > 60*i) 
 							{
 								selector.angle = -60 * (i + 3);
+								
+								if (selectedIndex != i)
+								{
+									hoverSnd.play();
+								}
+								
 								selectedIndex = i;
 							}
 						}

@@ -1,7 +1,6 @@
 package gameplay_objects 
 {
 	import flash.display.BitmapData;
-	import flash.events.MouseEvent;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;

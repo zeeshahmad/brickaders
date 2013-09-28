@@ -1,8 +1,5 @@
 package gameplay_objects 
 {
-	import com.greensock.easing.Back;
-	import com.greensock.easing.Linear;
-	import com.greensock.TweenMax;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import net.flashpunk.Entity;
