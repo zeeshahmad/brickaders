@@ -6,6 +6,8 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 	import gameplay_objects.SideBar;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
@@ -29,6 +31,7 @@ package
 			
 			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, deactivate);
 			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, activate);
+			NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
 			
 			/*// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
@@ -80,7 +83,19 @@ package
 			}
 		}
 		
-		
+		public function keyDown(e:KeyboardEvent):void
+		{
+			if (e.keyCode == Keyboard.BACK)
+			{
+				e.stopImmediatePropagation();
+				e.preventDefault();
+				
+				if (CURRENT_WORLD == "mainMenuWorld") NativeApplication.nativeApplication.exit();
+				else if (CURRENT_WORLD == "scoresScreen") FP.world = new MainMenuWorld;
+				else if (CURRENT_WORLD == "help") FP.world = new MainMenuWorld;
+				else if (CURRENT_WORLD == "gameWorld" && !GameWorld.paused) GameWorld.sideBar.doPause();
+			}
+		}
 		
 		//UNIVERSAL FUNCTIONS
 		public static function pickRandomFromArray(array:Array):*
