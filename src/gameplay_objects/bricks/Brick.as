@@ -72,7 +72,7 @@ package gameplay_objects.bricks
 		
 		[Embed(source = "../../../lib/sounds/get_orbiter.mp3")]
 		private static const GET_ORBITER:Class;
-		private static var getOrbiterSnd:Sfx = new Sfx(GET_ORBITER);
+		public static var getOrbiterSnd:Sfx = new Sfx(GET_ORBITER);
 		
 		private var gun:Image = new Image(GUN_IMG);
 		private var exhaustRight:Image = new Image(EXHAUST_IMG);

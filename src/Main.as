@@ -27,7 +27,8 @@ package
 		{
 			_instance = this;
 			
-			
+			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, deactivate);
+			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, activate);
 			
 			/*// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
@@ -58,7 +59,7 @@ package
 			super.init();
 		}
 		
-		override public function focusLost():void
+		public function deactivate(e:Event):void
 		{
 			if (CURRENT_WORLD == "gameWorld")
 			{
@@ -71,15 +72,13 @@ package
 			super.focusLost();
 		}
 		
-		override public function focusGained():void
+		public function activate(e:Event):void
 		{
 			if (CURRENT_WORLD == "mainMenuWorld")
 			{
 				if (!MainMenuWorld.music.playing) MainMenuWorld.music.loop();
 			}
 		}
-		
-		
 		
 		
 		

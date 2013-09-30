@@ -22,7 +22,7 @@ package worlds
 			title.y = 30;
 			addGraphic(title);
 			
-			var aboutString:String = "\n\nMade using the Flash Punk game engine in AS3. \n\nCreated by Zeeshan Ahmad";
+			var aboutString:String = "\n\nMade using the Flash Punk game engine in AS3. \n\nSounds produced using bfxr.net \n\n Developed by Zeeshan Ahmad";
 			
 			var abouttext:Text = new Text(aboutString, 5);
 			abouttext.y = title.y + title.height + 5;

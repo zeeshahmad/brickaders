@@ -8,6 +8,7 @@ package worlds
 	import gameplay_objects.BallEnemy;
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.FieldBar;
+	import gameplay_objects.Orbiter;
 	import gameplay_objects.Pad;
 	import gameplay_objects.particles.BackgroundStar;
 	import gameplay_objects.PointBar;
@@ -239,14 +240,17 @@ package worlds
 		
 		override public function update():void 
 		{
-			spawnBricks();
-			
-			if (FP.rand(800) < 2 && typeCount("ballenemy") < 2 && wave > 9) add(new BallEnemy());
+			if (!paused)
+			{
+				spawnBricks();
+				spawnBalls();
+				if (FP.rand(1200) < 2 && typeCount("ballenemy") < 2 && wave > 9) add(new BallEnemy());
+			}
 			
 			//background stars
 			if ( typeCount("bgStar") < 20 && FP.rand(100) < 10 ) create(BackgroundStar, true);
 			
-			if (Input.mousePressed && !Ball.targetOn)
+			if (Input.mousePressed && !Ball.targetOn && !paused)
 			{
 				if (mouseCollideRect(new Rectangle(actionInvoker.x, actionInvoker.y, actionInvoker.width, actionInvoker.height)))
 				{
@@ -281,7 +285,19 @@ package worlds
 			super.update();
 		}
 		
-		
+		public function spawnBalls():void
+		{
+			if (FP.rand(3000) < 2) if (typeCount("ball") != 0 && typeCount("ball") < 4)
+			{
+				FP.randomizeSeed();
+				var b:Ball = new Ball();
+				b.x = FP.rand(FP.width - SideBar.W) + SideBar.W;
+				b.y = 0;
+				add(b);
+				b.setCartesianSpd(0, 9);
+				Brick.getOrbiterSnd.play();
+			}
+		}
 		
 		public function spawnBricks():void
 		{

@@ -33,6 +33,9 @@
 		private static const DESTROY_SND:Class;
 		private var destroySnd:Sfx = new Sfx(DESTROY_SND);
 		
+		[Embed(source = "../../lib/sounds/orbiter_lost.mp3")]
+		private static const ORBITER_LOST_SND:Class;
+		public static var orbiterLostSnd:Sfx = new Sfx(ORBITER_LOST_SND);
 		
 		public var unstopable:Boolean = false;
 		public var shotAngle:Number;
@@ -285,13 +288,13 @@
 					
 					FP.randomizeSeed();
 					
-					if (!GameWorld.pad.fixed && FP.rand(7) == 0 && speedY > 0 && world !=null)
+					/*if (!GameWorld.pad.fixed && FP.rand(7) == 0 && speedY > 0 && world !=null)
 					{
 						var newball:Ball = new Ball();
 						newball.x  = x; newball.y = y;
 						newball.setCartesianSpd( -speedX, -Math.abs(speedY));
 						world.add(newball);
-					}
+					}*/
 					
 					bounceUp();
 					
@@ -416,6 +419,8 @@
 					if (brk) break;
 				}
 			}
+			
+			if (brk && GameWorld.soundOn) orbiterLostSnd.play();
 		}
 		
 		override public function render():void 
@@ -536,7 +541,7 @@
 		
 		public function destroy():void
 		{		
-			
+			setRadialSpd(0.5 * speed, radians);
 			collidable = false;
 			type = "exploding ball";
 			if (GameWorld.soundOn) destroySnd.play();
@@ -562,7 +567,7 @@
 					addGraphic(tPart);
 					
 					particleTween = new MultiVarTween(removeThis);
-					particleTween.tween(tPart, { x: tPart.x + FP.rand(100) - 50, y: tPart.y + FP.rand(100) - 50, scale:0 }, 0.8, Ease.quadOut);
+					particleTween.tween(tPart, { x: tPart.x + FP.rand(100) - 50, y: tPart.y + FP.rand(100) - 50, scale:0 }, 1, Ease.quadOut);
 					addTween(particleTween);
 				}
 			}

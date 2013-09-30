@@ -2,6 +2,7 @@ package gameplay_objects
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.VarTween;
 	import worlds.GameWorld;
 	
@@ -15,6 +16,9 @@ package gameplay_objects
 		private static const FIELDBAR_PNG:Class;
 		[Embed(source = "../../lib/ball/fieldbarinner.png")]
 		private static const FIELDBAR_INNER_PNG:Class;
+		[Embed(source = "../../lib/sounds/field.mp3")]
+		private static const FIELD_SND:Class;
+		private static var fieldSnd:Sfx = new Sfx(FIELD_SND);
 		
 		public var img:Image;
 		public var inner:Image;
@@ -52,6 +56,7 @@ package gameplay_objects
 		public function fillUp():void
 		{
 			fill = true;
+			fieldSnd.stop();
 		}
 		
 		override public function update():void 
@@ -64,6 +69,14 @@ package gameplay_objects
 				}
 				else fill = false;
 			}
+			else if (Ball.fieldCheck && (Ball.mouseOnLeft || Ball.mouseOnRight) && GameWorld.fieldLeft > 0.05*GameWorld.FIELD_TOTAL)
+			{
+				if (GameWorld.soundOn && !fieldSnd.playing)
+				{
+					fieldSnd.play();
+				}
+			}
+			
 			
 			super.update();
 		}

@@ -4,6 +4,7 @@ package gameplay_objects
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.tweens.misc.VarTween;
 	import net.flashpunk.utils.Draw;
@@ -16,6 +17,9 @@ package gameplay_objects
 	public class Pad extends Entity 
 	{
 		private var img:Image;
+		[Embed(source = "../../lib/sounds/pad_move.mp3")]
+		private static const MOVE_SND:Class;
+		private var moveSnd:Sfx = new Sfx(MOVE_SND);
 		
 		public function Pad() 
 		{
@@ -69,6 +73,8 @@ package gameplay_objects
 			moveTween.tween(this, "x", Math.min(Math.max(_x, SideBar.W),FP.width - width), 0.35, Ease.quadOut);
 			moveTween.complete = p.anchor;
 			addTween(moveTween, true);
+			
+			if (GameWorld.soundOn) moveSnd.play();
 			
 			return this;
 		}

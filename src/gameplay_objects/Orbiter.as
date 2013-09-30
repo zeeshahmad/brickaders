@@ -6,6 +6,7 @@ package gameplay_objects
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Draw;
+	import worlds.GameWorld;
 	
 	/**
 	 * ...
@@ -61,7 +62,7 @@ package gameplay_objects
 			//trace(orbitTarget);
 			
 			if (t > 360) t = 0;
-			else t += orbitSpeed;
+			else t += orbitSpeed * GameWorld.timeFactor * FP.rate;
 			
 			theta += 0.1;
 			
