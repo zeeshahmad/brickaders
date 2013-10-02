@@ -126,12 +126,8 @@ package gameplay_objects
 				trace("action selected index: " + String(selectedIndex));
 				if (selectedIndex == 0)
 				{
-					//stealth ball
-					ar = GameWorld.entitiesByType("ball", world);
-					for (var i:uint = 0; i < ar.length; i++)
-					{
-						(ar[i] as Ball).doStealth();
-					}
+					//rewind
+					GameWorld.doRewind();
 				}
 				else if (selectedIndex == 1)
 				{
@@ -154,8 +150,7 @@ package gameplay_objects
 				else if (selectedIndex == 4)
 				{
 					//power
-					ar = GameWorld.entitiesByType("ball", world);
-					if (ar.length!=0) (ar[FP.rand(ar.length)] as Ball).doPower();
+					Ball.doPower();
 				}
 				else if (selectedIndex == 5)
 				{

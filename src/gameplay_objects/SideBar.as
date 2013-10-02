@@ -34,6 +34,8 @@ package gameplay_objects
 		
 		[Embed(source = "../../lib/sidebar/pause.png")]
 		private static const pausePng:Class;
+		[Embed(source = "../../lib/sidebar/play.png")]
+		private static const playPng:Class;
 		[Embed(source = "../../lib/sidebar/giveup.png")]
 		private static const GIVEUP_PNG:Class;
 		
@@ -43,6 +45,7 @@ package gameplay_objects
 		private var soundOff:Image;
 		
 		private var pause:Image;
+		private var play:Image;
 		private var giveUp:Image;
 		
 		public var highLabel:Text;
@@ -73,12 +76,14 @@ package gameplay_objects
 			soundOn = new Image(soundOnPng);
 			
 			pause = new Image(pausePng);
+			play = new Image(playPng);
 			giveUp = new Image(GIVEUP_PNG);
 			
 			
 			//addGraphic(musicOn); addGraphic(musicOff); 
 			addGraphic(soundOff); addGraphic(soundOn); 
 			addGraphic(pause);
+			addGraphic(play);
 			
 			musicOff.x = 10;
 			musicOn.x = 10;
@@ -92,6 +97,9 @@ package gameplay_objects
 			
 			pause.x = 10;
 			pause.y = 110;
+			play.x = pause.x;
+			play.y = pause.y;
+			play.visible = false;
 			
 			highLabel = new Text("High Score:");
 			highLabel.size = 15;
@@ -126,7 +134,6 @@ package gameplay_objects
 			addGraphic(highText);
 			addGraphic(pauseLabel);
 			addGraphic(giveUp);
-			
 			super.added();
 		}
 		
@@ -142,6 +149,8 @@ package gameplay_objects
 			pauseLabel.x = (FP.width - pauseLabel.width - SideBar.W) / 2 + SideBar.W;
 			GameWorld.move = 0;
 			GameWorld.paused = true;
+			play.visible = true;
+			pause.visible = false;
 		}
 		
 		override public function update():void 
@@ -216,6 +225,8 @@ package gameplay_objects
 			GameWorld.paused = false;
 			pauseLabel.visible = false;
 			giveUp.visible = false;
+			pause.visible = true;
+			play.visible = false;
 		}
 		
 	}

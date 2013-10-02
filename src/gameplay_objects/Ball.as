@@ -1,6 +1,7 @@
 ﻿package gameplay_objects {
 	
 	import flash.display.BitmapData;
+	import flash.geom.ColorTransform;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import gameplay_objects.bricks.Brick;
@@ -85,13 +86,6 @@
 			
 			type = "ball";
 			
-			var stealthRingBmp:BitmapData = new BitmapData(DIAMETER + 6, DIAMETER + 6, true, 0);
-			Draw.setTarget(stealthRingBmp);
-			Draw.circle(RADIUS+3, RADIUS+3, RADIUS + 3, 0x1D6CBC);
-			stealthRing = new Image(stealthRingBmp);
-			stealthRing.x = -3; stealthRing.y = -3;
-			addGraphic(stealthRing);
-			stealthRing.visible = false;
 			
 			//for power ball
 			for (var i:int = 0; i < POWER_STEPS; i++) {
@@ -231,8 +225,6 @@
 		
 		override public function update():void 
 		{
-			//if (FP.rand(300) < 2) doStealth();
-			
 			moveFunction.apply(this, [this]);
 			
 			if (fieldCheck)
@@ -318,9 +310,8 @@
 				}
 				else if (this.y + this.height > 480)//lower boundry
 				{
-					bounceUp();
 					
-					
+					setCartesianSpd(speedX, 0);
 					
 					var orbiters:Array = GameWorld.entitiesByType("orbiter", world);
 					
@@ -348,7 +339,7 @@
 						if (GameWorld.soundOn) hitWallSnd.play();
 					}
 					
-					if (GameWorld.i.typeCount("ball") == 0 && GameWorld.i.typeCount("stealthball") == 0)
+					if (GameWorld.i.typeCount("ball") == 0)
 					{
 						GameWorld.doGameOver();
 					}
@@ -361,12 +352,7 @@
 			 setRadialSpd(reverseSpd, radians);
 			
 			
-			if (stealthOn)
-			{
-				if (stealthOffTween!=null)
-				 stealthOffTween.active = (int(GameWorld.move) != 0);
-			}
-			else if (powerOn)
+			if (powerOn)
 			{
 				positionsX.push(x);
 				positionsY.push(y);
@@ -438,39 +424,6 @@
 			super.render();
 		}
 		
-		public var stealthOn:Boolean = false;
-		public var stealthRing:Image;
-		public var stealthOffTween:MultiVarTween;
-		
-		public function doStealth():void
-		{
-			if (!stealthOn && !powerOn)
-			{
-				stealthOn = true;
-				stealthRing.visible = true;
-				
-				img.color = 0x1D6CBC;
-				var stealthOnTween:MultiVarTween = new MultiVarTween();
-				stealthOnTween.tween(img, { alpha: 0.2 }, 0.5);
-				addTween(stealthOnTween, true);
-				
-				
-				stealthOffTween = new MultiVarTween(onStealthComplete);
-				stealthOffTween.tween(img, { alpha: 1 }, 0.5, null, 1);
-				addTween(stealthOffTween, true);
-				type = "stealthball";
-			}
-		}
-		
-		
-		public function onStealthComplete():void
-		{
-			img.color = 0xffffff;
-			
-			stealthRing.visible = false;
-			stealthOn = false;
-			type = "ball";
-		}
 		
 		
 		public var reverseTween:MultiVarTween = new MultiVarTween();;
@@ -513,22 +466,23 @@
 			}
 		}
 		
-		public var powerOn:Boolean = false;
+		public static var powerOn:Boolean = false;
 		public var powerTween:MultiVarTween;
 		public var powerInitSpd:Number;
 		
-		public function doPower():void
+		public static function doPower():void
 		{
-			if (!powerOn && !stealthOn)
+			var ar:Array = GameWorld.entitiesByType("ball", FP.world);
+			
+			if (!powerOn) for (var i:uint = 0; i < ar.length; i++)
 			{
-				
 				powerOn = true;
-				powerTween = new MultiVarTween(powerEnd);
-				powerTween.tween(this, { }, 9);
-				addTween(powerTween, true);
-				img.color = 0x0DDD51;
-				powerInitSpd = speed.valueOf();
-				setRadialSpd(speed + 2, radians);
+				ar[i].powerTween = new MultiVarTween(ar[i].powerEnd);
+				ar[i].powerTween.tween(ar[i], { }, 9);
+				ar[i].addTween(ar[i].powerTween, true);
+				ar[i].img.color = 0x0DDD51;
+				ar[i].powerInitSpd = ar[i].speed.valueOf();
+				ar[i].setRadialSpd(ar[i].speed + 2, ar[i].radians);
 			}
 		}
 		
@@ -543,6 +497,7 @@
 		{		
 			setRadialSpd(0.5 * speed, radians);
 			collidable = false;
+			powerOn = false;
 			type = "exploding ball";
 			if (GameWorld.soundOn) destroySnd.play();
 			
@@ -552,6 +507,7 @@
 			var tPart:Image;
 			
 			img.visible = false;
+			picture.colorTransform(new Rectangle(0, 0, RADIUS * 2, RADIUS * 2), new ColorTransform(1, 0, 0));
 			
 			var particleTween:MultiVarTween;
 			

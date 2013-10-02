@@ -1,3 +1,1 @@
 -replace target shot with bomb
--replace stealth with reverse all
--power ball changes ALL ball to power ball

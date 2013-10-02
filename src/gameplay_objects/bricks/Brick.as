@@ -157,7 +157,7 @@ package gameplay_objects.bricks
 		
 		override public function added():void 
 		{
-			speedY = 0.5;
+			//speedY = 0.5;
 			super.added();
 		}
 		
@@ -191,7 +191,7 @@ package gameplay_objects.bricks
 					
 					if (defending && i.collideRect(i.x, i.y, x + shield.x, y + shield.y, shield.width, shield.height))
 					{
-						if (centerY < i.y && (i as Ball).speedY < 0 && !(i as Ball).powerOn) {
+						if (centerY < i.y && (i as Ball).speedY < 0 && !Ball.powerOn) {
 							(i as Ball).bounceDown();
 							GameWorld.addScore( -2);
 							if (world != null) world.add(new ScoreShow(-2, x + FP.rand(width), y + height + 24));
@@ -235,7 +235,7 @@ package gameplay_objects.bricks
 						var e:Entity = world.typeFirst("orbiter");
 						if (e.world != null) e.world.remove(e);
 					}
-					else 
+					else if (!endOfBrick)
 					{
 						GameWorld.addScore( -80);
 						if (world != null) world.add(new ScoreShow( -80, FP.rand(width) + x, y - 10));
@@ -249,7 +249,7 @@ package gameplay_objects.bricks
 		//collision test in ball class
 		public function onBallCollision(ball:Entity):void
 		{
-			if (!(ball as Ball).reverseOn && !(ball as Ball).powerOn)
+			if (!(ball as Ball).reverseOn && !Ball.powerOn && !endOfBrick)
 			{
 				var angle:Number = Math.atan2(ball.y + ball.halfHeight - y - halfHeight, ball.x + ball.halfWidth - x - halfWidth);
 				if (angle > -Math.PI + heightAngle && angle < - heightAngle) //top wall
@@ -291,7 +291,7 @@ package gameplay_objects.bricks
 		
 		public function fireGun():void
 		{
-			if (!firing && !defending)
+			if (!endOfBrick && !firing && !defending)
 			{
 				firing = true;
 				gun.smooth = true;
@@ -330,7 +330,7 @@ package gameplay_objects.bricks
 		
 		public function defend():void
 		{
-			if (!defending && !firing) {
+			if (!endOfBrick && !defending && !firing) {
 				defending = true;
 				shield.visible = true;
 				var defendTween:VarTween = new VarTween();
@@ -346,10 +346,13 @@ package gameplay_objects.bricks
 			}
 		}
 		
+		public var endOfBrick:Boolean = false;
+		
 		public function destroy():void
 		{		
 			collidable = false;
-			type = "exploding brick";
+			
+			endOfBrick = true;
 			
 			if (GameWorld.soundOn) explodeSnd.play();
 			

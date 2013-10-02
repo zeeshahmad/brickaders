@@ -8,7 +8,6 @@ package worlds
 	import gameplay_objects.BallEnemy;
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.FieldBar;
-	import gameplay_objects.Orbiter;
 	import gameplay_objects.Pad;
 	import gameplay_objects.particles.BackgroundStar;
 	import gameplay_objects.PointBar;
@@ -65,7 +64,7 @@ package worlds
 		public static var ballPathLayer:Sprite;
 		
 		public static var timeFactor:Number = 1;
-		public static var move:uint = 1;
+		public static var move:int = 1;
 		public static var paused:Boolean;
 		
 		public static var scoreTextLabel:Text;
@@ -170,6 +169,7 @@ package worlds
 			addGraphic(scoreTextLabel);
 			addGraphic(scoreText);
 			
+			
 			score = 0;
 			move = 1;
 			wave = 1;
@@ -231,9 +231,7 @@ package worlds
 			PointBar.pointLimit = 1;
 			PointBar.pointCount = 0;
 			
-			
-			//PointBar.firstBall = new Ball();
-			var ball:Ball = new Ball();
+						var ball:Ball = new Ball();
 			add(ball); ball.moveTo(200, 200);
 			ball.setRadialSpd(10, -Math.PI / 4);
 		}
@@ -244,7 +242,7 @@ package worlds
 			{
 				spawnBricks();
 				spawnBalls();
-				if (FP.rand(1200) < 2 && typeCount("ballenemy") < 2 && wave > 9) add(new BallEnemy());
+				if (FP.rand(2000) < 2 && typeCount("ballenemy") < 2 && wave > 9) add(new BallEnemy());
 			}
 			
 			//background stars
@@ -307,26 +305,25 @@ package worlds
 				for (var i:uint = 0; i < Math.ceil(Math.min(20, 0.5*wave+1)); i++)
 				{
 					b = new Brick();
-					add(b).y = -b.height-i * (FP.rand(20) + 25);
+					add(b).y = -b.height-i * (FP.rand(40) + b.height);
 				}
 				wave++;
 				SideBar.waveText.text = "Wave " + String(wave-1);
-				Brick.speedY = 0.5 + (wave * 0.4);
+				Brick.speedY = 0.4 + (wave * 0.05);
 			}
 		}
 		
-		/*public function stopPlayerInput():void
+		private static var prevBrickSpeed:Number;
+		public static function doRewind():void
 		{
+			prevBrickSpeed = Brick.speedY.valueOf();
+			Brick.speedY = -4*Math.abs(Brick.speedY);
+			var t:MultiVarTween = new MultiVarTween(function():void { Brick.speedY = GameWorld.prevBrickSpeed.valueOf(); } );
+			t.tween(GameWorld, { }, 1.2);
+			FP.world.addTween(t, true);
 			
-			TweenLite.to(GameWorld, 0.5, { move: 1, onStart:function():void {
-				//when every thing finally gets going
-				for each (var b:Ball in entitiesByType("ball", this))
-				{
-					if (b.speedIndicatorTween != null) b.speedIndicatorTween.reverse();
-				}
-			}});
-			
-		}*/
+		}
+		
 		
 		public static var slomoOnT:MultiVarTween;
 		public static var slomoOffT:MultiVarTween;
@@ -386,7 +383,7 @@ package worlds
 		
 		public static function doGameOver():void
 		{
-			if (FP.world.typeCount("ball") == 0 && FP.world.typeCount("stealthball") ==0 && FP.world.typeCount("powerball") == 0)
+			if (FP.world.typeCount("ball") == 0 && FP.world.typeCount("powerball") == 0)
 			{
 				var overTween:MultiVarTween = new MultiVarTween(function():void{
 				
