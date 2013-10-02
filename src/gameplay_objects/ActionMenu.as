@@ -85,7 +85,7 @@ package gameplay_objects
 		
 		public function show():void
 		{
-			if (!active && GameWorld.i != null && GameWorld.i.typeCount("orbiter") > 0 && !Ball.targetOn && !Pad.shadowPadOn && !GameWorld.paused)
+			if (!active && GameWorld.i != null && GameWorld.i.typeCount("orbiter") > 0 && !Pad.shadowPadOn && !GameWorld.paused && !GameWorld.bombOn)
 			{
 				selectedIndex = 10; //aribitrary value for none
 				
@@ -143,9 +143,8 @@ package gameplay_objects
 				}
 				else if (selectedIndex == 3)
 				{
-					//shoot
-					ar = GameWorld.entitiesByType("ball", world);
-					if (ar.length!=0) (ar[FP.rand(ar.length)] as Ball).doTarget();
+					//bomb
+					GameWorld.doBomb();
 				}
 				else if (selectedIndex == 4)
 				{

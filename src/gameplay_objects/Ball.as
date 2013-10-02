@@ -308,15 +308,15 @@
 					
 					
 				}
-				else if (this.y + this.height > 480)//lower boundry
+				else if (bottom > FP.height)//lower boundry
 				{
 					
-					setCartesianSpd(speedX, 0);
+					setCartesianSpd(speedX, -0.1);
 					
-					var orbiters:Array = GameWorld.entitiesByType("orbiter", world);
+					var orbiters:Array = new Array();
+					FP.world.getType("orbiter", orbiters);
 					
 					removeOrbiters();
-					
 					
 					var orbCount:uint = 0;
 					for (var or2:uint = 0; or2 < orbiters.length; or2++)
@@ -326,7 +326,6 @@
 							orbCount++;
 							break;
 						}
-						
 					}
 					
 					onAnyCollision();
@@ -359,31 +358,6 @@
 				
 				if (powerTween!=null)
 				 powerTween.active = (int(GameWorld.move) != 0);
-			}
-			
-			if (targetOn)
-			{
-				if (Input.mousePressed && Input.mouseY < 480 - GameWorld.pointBar.height && Input.mouseX > SideBar.W)
-				{
-					if (targetEntity != null)
-					{
-						targetEntity.x = Input.mouseX - Image(targetEntity.graphic).width / 2;
-						targetEntity.y = Input.mouseY - Image(targetEntity.graphic).height / 2;
-						
-						if (world != null) world.add(targetEntity);
-						targetOn = false;
-						thisTargetOn = false;
-						shootBullet();
-						
-						var targetRemoveTween:MultiVarTween = new MultiVarTween(function():void {
-							if (targetEntity.world != null) targetEntity.world.remove(targetEntity);
-						});
-						targetRemoveTween.tween(Image(targetEntity.graphic), { alpha: 0 }, 0.4, null, 3);
-						addTween(targetRemoveTween, true);
-					}
-					
-					
-				}
 			}
 			
 			
@@ -448,23 +422,6 @@
 			img.color = 0xffffff;
 		}
 		
-		
-		public static var targetOn:Boolean = false;
-		public var targetEntity:Entity;
-		
-		public function doTarget():void
-		{
-			if (!targetOn)
-			{
-				
-				targetOn = true;
-				thisTargetOn = true;
-				targetEntity = new Entity(0, 0, new Image(TARGET_PNG));
-				targetEntity.type = "targetEntity";
-				targetEntity.setHitbox(Image(targetEntity.graphic).width, Image(targetEntity.graphic).height);
-				//targetEntity.setOrigin(Image(targetEntity.graphic).width / 2, Image(targetEntity.graphic).height / 2);
-			}
-		}
 		
 		public static var powerOn:Boolean = false;
 		public var powerTween:MultiVarTween;
@@ -534,13 +491,6 @@
 		{
 			if (this.world != null) this.world.remove(this);
 			
-			if (thisTargetOn)
-			{
-				targetEntity = null;
-				targetOn = false;
-				var b:Ball = FP.world.typeFirst("ball") as Ball;
-				b.doTarget();
-			}
 			
 		}
 		

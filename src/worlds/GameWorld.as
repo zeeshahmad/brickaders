@@ -6,6 +6,7 @@ package worlds
 	import gameplay_objects.ActionMenu;
 	import gameplay_objects.Ball;
 	import gameplay_objects.BallEnemy;
+	import gameplay_objects.Bomb;
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.FieldBar;
 	import gameplay_objects.Pad;
@@ -176,7 +177,6 @@ package worlds
 			timeFactor = 1;
 			paused = false;
 			fieldLeft = FIELD_TOTAL;
-			Ball.targetOn = false;
 			
 			sideBar.x = -100;
 			var sidebarT:MultiVarTween = new MultiVarTween();
@@ -248,7 +248,7 @@ package worlds
 			//background stars
 			if ( typeCount("bgStar") < 20 && FP.rand(100) < 10 ) create(BackgroundStar, true);
 			
-			if (Input.mousePressed && !Ball.targetOn && !paused)
+			if (Input.mousePressed && !paused)
 			{
 				if (mouseCollideRect(new Rectangle(actionInvoker.x, actionInvoker.y, actionInvoker.width, actionInvoker.height)))
 				{
@@ -279,6 +279,14 @@ package worlds
 				}
 			}
 			
+			if (bombOn)
+			{
+				if (Input.mousePressed)
+				{
+					bombOn = false;
+					add(new Bomb(FP.width, FP.halfHeight, Input.mouseX, Input.mouseY));
+				}
+			}
 			
 			super.update();
 		}
@@ -341,6 +349,17 @@ package worlds
 				slomoOffT = new MultiVarTween(function():void { slomoOn = false; } );
 				slomoOffT.tween(GameWorld, {timeFactor:1},0.8, Ease.quadOut, 5);
 				i.addTween(slomoOffT, true);
+			}
+		}
+		
+		public static var bombOn:Boolean = false;
+		
+		public static function doBomb():void
+		{
+			if (!bombOn)
+			{
+				bombOn = true;
+				
 			}
 		}
 		
