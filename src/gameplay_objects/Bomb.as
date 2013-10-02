@@ -7,6 +7,7 @@ package gameplay_objects
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.utils.Ease;
@@ -22,6 +23,9 @@ package gameplay_objects
 		[Embed(source = "../../lib/bricks/bomb.png")]
 		private static const BOMB_PNG:Class;
 		private var pic:Image;
+		[Embed(source = "../../lib/sounds/bomb_blip.mp3")]
+		private static const BOMB_BLIP_SND:Class;
+		private var blipSnd:Sfx = new Sfx(BOMB_BLIP_SND);
 		
 		public var to:Point;
 		
@@ -142,8 +146,9 @@ package gameplay_objects
 		
 		public function doBlip():void
 		{
-			//TODO blip code here
-			trace(bombTime);
+			blipSnd.play();
+			if (middle.visible) middle.visible = false;
+			else middle.visible = true;
 		}
 		
 	}

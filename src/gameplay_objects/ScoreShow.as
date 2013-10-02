@@ -1,6 +1,7 @@
 package gameplay_objects 
 {
 	import net.flashpunk.Entity;
+	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
@@ -23,7 +24,7 @@ package gameplay_objects
 		public var showString:String;
 		public var text:Text;
 		
-		public function ScoreShow(amount:int, _x:Number, _y:Number) 
+		public function ScoreShow(amount:int, _x:Number, _y:Number, label:String = "") 
 		{
 			x = _x;
 			y = _y;
@@ -31,18 +32,18 @@ package gameplay_objects
 			var c:uint;
 			
 			if (amount > 0) {
-				showString = "+ ";
+				showString = label + " +";
 				c = 0xffffff;
 				//if (GameWorld.soundOn) upSnd.play();
 				
 			}
 			else if (amount < 0) {
-				showString = "- ";
+				showString = label + " -";
 				c = 0xE73103;
 				if (GameWorld.soundOn) downSnd.play();
 			}
 			else {
-				showString = "";
+				showString = label;
 				c = 0xB9B9B9;
 			}
 			
@@ -51,7 +52,10 @@ package gameplay_objects
 			text = new Text(showString);
 			text.size = 24;
 			text.color = c;
-			addGraphic(text);
+			graphic = text;
+			
+			x = Math.min(Math.max(x, SideBar.W), FP.width - text.width);
+			y = Math.min(Math.max(y, 0), PointBar.Y - text.height);
 			
 			var up:MultiVarTween = new MultiVarTween(removeThis);
 			up.tween(text, { alpha: 0, y : -text.height }, 0.8, null, 0.5);

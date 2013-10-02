@@ -74,7 +74,7 @@ package gameplay_objects
 			moveTween.complete = p.anchor;
 			addTween(moveTween, true);
 			
-			if (GameWorld.soundOn) moveSnd.play();
+			if (GameWorld.soundOn) moveSnd.play(0.5);
 			
 			return this;
 		}

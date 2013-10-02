@@ -281,7 +281,7 @@ package worlds
 			
 			if (bombOn)
 			{
-				if (Input.mousePressed)
+				if (Input.mousePressed && Input.mouseY < PointBar.Y && Input.mouseX > SideBar.W)
 				{
 					bombOn = false;
 					add(new Bomb(FP.width, FP.halfHeight, Input.mouseX, Input.mouseY));
@@ -301,7 +301,7 @@ package worlds
 				b.y = 0;
 				add(b);
 				b.setCartesianSpd(0, 9);
-				Brick.getOrbiterSnd.play();
+				if (soundOn) Brick.getOrbiterSnd.play();
 			}
 		}
 		

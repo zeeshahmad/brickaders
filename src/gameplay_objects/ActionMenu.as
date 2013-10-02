@@ -100,7 +100,7 @@ package gameplay_objects
 				leftIndicator.x = 393 / 2-leftIndicator.width/2;
 				leftIndicator.y = 393 / 2 - leftIndicator.height / 2;
 				
-				invokeSnd.play();
+				if (GameWorld.soundOn) invokeSnd.play();
 			}
 		}
 		

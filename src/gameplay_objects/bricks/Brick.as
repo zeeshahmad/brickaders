@@ -74,6 +74,14 @@ package gameplay_objects.bricks
 		private static const GET_ORBITER:Class;
 		public static var getOrbiterSnd:Sfx = new Sfx(GET_ORBITER);
 		
+		[Embed(source = "../../../lib/sounds/brick_dodge.mp3")]
+		private static const DODGE_SND:Class;
+		public var dodgeSnd:Sfx = new Sfx(DODGE_SND);
+		
+		[Embed(source = "../../../lib/sounds/bonus.mp3")]
+		private static const BONUS_SND:Class;
+		public static var bonusSnd:Sfx = new Sfx(BONUS_SND);
+		
 		private var gun:Image = new Image(GUN_IMG);
 		private var exhaustRight:Image = new Image(EXHAUST_IMG);
 		private var shieldIcon:Image = new Image(SHIELD_IMG);
@@ -172,7 +180,7 @@ package gameplay_objects.bricks
 			{
 				if (i.distanceFrom(this, true) < 60) 
 				{
-					if (enableDodge) 
+					if (enableDodge && !endOfBrick) 
 					{
 						if (i.centerX > centerX)
 						{
@@ -187,6 +195,7 @@ package gameplay_objects.bricks
 							exhaustRight.flipped = true;
 							exhaustRight.visible = true;
 						}
+						if (GameWorld.soundOn && !dodgeSnd.playing) dodgeSnd.play();
 					}
 					
 					if (defending && i.collideRect(i.x, i.y, x + shield.x, y + shield.y, shield.width, shield.height))
@@ -202,6 +211,7 @@ package gameplay_objects.bricks
 				else {
 					dodgeX = 0;
 					exhaustRight.visible = false;
+					if (dodgeSnd.playing) dodgeSnd.stop();
 				}
 			}
 			
@@ -270,10 +280,20 @@ package gameplay_objects.bricks
 				}
 			}
 			
+			if (ball.centerX > left + (1/3) * width && ball.centerX < right - (1/3) * width && !endOfBrick)
+			{
+				GameWorld.addScore(20);
+				if (world != null) world.add(new ScoreShow(20, FP.rand(width) + x, y - height, "Center Shot!"));
+				if (GameWorld.soundOn) bonusSnd.play();
+			}
+			
 			var hitScore:uint = Math.round(Math.abs(8 * (1 - y / 480)));
-			if (bonus) hitScore += 150;
+			if (bonus) {
+				hitScore += 150;
+				if (GameWorld.soundOn) bonusSnd.play();
+			}
 			GameWorld.addScore(hitScore);
-			if (world != null) world.add(new ScoreShow(hitScore, FP.rand(width) + x, y - height));
+			if (world != null) world.add(new ScoreShow(hitScore, FP.rand(width) + x, y +2* height));
 			
 			FP.randomizeSeed();
 			if (world != null) if (world.typeCount("orbiter") < 6) if (FP.rand(3) == 0) {
@@ -312,9 +332,12 @@ package gameplay_objects.bricks
 		{
 			angleToPad = 180 * Math.atan2(GameWorld.pad.centerX - x - halfWidth, GameWorld.pad.y - y - height) / Math.PI;
 			fireAngle = Math.atan2(GameWorld.pad.top - bottom, GameWorld.pad.centerX - centerX);
-			gunTween = new MultiVarTween(departBullet);
-			gunTween.tween(gun, { angle: angleToPad }, 0.6, null, 0.9);
-			addTween(gunTween, true);
+			if (!endOfBrick)
+			{
+				gunTween = new MultiVarTween(departBullet);
+				gunTween.tween(gun, { angle: angleToPad }, 0.6, null, 0.9);
+				addTween(gunTween, true);
+			}
 		}
 		
 		private function departBullet():void
@@ -391,8 +414,6 @@ package gameplay_objects.bricks
 		{
 			if (this.world != null) this.world.remove(this);
 		}
-		
-		
 		
 	}
 

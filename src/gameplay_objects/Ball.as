@@ -308,15 +308,15 @@
 					
 					
 				}
-				else if (bottom > FP.height)//lower boundry
+				else if (bottom > FP.height && !collideBottom)//lower boundry
 				{
-					
-					setCartesianSpd(speedX, -0.1);
+					bounceUp();
+					collideBottom = true;
 					
 					var orbiters:Array = new Array();
 					FP.world.getType("orbiter", orbiters);
 					
-					removeOrbiters();
+					
 					
 					var orbCount:uint = 0;
 					for (var or2:uint = 0; or2 < orbiters.length; or2++)
@@ -332,10 +332,8 @@
 					
 					if (orbCount == 0) {
 						destroy();
-					}
-					else 
-					{
-						if (GameWorld.soundOn) hitWallSnd.play();
+					} else {
+						removeOrbiters();
 					}
 					
 					if (GameWorld.i.typeCount("ball") == 0)
@@ -345,7 +343,8 @@
 					
 					
 				}
-				else if (!collide("ball", x, y)) collideOnce = false;
+				else if (!collide("pad", x, y)) collideOnce = false;
+				if (bottom < FP.height) collideBottom = false;
 			}
 			else if (reverseTween.active)
 			 setRadialSpd(reverseSpd, radians);
@@ -364,8 +363,7 @@
 			super.update();
 		}
 		
-		public var thisTargetOn:Boolean = false;
-		
+		public var collideBottom:Boolean = false;
 		
 		public function removeOrbiters(brk:Boolean = true):void
 		{
@@ -445,6 +443,7 @@
 		
 		public function powerEnd():void
 		{
+			
 			img.color = 0xffffff;
 			setRadialSpd(powerInitSpd, radians);
 			powerOn = false;
@@ -454,7 +453,6 @@
 		{		
 			setRadialSpd(0.5 * speed, radians);
 			collidable = false;
-			powerOn = false;
 			type = "exploding ball";
 			if (GameWorld.soundOn) destroySnd.play();
 			
