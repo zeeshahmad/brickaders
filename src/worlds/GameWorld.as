@@ -41,6 +41,14 @@ package worlds
 		private static const START_SND:Class;
 		private static var startSnd:Sfx = new Sfx(START_SND);
 		
+		[Embed(source = "../../lib/sounds/slomo_off.mp3")]
+		private static const SLOMO_OFF_SND:Class;
+		private static var slomoOffSnd:Sfx = new Sfx(SLOMO_OFF_SND);
+		
+		[Embed(source = "../../lib/sounds/slomo_on.mp3")]
+		private static const SLOMO_ON_SND:Class;
+		private static var slomoOnSnd:Sfx = new Sfx(SLOMO_ON_SND);
+		
 		/*[Embed(source = "../../lib/music/game.mp3")]
 		private static const MUSIC:Class;
 		public static var music:Sfx = new Sfx(MUSIC);*/
@@ -346,9 +354,10 @@ package worlds
 				slomoOnT.tween(GameWorld, { timeFactor:0.2 }, 0.8, Ease.quadOut);
 				i.addTween(slomoOnT, true);
 				
-				slomoOffT = new MultiVarTween(function():void { slomoOn = false; } );
-				slomoOffT.tween(GameWorld, {timeFactor:1},0.8, Ease.quadOut, 5);
+				slomoOffT = new MultiVarTween(function():void { slomoOn = false; if (GameWorld.soundOn) slomoOffSnd.play(); } );
+				slomoOffT.tween(GameWorld, { timeFactor:1 }, 0.8, Ease.quadOut, 5);
 				i.addTween(slomoOffT, true);
+				if (soundOn) slomoOnSnd.play();
 			}
 		}
 		

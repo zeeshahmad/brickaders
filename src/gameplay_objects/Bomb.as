@@ -45,15 +45,12 @@ package gameplay_objects
 			setHitbox(pic.width, pic.height, pic.width/2, pic.height/2);
 			pic.centerOrigin();
 			
-			var mD:Number = 2;
-			var middleBD:BitmapData = new BitmapData(mD, mD, true, 0);
-			Draw.setTarget(middleBD);
-			Draw.circlePlus(pic.width / 2, pic.height / 2, mD / 2, 0xDF150B);
+			var mD:Number = 3;
+			var middleBD:BitmapData = new BitmapData(mD, mD, false, 0xDED90C);
 			middle = new Image(middleBD);
-			middle.x = (pic.width - mD) / 2;
-			middle.y = (pic.height - mD) / 2;
+			middle.x = -middle.width/2;
+			middle.y = -middle.height/2;
 			addGraphic(middle);
-			
 		}
 		
 		public var speed:Number;
@@ -146,7 +143,7 @@ package gameplay_objects
 		
 		public function doBlip():void
 		{
-			blipSnd.play();
+			if (GameWorld.soundOn) blipSnd.play();
 			if (middle.visible) middle.visible = false;
 			else middle.visible = true;
 		}
