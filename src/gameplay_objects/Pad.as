@@ -21,6 +21,10 @@ package gameplay_objects
 		private static const MOVE_SND:Class;
 		private var moveSnd:Sfx = new Sfx(MOVE_SND);
 		
+		[Embed(source = "../../lib/sounds/shadow_pad.mp3")]
+		private static const SHADOW_SND:Class;
+		public static var shadowSnd:Sfx = new Sfx(SHADOW_SND);
+		
 		public function Pad() 
 		{
 			var w:Number = 150; //width
@@ -131,6 +135,8 @@ package gameplay_objects
 				var pointRemTween:MultiVarTween = new MultiVarTween(function():void { GameWorld.del(shadowPoint) } );
 				pointRemTween.tween(shadowPoint.pointSpritemap, { alpha :0 }, 0.7, null, 1.5);
 				addTween(pointRemTween, true);
+				
+				if (GameWorld.soundOn) shadowSnd.play();
 			}
 		}
 		

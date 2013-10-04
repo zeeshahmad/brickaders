@@ -56,13 +56,13 @@ package gameplay_objects
 		public var speed:Number;
 		public var moveTween:MultiVarTween = new MultiVarTween();
 		public var bombTween:MultiVarTween = new MultiVarTween(explode);
-		public static const BOMB_TIME:Number = 7;
+		public static const BOMB_TIME:Number = 4;
 		public var bombTime:Number;
 		public var blinkInterval:Number;
 		
 		override public function added():void 
 		{
-			moveTween.tween(this, { x:to.x, y:to.y }, 5, Ease.quadOut);
+			moveTween.tween(this, { x:to.x, y:to.y }, 3, Ease.quadOut);
 			addTween(moveTween, true);
 			
 			blinkInterval = 1;
@@ -132,7 +132,7 @@ package gameplay_objects
 			
 			blipTweens = new Array();
 			var bt:MultiVarTween;
-			var n:int = Math.ceil(Math.abs(1*s));
+			var n:int = Math.ceil(Math.abs(2*s));
 			for (var i:uint = 0; i < n; i++)
 			{
 				bt = new MultiVarTween(doBlip);

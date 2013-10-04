@@ -38,6 +38,10 @@
 		private static const ORBITER_LOST_SND:Class;
 		public static var orbiterLostSnd:Sfx = new Sfx(ORBITER_LOST_SND);
 		
+		[Embed(source = "../../lib/sounds/power_ball.mp3")]
+		private static const POWER_BALL_SND:Class;
+		public static var powerSnd:Sfx = new Sfx(POWER_BALL_SND);
+		
 		public var unstopable:Boolean = false;
 		public var shotAngle:Number;
 		public var shotSpeed:Number = 5;
@@ -304,6 +308,12 @@
 					
 					if (GameWorld.pad.moveTween != null && GameWorld.pad.moveTween.active) {
 						setCartesianSpd(speedX + GameWorld.pad.dir * 0.4, speedY);
+						if (GameWorld.pad.moveTween.percent > 0.75)
+						{
+							GameWorld.addScore(4);
+							if (world != null) world.add(new ScoreShow(4, x, PointBar.Y - 40, "Last Minute Catch!"));
+							if (GameWorld.soundOn) Brick.bonusSnd.play();
+						}
 					}
 					
 					
@@ -427,17 +437,22 @@
 		
 		public static function doPower():void
 		{
-			var ar:Array = GameWorld.entitiesByType("ball", FP.world);
 			
-			if (!powerOn) for (var i:uint = 0; i < ar.length; i++)
+			
+			if (!powerOn) 
 			{
-				powerOn = true;
-				ar[i].powerTween = new MultiVarTween(ar[i].powerEnd);
-				ar[i].powerTween.tween(ar[i], { }, 9);
-				ar[i].addTween(ar[i].powerTween, true);
-				ar[i].img.color = 0x0DDD51;
-				ar[i].powerInitSpd = ar[i].speed.valueOf();
-				ar[i].setRadialSpd(ar[i].speed + 2, ar[i].radians);
+				var ar:Array = GameWorld.entitiesByType("ball", FP.world);
+				if (GameWorld.soundOn) powerSnd.play();
+				for (var i:uint = 0; i < ar.length; i++)
+				{
+					powerOn = true;
+					ar[i].powerTween = new MultiVarTween(ar[i].powerEnd);
+					ar[i].powerTween.tween(ar[i], { }, 9);
+					ar[i].addTween(ar[i].powerTween, true);
+					ar[i].img.color = 0x0DDD51;
+					ar[i].powerInitSpd = ar[i].speed.valueOf();
+					ar[i].setRadialSpd(ar[i].speed + 2, ar[i].radians);
+				}
 			}
 		}
 		

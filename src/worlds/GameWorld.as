@@ -354,9 +354,14 @@ package worlds
 				slomoOnT.tween(GameWorld, { timeFactor:0.2 }, 0.8, Ease.quadOut);
 				i.addTween(slomoOnT, true);
 				
-				slomoOffT = new MultiVarTween(function():void { slomoOn = false; if (GameWorld.soundOn) slomoOffSnd.play(); } );
+				slomoOffT = new MultiVarTween(function():void { slomoOn = false;  } );
 				slomoOffT.tween(GameWorld, { timeFactor:1 }, 0.8, Ease.quadOut, 5);
 				i.addTween(slomoOffT, true);
+				
+				var offT:MultiVarTween = new MultiVarTween(function():void { if (GameWorld.soundOn) slomoOffSnd.play(); } );
+				offT.tween(GameWorld, { }, 5);
+				i.addTween(offT, true);
+				
 				if (soundOn) slomoOnSnd.play();
 			}
 		}
@@ -368,7 +373,6 @@ package worlds
 			if (!bombOn)
 			{
 				bombOn = true;
-				
 			}
 		}
 		

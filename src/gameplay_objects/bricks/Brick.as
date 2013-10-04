@@ -82,6 +82,10 @@ package gameplay_objects.bricks
 		private static const BONUS_SND:Class;
 		public static var bonusSnd:Sfx = new Sfx(BONUS_SND);
 		
+		[Embed(source = "../../../lib/sounds/bonus_ship.mp3")]
+		private static const BONUS_SHIP_SND:Class;
+		private static var bonusShipSnd:Sfx = new Sfx(BONUS_SHIP_SND);
+		
 		private var gun:Image = new Image(GUN_IMG);
 		private var exhaustRight:Image = new Image(EXHAUST_IMG);
 		private var shieldIcon:Image = new Image(SHIELD_IMG);
@@ -175,6 +179,7 @@ package gameplay_objects.bricks
 			x = Math.max(Math.min(x,800 - width), SideBar.W);
 			y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor;
 			
+			if (bonus && !bonusShipSnd.playing) bonusShipSnd.play();
 			
 			for each (var i:Entity in GameWorld.entitiesByType("ball", world))
 			{
@@ -332,7 +337,7 @@ package gameplay_objects.bricks
 		{
 			angleToPad = 180 * Math.atan2(GameWorld.pad.centerX - x - halfWidth, GameWorld.pad.y - y - height) / Math.PI;
 			fireAngle = Math.atan2(GameWorld.pad.top - bottom, GameWorld.pad.centerX - centerX);
-			if (!endOfBrick)
+			if (!endOfBrick && !GameWorld.paused)
 			{
 				gunTween = new MultiVarTween(departBullet);
 				gunTween.tween(gun, { angle: angleToPad }, 0.6, null, 0.9);
@@ -377,7 +382,7 @@ package gameplay_objects.bricks
 			
 			endOfBrick = true;
 			
-			if (GameWorld.soundOn) explodeSnd.play();
+			if (GameWorld.soundOn) explodeSnd.play(0.8);
 			
 			//explosion
 			var l:Number = 10;
