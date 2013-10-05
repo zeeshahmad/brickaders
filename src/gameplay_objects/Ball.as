@@ -70,8 +70,8 @@
 		public var pathCount:uint = 0;
 		
 		public static const POWER_STEPS:uint = 5;
-		public var positionsX:Vector.<Number> = new Vector.<Number>;
-		public var positionsY:Vector.<Number> = new Vector.<Number>;
+		public var positionsX:Vector.<Number>;
+		public var positionsY:Vector.<Number>;
 		
 		public function Ball() {
 			// constructor code
@@ -91,11 +91,6 @@
 			type = "ball";
 			
 			
-			//for power ball
-			for (var i:int = 0; i < POWER_STEPS; i++) {
-                positionsX.push(x);
-                positionsY.push(y);
-            }
 		}
 		
 		public function clone():Ball
@@ -435,17 +430,27 @@
 		public var powerTween:MultiVarTween;
 		public var powerInitSpd:Number;
 		
+		public function resetPositionsForPower():void
+		{
+			positionsX = new Vector.<Number>;
+			positionsY = new Vector.<Number>;
+			//for power ball
+			for (var k:int = 0; k < POWER_STEPS; k++) {
+                positionsX.push(x);
+                positionsY.push(y);
+            }
+		}
+		
 		public static function doPower():void
 		{
-			
-			
 			if (!powerOn) 
 			{
 				var ar:Array = GameWorld.entitiesByType("ball", FP.world);
 				if (GameWorld.soundOn) powerSnd.play();
+				
 				for (var i:uint = 0; i < ar.length; i++)
 				{
-					powerOn = true;
+					(ar[i] as Ball).resetPositionsForPower();
 					ar[i].powerTween = new MultiVarTween(ar[i].powerEnd);
 					ar[i].powerTween.tween(ar[i], { }, 9);
 					ar[i].addTween(ar[i].powerTween, true);
@@ -453,6 +458,7 @@
 					ar[i].powerInitSpd = ar[i].speed.valueOf();
 					ar[i].setRadialSpd(ar[i].speed + 2, ar[i].radians);
 				}
+				powerOn = true;
 			}
 		}
 		

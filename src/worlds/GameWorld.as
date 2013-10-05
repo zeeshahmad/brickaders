@@ -192,6 +192,7 @@ package worlds
 			timeFactor = 1;
 			paused = false;
 			fieldLeft = FIELD_TOTAL;
+			Ball.powerOn = false;
 			
 			sideBar.x = -100;
 			var sidebarT:MultiVarTween = new MultiVarTween();
