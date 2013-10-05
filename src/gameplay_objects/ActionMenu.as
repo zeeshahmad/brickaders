@@ -18,11 +18,6 @@ package gameplay_objects
 	public class ActionMenu extends Entity 
 	{
 		
-		[Embed(source = "../../lib/actions_tiles/power.png")]
-		private static const POWER_PNG:Class;
-		[Embed(source = "../../lib/actions_tiles/shoot.png")]
-		private static const SHOOT_PNG:Class;
-		
 		[Embed(source = "../../lib/actions_tiles/bgdisk.png")]
 		private static const BG_DISK_PNG:Class;
 		
@@ -127,14 +122,21 @@ package gameplay_objects
 				if (selectedIndex == 0)
 				{
 					//rewind
-					GameWorld.doRewind();
+					//GameWorld.doRewind();
+					GameWorld.doBulletsFromPad();
 				}
 				else if (selectedIndex == 1)
 				{
 					//reverse ball
-					ar = GameWorld.entitiesByType("ball", world);
+					/*ar = GameWorld.entitiesByType("ball", world);
 					for (var j:uint = 0; j < ar.length; j++)
-					if (!(ar[j].reverseOn)) (ar[j] as Ball).doReverse();
+					if (!(ar[j].reverseOn)) (ar[j] as Ball).doReverse();*/
+					var unlocked:Boolean = GameWorld.doUnlockPad();
+					var unlckBall:Ball = FP.world.typeFirst("ball") as Ball;
+					if (unlckBall != null && !unlocked)
+					{
+						FP.world.add(new Orbiter(unlckBall));
+					}
 				}
 				else if (selectedIndex == 2 )
 				{

@@ -47,7 +47,7 @@ package gameplay_objects
 				c = 0xB9B9B9;
 			}
 			
-			showString += String(Math.abs(amount));
+			if (amount != 0) showString += String(Math.abs(amount));
 			
 			text = new Text(showString);
 			text.size = 24;

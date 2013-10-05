@@ -25,6 +25,10 @@ package gameplay_objects
 		private static const SHADOW_SND:Class;
 		public static var shadowSnd:Sfx = new Sfx(SHADOW_SND);
 		
+		[Embed(source = "../../lib/sounds/pad_unlock.mp3")]
+		private static const PAD_UNLOCK_SND:Class;
+		public static var padUnclockSnd:Sfx = new Sfx(PAD_UNLOCK_SND);
+		
 		public function Pad() 
 		{
 			var w:Number = 150; //width
@@ -139,6 +143,7 @@ package gameplay_objects
 				if (GameWorld.soundOn) shadowSnd.play();
 			}
 		}
+		
 		
 		
 	}

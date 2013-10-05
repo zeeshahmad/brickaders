@@ -287,8 +287,8 @@ package gameplay_objects.bricks
 			
 			if (ball.centerX > left + (1/3) * width && ball.centerX < right - (1/3) * width && !endOfBrick)
 			{
-				GameWorld.addScore(20);
-				if (world != null) world.add(new ScoreShow(20, FP.rand(width) + x, y - height, "Center Shot!"));
+				GameWorld.addScore(10);
+				if (world != null) world.add(new ScoreShow(10, FP.rand(width) + x, y - height, "Center Shot!"));
 				if (GameWorld.soundOn) bonusSnd.play();
 			}
 			

@@ -2,16 +2,19 @@ package worlds
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import gameplay_objects.ActionMenu;
 	import gameplay_objects.Ball;
 	import gameplay_objects.BallEnemy;
 	import gameplay_objects.Bomb;
 	import gameplay_objects.bricks.Brick;
+	import gameplay_objects.Bullet;
 	import gameplay_objects.FieldBar;
 	import gameplay_objects.Pad;
 	import gameplay_objects.particles.BackgroundStar;
 	import gameplay_objects.PointBar;
+	import gameplay_objects.ScoreShow;
 	import gameplay_objects.SideBar;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -48,6 +51,10 @@ package worlds
 		[Embed(source = "../../lib/sounds/slomo_on.mp3")]
 		private static const SLOMO_ON_SND:Class;
 		private static var slomoOnSnd:Sfx = new Sfx(SLOMO_ON_SND);
+		
+		[Embed(source = "../../lib/sounds/bomb_assign.mp3")]
+		private static const BOMB_ASS_SND:Class;
+		private static var bombAssignSnd:Sfx = new Sfx(BOMB_ASS_SND);
 		
 		/*[Embed(source = "../../lib/music/game.mp3")]
 		private static const MUSIC:Class;
@@ -292,7 +299,8 @@ package worlds
 				if (Input.mousePressed && Input.mouseY < PointBar.Y && Input.mouseX > SideBar.W)
 				{
 					bombOn = false;
-					add(new Bomb(FP.width, FP.halfHeight, Input.mouseX, Input.mouseY));
+					add(new Bomb(Input.mouseX, -20, Input.mouseX, Input.mouseY));
+					if (GameWorld.soundOn) bombAssignSnd.play();
 				}
 			}
 			
@@ -329,7 +337,7 @@ package worlds
 			}
 		}
 		
-		private static var prevBrickSpeed:Number;
+		/*private static var prevBrickSpeed:Number;
 		public static function doRewind():void
 		{
 			prevBrickSpeed = Brick.speedY.valueOf();
@@ -338,8 +346,35 @@ package worlds
 			t.tween(GameWorld, { }, 1.2);
 			FP.world.addTween(t, true);
 			
+		}*/
+		
+		public static function doBulletsFromPad():void
+		{
+			if (pad != null) for (var i:uint = 0; i < 3; i++)
+			{
+				FP.world.add(new Bullet(new Point(pad.centerX, pad.y - 5), -(i+1)*Math.PI/4, 8, 3, FP.world));
+			}
+			if (soundOn) Brick.shootSnd.play();
 		}
 		
+		public static function doUnlockPad():Boolean
+		{
+			var unlocked:Boolean = false;
+			if (pad != null)
+			{ 
+				if (pad.fixed)
+				{
+					pad.showFixed = false;
+					pointBar.clear();
+					if (soundOn) Pad.padUnclockSnd.play();
+					unlocked = true;
+				}
+				else {
+					FP.world.add(new ScoreShow(0, FP.halfWidth-30, FP.halfHeight, "Pad already unlocked!"));
+				}
+			}
+			return unlocked;
+		}
 		
 		public static var slomoOnT:MultiVarTween;
 		public static var slomoOffT:MultiVarTween;
