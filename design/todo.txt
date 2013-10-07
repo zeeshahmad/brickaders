@@ -1,9 +1,8 @@
--replace bomb icon ..
--also change shadow pad icon..
--bomb appears from a more suitable place..
--Instead of "rewind bricks" , shoot 3 bullets from pad (diverging)..
--Instead of "Reverse ball", option for unlock pad..
--Center shot adds only +10 to score..
 
--when power on, positions should be reset to current
+-brick reaches bottom reduces score (correct BUG)
+-bullet hit pad costs more score
+-reduce the probability for ball enemy considerablly!!
+
+-add and implement health bar 
+-add health packs falling down to be caught for pad 
 -add some action to launcher icon
