@@ -357,8 +357,11 @@
 			
 			if (powerOn)
 			{
-				positionsX.push(x);
-				positionsY.push(y);
+				if (positionsX != null && positionsY != null)
+				{
+					positionsX.push(x);
+					positionsY.push(y);
+				}
 				
 				if (powerTween!=null)
 				 powerTween.active = (int(GameWorld.move) != 0);
@@ -392,6 +395,7 @@
 			{
 				for (var i:int = 0; i < POWER_STEPS; i++) {
 					img.alpha = i / POWER_STEPS;
+					if (positionsX != null && positionsY != null) 
 					Draw.graphic(graphic, positionsX[i], positionsY[i]);
 				}
 				

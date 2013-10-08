@@ -346,7 +346,9 @@ package worlds
 				}
 				wave++;
 				SideBar.waveText.text = "Wave " + String(wave-1);
-				Brick.speedY = 0.4 + (wave * 0.05);
+				Brick.speedY = 0.4 + (wave * 0.03);
+				//speed up bricks for debug
+				//Brick.speedY = 1.5;
 			}
 		}
 		

@@ -244,18 +244,19 @@ package gameplay_objects.bricks
 			{
 				if (world != null) 
 				{
-					if (world.typeCount("orbiter") > 0)
+					/*if (world.typeCount("orbiter") > 0)
 					{
 						var e:Entity = world.typeFirst("orbiter");
 						if (e.world != null) e.world.remove(e);
 					}
-					else if (!endOfBrick)
+					else */if (!endOfBrick)
 					{
 						GameWorld.addScore( -80);
 						if (world != null) world.add(new ScoreShow( -80, FP.rand(width) + x, y - 10));
 						GameWorld.reduceHealth();
 					}
 				}
+				trace(endOfBrick);
 				destroy();
 			}
 			super.update();
@@ -292,7 +293,7 @@ package gameplay_objects.bricks
 				if (GameWorld.soundOn) bonusSnd.play();
 			}
 			
-			var hitScore:uint = Math.round(Math.abs(8 * (1 - y / 480)));
+			var hitScore:uint = Math.round(Math.abs(20 * (1 - y / 480)));
 			if (bonus) {
 				hitScore += 150;
 				if (GameWorld.soundOn) bonusSnd.play();

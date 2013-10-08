@@ -206,6 +206,7 @@ package gameplay_objects
 			{
 				if (Input.mousePressed && GameWorld.mouseCollideRect(new Rectangle(giveUp.x, giveUp.y, giveUp.width, giveUp.height)))
 				{
+					GameWorld.submitScore(GameWorld.score);
 					FP.world = new GameOver;
 				}
 				
