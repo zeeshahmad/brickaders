@@ -128,9 +128,6 @@ package gameplay_objects
 				else if (selectedIndex == 1)
 				{
 					//reverse ball
-					/*ar = GameWorld.entitiesByType("ball", world);
-					for (var j:uint = 0; j < ar.length; j++)
-					if (!(ar[j].reverseOn)) (ar[j] as Ball).doReverse();*/
 					var unlocked:Boolean = GameWorld.doUnlockPad();
 					var unlckBall:Ball = FP.world.typeFirst("ball") as Ball;
 					if (unlckBall != null && !unlocked)
@@ -147,6 +144,7 @@ package gameplay_objects
 				{
 					//bomb
 					GameWorld.doBomb();
+					FP.world.add(new ScoreShow(0, FP.halfWidth-30, FP.halfHeight, "Tap to Deploy"));
 				}
 				else if (selectedIndex == 4)
 				{

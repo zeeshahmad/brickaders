@@ -222,14 +222,13 @@ package gameplay_objects.bricks
 			
 			if (collide("pad", x, y))
 			{
-				if ((collide("pad", x, y) as Pad).moveTween.active)
+				if (!(collide("pad", x, y) as Pad).moveTween.active)
 				{
-					destroy();
+					GameWorld.addScore( -110);
+					if (world != null) world.add(new ScoreShow( -110, FP.rand(width) + x, y - 10));
+					GameWorld.reduceHealth();
 				}
-				else 
-				{
-					trace("brick hit pad");
-				}
+				destroy();
 			}
 			
 			if (collidable && Math.round(GameWorld.move) == 1)
@@ -254,6 +253,7 @@ package gameplay_objects.bricks
 					{
 						GameWorld.addScore( -80);
 						if (world != null) world.add(new ScoreShow( -80, FP.rand(width) + x, y - 10));
+						GameWorld.reduceHealth();
 					}
 				}
 				destroy();
@@ -329,7 +329,6 @@ package gameplay_objects.bricks
 				addTween(gunOutTween, true);
 				
 				pointAndShoot();
-				
 			}
 		}
 		

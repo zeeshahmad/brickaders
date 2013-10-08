@@ -11,6 +11,7 @@ package worlds
 	import gameplay_objects.bricks.Brick;
 	import gameplay_objects.Bullet;
 	import gameplay_objects.FieldBar;
+	import gameplay_objects.HealthBar;
 	import gameplay_objects.Pad;
 	import gameplay_objects.particles.BackgroundStar;
 	import gameplay_objects.PointBar;
@@ -73,6 +74,7 @@ package worlds
 		public static var pointBar:PointBar;
 		public static var actionMenu:ActionMenu;
 		public static var fieldBar:FieldBar;
+		public static var healthBar:HealthBar;
 		
 		//layers
 		public static var pointLayer:Sprite;
@@ -82,6 +84,7 @@ package worlds
 		public static var timeFactor:Number = 1;
 		public static var move:int = 1;
 		public static var paused:Boolean;
+		public static var health:uint;
 		
 		public static var scoreTextLabel:Text;
 		public static var scoreText:Text;
@@ -101,6 +104,7 @@ package worlds
 			pad = new Pad();
 			actionMenu = new ActionMenu();
 			fieldBar = new FieldBar();
+			healthBar = new HealthBar();
 			
 			scoreTextLabel = new Text("Score: ");
 			scoreTextLabel.color = 0xDDDDDD;
@@ -181,6 +185,7 @@ package worlds
 			add(pointBar);
 			add(pad);
 			add(fieldBar);
+			//add(healthBar);
 			
 			addGraphic(scoreTextLabel);
 			addGraphic(scoreText);
@@ -190,6 +195,8 @@ package worlds
 			move = 1;
 			wave = 1;
 			timeFactor = 1;
+			health = 10;
+			healthBar.showHealth(health);
 			paused = false;
 			fieldLeft = FIELD_TOTAL;
 			Ball.powerOn = false;
@@ -202,6 +209,8 @@ package worlds
 			pointBar.y = FP.height;
 			var pointbarT:MultiVarTween = new MultiVarTween();
 			pointbarT.tween(pointBar, { y: pointBar.nY }, 0.4, Ease.quintOut);
+			
+			
 			
 			pad.y = FP.height;
 			var padT:MultiVarTween = new MultiVarTween();
@@ -247,9 +256,10 @@ package worlds
 			PointBar.pointLimit = 1;
 			PointBar.pointCount = 0;
 			
-						var ball:Ball = new Ball();
+			var ball:Ball = new Ball();
 			add(ball); ball.moveTo(200, 200);
 			ball.setRadialSpd(10, -Math.PI / 4);
+			add(healthBar);
 		}
 		
 		override public function update():void 
@@ -258,7 +268,9 @@ package worlds
 			{
 				spawnBricks();
 				spawnBalls();
-				if (FP.rand(2000) < 2 && typeCount("ballenemy") < 2 && wave > 9) add(new BallEnemy());
+				
+				//ball enemies:
+				if (wave > 20 && FP.rand(6000) < 2 && typeCount("ballenemy") < 2) add(new BallEnemy());
 			}
 			
 			//background stars
@@ -449,10 +461,24 @@ package worlds
 			if (e.world != null) e.world.remove(e);
 		}
 		
-		public static function doGameOver():void
+		public static function reduceHealth(amount:int = 1):void
 		{
-			if (FP.world.typeCount("ball") == 0 && FP.world.typeCount("powerball") == 0)
+			if (health > 0) health -= amount;
+			healthBar.showHealth(health);
+			
+			if (!doGameOver())
 			{
+				if (GameWorld.soundOn) Ball.orbiterLostSnd.play();
+			}
+		}
+		
+		public static function doGameOver():Boolean
+		{
+			var over:Boolean = false;
+			
+			if ((FP.world.typeCount("ball") == 0 && FP.world.typeCount("powerball") == 0) || health == 0)
+			{
+				over = true;
 				var overTween:MultiVarTween = new MultiVarTween(function():void{
 				
 				submitScore(score);
@@ -461,6 +487,7 @@ package worlds
 				overTween.tween(GameWorld, { }, 1);
 				FP.world.addTween(overTween, true);
 			}
+			return over;
 		}
 		
 	}

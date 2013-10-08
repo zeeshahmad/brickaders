@@ -14,7 +14,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
+   inkscape:version="0.48.1 "
    sodipodi:docname="invaders.svg">
   <defs
      id="defs4">
@@ -698,14 +698,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="1268.5697"
-     inkscape:cy="186.84541"
+     inkscape:zoom="0.7071068"
+     inkscape:cx="1615.3173"
+     inkscape:cy="1046.896"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="850"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -2253,7 +2253,7 @@
        id="rect3881-17-2"
        width="800"
        height="480"
-       x="946.99994"
+       x="949.73633"
        y="-418.63779" />
     <rect
        style="fill:#3297be;fill-opacity:1;fill-rule:evenodd;stroke:none;display:inline"
@@ -2657,5 +2657,106 @@
            transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)" />
       </g>
     </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3342"
+       width="800"
+       height="91.216774"
+       x="949.73633"
+       y="-29.854561" />
+    <rect
+       style="opacity:0.64110347;fill:none;stroke:#88b960;stroke-width:8.98001099;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4112"
+       width="191.44255"
+       height="34.118473"
+       x="1904.5035"
+       y="173.69334"
+       ry="10.425089"
+       inkscape:export-filename="U:\Brickaders\lib\pointbar\healthbar_border.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4118"
+       width="13.774719"
+       height="17.847763"
+       x="1819.8113"
+       y="126.2079"
+       ry="3.1413286"
+       inkscape:export-filename="U:\Brickaders\lib\pointbar\health_bit.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-9"
+       width="13.774719"
+       height="17.847763"
+       x="1837.8414"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-2"
+       width="13.774719"
+       height="17.847763"
+       x="1855.8716"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-3"
+       width="13.774719"
+       height="17.847763"
+       x="1873.9019"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-4"
+       width="13.774719"
+       height="17.847763"
+       x="1891.932"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-36"
+       width="13.774719"
+       height="17.847763"
+       x="1909.9622"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-95"
+       width="13.774719"
+       height="17.847763"
+       x="1927.9923"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-91"
+       width="13.774719"
+       height="17.847763"
+       x="1946.0226"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-40"
+       width="13.774719"
+       height="17.847763"
+       x="1964.0527"
+       y="126.2079"
+       ry="3.1413286" />
+    <rect
+       style="opacity:0.64110347;fill:#88b960;fill-opacity:1;stroke:#88b960;stroke-width:1.74966717;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4118-98"
+       width="13.774719"
+       height="17.847763"
+       x="1982.0829"
+       y="126.2079"
+       ry="3.1413286" />
   </g>
 </svg>

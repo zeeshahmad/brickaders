@@ -1,8 +1,5 @@
 
--brick reaches bottom reduces score (correct BUG)
--bullet hit pad costs more score
--reduce the probability for ball enemy considerablly!!
+-brick reaches bottom reduces score (correct BUG)..?
 
--add and implement health bar 
 -add health packs falling down to be caught for pad 
 -add some action to launcher icon
