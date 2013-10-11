@@ -365,9 +365,12 @@ package worlds
 		
 		public static function doBulletsFromPad():void
 		{
-			if (pad != null) for (var i:uint = 0; i < 3; i++)
+			const noOfBullets:uint = 6;
+			
+			
+			if (pad != null) for (var i:uint = 0; i < noOfBullets; i++)
 			{
-				FP.world.add(new Bullet(new Point(pad.centerX, pad.y - 5), -(i+1)*Math.PI/4, 8, 3, FP.world));
+				FP.world.add(new Bullet(new Point(pad.centerX, pad.y - 5), -(i+1)*Math.PI/(noOfBullets+1), 8, 3, FP.world));
 			}
 			if (soundOn) Brick.shootSnd.play();
 		}

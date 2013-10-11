@@ -178,6 +178,20 @@
 			
 		}
 		
+		
+		public var airCombo:uint = 0;
+		
+		public function airComboCheck():void
+		{
+			airCombo++;
+			if (airCombo > 1)
+			{
+				FP.world.add(new ScoreShow(airCombo * 15, x + FP.rand(50), y + FP.rand(20), "Air Combo X" + String(airCombo)));
+				GameWorld.addScore(airCombo * 15);
+				if (GameWorld.soundOn) Brick.bonusSnd.play();
+			}
+		}
+		
 		public var moveFunction:Function = function(ins:Ball):void
 		{
 			this.x += (ins.speedX) * GameWorld.timeFactor * GameWorld.move * FP.rate;
@@ -251,7 +265,7 @@
 					
 					clearWallTouch();
 					onAnyCollision();
-					
+					airCombo = 0;
 				}
 				else if (this.x + this.width > FP.width)//right wall
 				{
@@ -260,6 +274,7 @@
 					
 					clearWallTouch();
 					onAnyCollision();
+					airCombo = 0;
 				}
 				
 				//vertical collision
@@ -270,6 +285,7 @@
 					
 					clearWallTouch();
 					onAnyCollision();
+					airCombo = 0;
 				}
 				else if (collide("pad", x, y) && !collideOnce)
 				//&&this.x > GameWorld.pad.x && this.x < GameWorld.pad.x + GameWorld.pad.width)//pad
@@ -299,7 +315,7 @@
 					GameWorld.pointBar.clear();
 					
 					onAnyCollision();
-					
+					airCombo = 0;
 					
 					if (GameWorld.pad.moveTween != null && GameWorld.pad.moveTween.active) {
 						setCartesianSpd(speedX + GameWorld.pad.dir * 0.4, speedY);
@@ -334,6 +350,7 @@
 					}
 					
 					onAnyCollision();
+					airCombo = 0;
 					
 					if (orbCount == 0) {
 						destroy();

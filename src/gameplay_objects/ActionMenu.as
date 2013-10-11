@@ -121,9 +121,10 @@ package gameplay_objects
 				trace("action selected index: " + String(selectedIndex));
 				if (selectedIndex == 0)
 				{
-					//rewind
-					//GameWorld.doRewind();
+					//pad shoots bullets
 					GameWorld.doBulletsFromPad();
+					
+					//GameWorld.doRewind();
 				}
 				else if (selectedIndex == 1)
 				{

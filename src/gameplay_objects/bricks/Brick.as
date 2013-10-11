@@ -265,6 +265,8 @@ package gameplay_objects.bricks
 		//collision test in ball class
 		public function onBallCollision(ball:Entity):void
 		{
+			(ball as Ball).airComboCheck();
+			
 			if (!(ball as Ball).reverseOn && !Ball.powerOn && !endOfBrick)
 			{
 				var angle:Number = Math.atan2(ball.y + ball.halfHeight - y - halfHeight, ball.x + ball.halfWidth - x - halfWidth);
