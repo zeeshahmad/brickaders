@@ -8,6 +8,7 @@ package
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	import gameplay_objects.Ball;
 	import gameplay_objects.SideBar;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
@@ -44,6 +45,7 @@ package
 			
 			FP.screen.color = 0x333333;
 			FP.world = new MainMenuWorld;
+			
 			
 			
 		}

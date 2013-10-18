@@ -1,5 +1,7 @@
 
 -brick reaches bottom reduces score (correct BUG)..?
+-increase probability for spawning a bonus brick
+-pad shoots atleast 3 bullets, then same as no. of orbiters
 
 -add health packs falling down to be caught for pad 
 -add some action to launcher icon
