@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'17/10/2013'</value>
+      <value>'09/01/2014'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -32,16 +32,15 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>U:\Brickaders\src</path-element>
-      <path-element>U:\FlashDevelop\classpath</path-element>
-      <path-element>U:\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>C:\Users\Zeeshan\brickaders\src</path-element>
+      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>U:\Brickaders\src\flashpunk-1.7.0.swc</path-element>
+      <path-element>C:\Users\Zeeshan\brickaders\src\flashpunk-1.7.0.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>U:\Brickaders\src\Main.as</path-element>
+    <path-element>C:\Users\Zeeshan\brickaders\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
