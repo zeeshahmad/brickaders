@@ -118,6 +118,7 @@ package gameplay_objects.bricks
 			if (r < 40) {
 				img = new Image(INVADER_1);
 				imgClass = INVADER_1;
+				
 				enableDodge = false;
 			}
 			else if (r < 60) {
@@ -141,6 +142,8 @@ package gameplay_objects.bricks
 				dodgeAmount = 1.9;
 				bonus = true;
 			}
+			
+			moveFunction = defaultMF;
 			
 			img.smooth = true;
 			//img.scale = 0.8;
@@ -173,11 +176,19 @@ package gameplay_objects.bricks
 			super.added();
 		}
 		
-		override public function update():void 
+		private var moveFunction:Function;
+		
+		private function defaultMF():void
 		{
 			x += (speedX + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor;        
 			x = Math.max(Math.min(x,800 - width), SideBar.W);
 			y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor;
+		}
+		
+		override public function update():void 
+		{
+			
+			if (moveFunction != null) moveFunction.apply(this);
 			
 			if (bonus && !bonusShipSnd.playing) bonusShipSnd.play();
 			
