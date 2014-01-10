@@ -17,7 +17,6 @@ package gameplay_objects
 		
 		public static var pointLimit:uint;
 		public static var pointCount:uint;
-		public static var enabled:Boolean;
 		
 		public static var points:Array;
 		
@@ -46,7 +45,6 @@ package gameplay_objects
 		
 		override public function added():void 
 		{
-			enabled = true;
 			
 			super.added();
 		}
@@ -59,9 +57,9 @@ package gameplay_objects
 			{
 				if (collidePoint(x, y, Input.mouseX, Input.mouseY))
 				{
-					if (enabled)
+					clear();
+					if (Pad.movesLeft > 0)
 					{
-						enabled = false;
 						
 						//put point
 						p = new PadPoint(Input.mouseX);
@@ -85,7 +83,6 @@ package gameplay_objects
 		public function clear():void
 		{
 			if (p != null) if (p.world != null) p.disappear();
-			enabled = true;
 		}
 		
 		

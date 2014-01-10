@@ -118,7 +118,6 @@ package gameplay_objects.bricks
 			if (r < 40) {
 				img = new Image(INVADER_1);
 				imgClass = INVADER_1;
-				
 				enableDodge = false;
 			}
 			else if (r < 60) {
@@ -172,23 +171,38 @@ package gameplay_objects.bricks
 		
 		override public function added():void 
 		{
-			//speedY = 0.5;
+			
 			super.added();
 		}
 		
 		private var moveFunction:Function;
+		private var moveI:int = 1; 
+		private var moveJ:int = 1;
+		public var counter:Number = 0;
 		
 		private function defaultMF():void
 		{
-			x += (speedX + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor;        
-			x = Math.max(Math.min(x,800 - width), SideBar.W);
-			y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor;
+			counter += FP.elapsed;
+			
+			if (counter >= 1.0)
+			{
+				if (moveJ == 0) moveJ = 1;
+				else moveJ = 0;
+				
+				counter -= 1.0;
+			}
+			
 		}
+		
+		
 		
 		override public function update():void 
 		{
-			
 			if (moveFunction != null) moveFunction.apply(this);
+			
+			x += (speedX + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor*moveI;        
+			x = Math.max(Math.min(x,800 - width), SideBar.W);
+			y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor * moveJ;
 			
 			if (bonus && !bonusShipSnd.playing) bonusShipSnd.play();
 			
@@ -276,10 +290,19 @@ package gameplay_objects.bricks
 		//collision test in ball class
 		public function onBallCollision(ball:Entity):void
 		{
+			Pad.movesLeft++;
+			
 			(ball as Ball).airComboCheck();
 			
-			if (!(ball as Ball).reverseOn && !Ball.powerOn && !endOfBrick)
+			if (/*!(ball as Ball).reverseOn && */!Ball.powerOn && !endOfBrick)
 			{
+				if ((ball as Ball).reverseOn) 
+				{
+					//cancel reverse and just bounce off like normal
+					(ball as Ball).reverseTween.cancel();
+					(ball as Ball).onReverseComplete();
+				}
+				
 				var angle:Number = Math.atan2(ball.y + ball.halfHeight - y - halfHeight, ball.x + ball.halfWidth - x - halfWidth);
 				if (angle > -Math.PI + heightAngle && angle < - heightAngle) //top wall
 				{

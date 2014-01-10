@@ -431,7 +431,7 @@
 		public function doReverse():void
 		{
 			reverseSpd = speed.valueOf();
-			img.color = 0xC0C918;
+			//img.color = 0xC0C918;
 			
 			reverseTween = new MultiVarTween(onReverseComplete);
 			reverseTween.tween(this, { reverseSpd: Number(-reverseSpd).valueOf() }, 0.5, Ease.cubeInOut);
@@ -443,7 +443,7 @@
 		public function onReverseComplete():void
 		{
 			reverseOn = false;
-			img.color = 0xffffff;
+			//img.color = 0xffffff;
 		}
 		
 		

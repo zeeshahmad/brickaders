@@ -6,7 +6,6 @@ package gameplay_objects
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
-	import net.flashpunk.tweens.misc.MultiVarTween;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.World;
 	import worlds.GameWorld;

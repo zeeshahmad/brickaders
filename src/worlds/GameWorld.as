@@ -200,6 +200,7 @@ package worlds
 			paused = false;
 			fieldLeft = FIELD_TOTAL;
 			Ball.powerOn = false;
+			Pad.movesLeft = 3;
 			
 			sideBar.x = -100;
 			var sidebarT:MultiVarTween = new MultiVarTween();
@@ -267,7 +268,7 @@ package worlds
 			if (!paused)
 			{
 				spawnBricks();
-				spawnBalls();
+				//spawnBalls();
 				
 				//ball enemies:
 				if (wave > 20 && FP.rand(6000) < 2 && typeCount("ballenemy") < 2) add(new BallEnemy());
@@ -346,7 +347,7 @@ package worlds
 				}
 				wave++;
 				SideBar.waveText.text = "Wave " + String(wave-1);
-				Brick.speedY = 0.4 + (wave * 0.03);
+				Brick.speedY = 1.0 + (wave * 0.03);
 				//speed up bricks for debug
 				//Brick.speedY = 1.5;
 			}
