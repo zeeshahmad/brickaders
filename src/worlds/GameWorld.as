@@ -201,6 +201,7 @@ package worlds
 			fieldLeft = FIELD_TOTAL;
 			Ball.powerOn = false;
 			Pad.movesLeft = 3;
+			SideBar.movesLeftText.text = "Moves: " + String(Pad.movesLeft);
 			
 			sideBar.x = -100;
 			var sidebarT:MultiVarTween = new MultiVarTween();

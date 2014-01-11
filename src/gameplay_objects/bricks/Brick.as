@@ -26,7 +26,7 @@ package gameplay_objects.bricks
 	 */
 	public class Brick extends Entity 
 	{
-		public var speedX:Number = 0;
+		public static var speedX:Number = 1.2;
 		public static var speedY:Number = 0;
 		public var dodgeX:Number = 0;
 		public var dodgeAmount:Number = 0;
@@ -108,41 +108,55 @@ package gameplay_objects.bricks
 			gun.originY = 5;
 			
 			var rLim:Number;
-			if (GameWorld.wave < 6) rLim = 39;
-			else if (GameWorld.wave < 20) rLim = 69;
-			else if (GameWorld.wave < 40) rLim = 74;
+			if (GameWorld.wave < 6) rLim = 29;
+			else if (GameWorld.wave < 20) rLim = 59;
+			else if (GameWorld.wave < 40) rLim = 65;
 			else rLim = 77;
 			
 			var r:Number = FP.rand(rLim);
 			
-			if (r < 40) {
+			if (r < 30) {
 				img = new Image(INVADER_1);
 				imgClass = INVADER_1;
 				enableDodge = false;
+				
+				movementI = [0, 0];
+				movementJ = [1, 0];
 			}
-			else if (r < 60) {
+			else if (r < 50) {
 				img = new Image(INVADER_2);
 				imgClass = INVADER_2;
-				dodgeAmount = 1.25;
+				enableDodge = false; //dodgeAmount = 1.25;
+				
+				movementI = [0, 0, 1, 0, 0, -1];
+				movementJ = [1, 1, 0, 1, 1, 0];
 			}
-			else if (r < 70) {
+			else if (r < 61) {
 				img = new Image(INVADER_3);
 				imgClass = INVADER_3;
-				dodgeAmount = 1.5;
+				enableDodge = false; //dodgeAmount = 1.5;
+				
+				movementI = [0, 0, 1, 0, 0, 0, -1, 0];
+				movementJ = [1, 1, 0, -1, 1, 1, 0, -1];
 			}
 			else if (r < 75) {
 				img = new Image(INVADER_4);
 				imgClass = INVADER_4;
 				dodgeAmount = 1.6;
+				
+				movementI = [0];
+				movementJ = [1];
 			}
 			else if (r < 78) {
 				img = new Image(INVADER_BONUS);
 				imgClass = INVADER_BONUS;
 				dodgeAmount = 1.9;
 				bonus = true;
+				
+				movementI = [0];
+				movementJ = [1];
 			}
 			
-			moveFunction = defaultMF;
 			
 			img.smooth = true;
 			//img.scale = 0.8;
@@ -175,32 +189,33 @@ package gameplay_objects.bricks
 			super.added();
 		}
 		
-		private var moveFunction:Function;
-		private var moveI:int = 1; 
-		private var moveJ:int = 1;
-		public var counter:Number = 0;
+		private var moveI:int = 0; 
+		private var moveJ:int = 0;
+		public var counter:Number = Math.random() * -0.8;
+		private var movementIndex:uint = 0;
+		private var movementI:Array;
+		private var movementJ:Array;
 		
-		private function defaultMF():void
+		private function moveFunction():void
 		{
 			counter += FP.elapsed;
 			
 			if (counter >= 1.0)
 			{
-				if (moveJ == 0) moveJ = 1;
-				else moveJ = 0;
-				
+				moveI = movementI[movementIndex];
+				moveJ = movementJ[movementIndex];
+				if (movementIndex == movementI.length - 1) movementIndex = 0;
+				else movementIndex++;
 				counter -= 1.0;
 			}
-			
 		}
-		
 		
 		
 		override public function update():void 
 		{
-			if (moveFunction != null) moveFunction.apply(this);
+			moveFunction.apply(this);
 			
-			x += (speedX + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor*moveI;        
+			x += (speedX*moveI + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor;        
 			x = Math.max(Math.min(x,800 - width), SideBar.W);
 			y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor * moveJ;
 			
@@ -291,6 +306,7 @@ package gameplay_objects.bricks
 		public function onBallCollision(ball:Entity):void
 		{
 			Pad.movesLeft++;
+			SideBar.movesLeftText.text = "Moves: " + String(Pad.movesLeft);
 			
 			(ball as Ball).airComboCheck();
 			

@@ -22,6 +22,7 @@ package gameplay_objects
 		public static const W:Number = 100;
 		
 		public static var waveText:Text;
+		public static var movesLeftText:Text;
 		
 		[Embed(source = "../../lib/sidebar/musicOff.png")]
 		private static const musicOffPng:Class;
@@ -68,6 +69,11 @@ package gameplay_objects
 			waveText.color = 0xA4DAFB;
 			waveText.x = 5;
 			waveText.y = 20;
+			
+			movesLeftText = new Text("Moves: " + String(Pad.movesLeft));
+			movesLeftText.color = 0xA4DAFB;
+			movesLeftText.x = 1;
+			movesLeftText.y = 360;
 			
 			musicOff = new Image(musicOffPng);
 			musicOn = new Image(musicOnPng);
@@ -131,6 +137,7 @@ package gameplay_objects
 		override public function added():void 
 		{
 			addGraphic(waveText);
+			addGraphic(movesLeftText);
 			addGraphic(highText);
 			addGraphic(pauseLabel);
 			addGraphic(giveUp);

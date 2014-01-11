@@ -78,7 +78,8 @@ package gameplay_objects
 		
 		public function getToPosition(_x:Number, p:PadPoint):Pad
 		{
-			movesLeft = Math.max(0, Math.round(movesLeft-1));
+			movesLeft = Math.max(0, Math.round(movesLeft - 1));
+			SideBar.movesLeftText.text = "Moves: " + String(Pad.movesLeft);
 			dir = (_x > x ? 1:-1);
 			moveTween = new VarTween();
 			moveTween.tween(this, "x", Math.min(Math.max(_x, SideBar.W),FP.width - width), 0.35, Ease.quadOut);
@@ -92,7 +93,6 @@ package gameplay_objects
 		
 		override public function update():void 
         {
-			trace(movesLeft);
 			
             positions.push(x);
             positions.push(y);
