@@ -8,3 +8,17 @@
 
 
 --orbiter is a count of how many actions available
+
+NEW:
+	
+Ball actions:
+	power ball (2 orbiters)
+	shoot (1 orbiter)
+	reverse ball (1 orbiter)
+	leave mine (3 orbiters)
+	
+Pad actions:
+	shadow pad (1 orbiters)
+	missile (3 orbiters)
+	magnet (2 orbiters)
+	deploy bomb (2 orbiters)
