@@ -196,14 +196,23 @@ package gameplay_objects.bricks
 		private var movementI:Array;
 		private var movementJ:Array;
 		
+		private var moveTween:MultiVarTween;
+		
 		private function moveFunction():void
 		{
 			counter += FP.elapsed;
 			
-			if (counter >= 1.0)
+			if (counter >= 1.8)
 			{
 				moveI = movementI[movementIndex];
 				moveJ = movementJ[movementIndex];
+				
+				if (moveTween != null) if (moveTween.active) moveTween.cancel();
+				moveTween = new MultiVarTween();
+				moveTween.tween(this, { x: Main.between(SideBar.W, 800, x + 40 * moveI),
+				y: Main.between(0, 480, y + 40 * moveJ) }, 1.1, Ease.quadOut);
+				addTween(moveTween);
+				
 				if (movementIndex == movementI.length - 1) movementIndex = 0;
 				else movementIndex++;
 				counter -= 1.0;
@@ -213,11 +222,12 @@ package gameplay_objects.bricks
 		
 		override public function update():void 
 		{
+			if (!GameWorld.paused && !GameWorld.actionMenu.active) 
 			moveFunction.apply(this);
 			
-			x += (speedX*moveI + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor;        
-			x = Math.max(Math.min(x,800 - width), SideBar.W);
-			y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor * moveJ;
+			//x += (speedX*moveI + dodgeX) * GameWorld.move * FP.rate * GameWorld.timeFactor;        
+			//x = Math.max(Math.min(x,800 - width), SideBar.W);
+			//y += speedY * GameWorld.move * FP.rate * GameWorld.timeFactor * moveJ;
 			
 			if (bonus && !bonusShipSnd.playing) bonusShipSnd.play();
 			

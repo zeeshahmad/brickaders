@@ -130,6 +130,18 @@ package
 			return Math.round(val / Math.abs(val));
 		}
 		
+		public static function between(number1:Number, number2:Number, val:Number):Number
+		{
+			var a:Number, b:Number;
+			if (number1 > number2) {
+				a = number1; b = number2;
+			}
+			else {
+				a = number2; b = number1;
+			}
+			return Math.max(b, Math.min(a, val));
+		}
+		
 		
 	}
 	
