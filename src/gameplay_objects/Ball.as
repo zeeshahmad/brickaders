@@ -8,6 +8,7 @@
 	import gameplay_objects.particles.*;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Emitter;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.MultiVarTween;
@@ -73,6 +74,9 @@
 		public var positionsX:Vector.<Number>;
 		public var positionsY:Vector.<Number>;
 		
+		public var numberTrail:Number = 0;
+		public var trailEmiter:Emitter;
+		
 		public function Ball() {
 			// constructor code
 			
@@ -90,7 +94,11 @@
 			
 			type = "ball";
 			
-			
+			trailEmiter = new Emitter(new BitmapData(3, 3, false, 0xFFFFFF), 3, 3);
+			trailEmiter.newType("trail", [0]);
+			trailEmiter.setColor("trail");
+			trailEmiter.setAlpha("trail");
+			FP.world.addGraphic(trailEmiter);
 		}
 		
 		public function clone():Ball
@@ -305,6 +313,11 @@
 					
 					bounceUp();
 					
+					//new trail of particles
+					numberTrail = 10;
+					
+					
+					
 					GameWorld.pad.showFixed = false;
 					collide("pad", x, y).y = GameWorld.pointBar.nY - GameWorld.pad.height + 2;
 					
@@ -384,9 +397,18 @@
 				 powerTween.active = (int(GameWorld.move) != 0);
 			}
 			
+			//trail particles
+			//TODO: first study how particles work in engine
+			
+			trailEmiter.setMotion("trail", radians + Math.PI, 5, 1.5, Math.PI / 8, 2, 0.5); 
+			if (numberTrail > 0) {
+				trailEmiter.emit("trail", centerX, centerY);
+			}
 			
 			super.update();
 		}
+		
+		
 		
 		public var collideBottom:Boolean = false;
 		
