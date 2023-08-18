@@ -4,4 +4,6 @@ Arcade game for android, a combination of invaders and breakout.
 
 ![demo](brickaders.gif)
 
-Made using AdobeAir with ActionScript 3
+Made using AdobeAir with ActionScript 3.
+
+This is very old code (from 2013), any new updates would probably require moving to Haxe
